@@ -3,3 +3,4 @@ _site/
 .jekyll-cache/
 .jekyll-metadata
 **/compiled_program.json
+.vscode
