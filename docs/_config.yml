@@ -18,19 +18,21 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Perama's notes
-email: perama-code@gmail.com
+title: Perama's notes.
+author: Perama
 description: >- # this means to ignore newlines until "baseurl:"
-  Notes about interesting things.
+  Interesting topics and explorations.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: eth_worm
 github_username:  perama-v
 
 # Build settings
-theme: jekyll-theme-midnight
+theme: minima
+
 plugins:
   - jekyll-feed
+  - jekyll-toc
 
 # Exclude from processing.
 # The following items will not be processed, by default.
