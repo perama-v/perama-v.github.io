@@ -36,3 +36,6 @@ more [**technical description**]({{ site.baseurl }}{% link cairo/technical_summa
 Cairo was invented at [Starkware](https://www.cairo-lang.org/), and for complete and
 accurate information on how to use the language, see
 the [official docs](https://www.cairo-lang.org/docs/).
+
+How to use Cairo?
+- Basic [**building blocks**]({{ site.baseurl }}{% link cairo/building_blocks.md %})
