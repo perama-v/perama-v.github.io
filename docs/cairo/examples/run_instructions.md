@@ -73,4 +73,4 @@ sent it to the contract.
 ### Using the proof
 
 You can deploy a smart contract which can integrate the proof as part of a larger
-application. More details can be found [here](solidity_skeleton.md).
+application. More details can be found in this [solidity skeleton](solidity_skeleton.md).

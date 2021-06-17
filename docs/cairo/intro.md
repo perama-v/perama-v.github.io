@@ -25,6 +25,10 @@ The benefit of STARKs can be summarised in this python pseudocode.
     print(batch)
 {% endhighlight %}
 
+How to use Cairo?
+- Check out some [**building blocks**]({{ site.baseurl }}{% link cairo/building_blocks.md %})
+- [**Build an application**]({{ site.baseurl }}{% link cairo/examples/solidity_skeleton.md %})
+
 The Cairo rabbit hole goes deep.
 
 For fast explanation what Cairo is, from the foundation up, read this
@@ -36,6 +40,3 @@ more [**technical description**]({{ site.baseurl }}{% link cairo/technical_summa
 Cairo was invented at [Starkware](https://www.cairo-lang.org/), and for complete and
 accurate information on how to use the language, see
 the [official docs](https://www.cairo-lang.org/docs/).
-
-How to use Cairo?
-- Basic [**building blocks**]({{ site.baseurl }}{% link cairo/building_blocks.md %})
