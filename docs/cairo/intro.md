@@ -29,6 +29,8 @@ How to use Cairo?
 - Check out some [**building blocks**]({{ site.baseurl }}{% link cairo/building_blocks.md %})
 - [**Build an application**]({{ site.baseurl }}{% link cairo/examples/solidity_skeleton.md %})
 - Examine different [**deployment options**]({{ site.baseurl }}{% link cairo/deployment_options.md %})
+- Understand the [**space-time resource**]({{ site.baseurl }}{% link cairo/proof_size.md %})
+implications of proofs.
 
 The Cairo rabbit hole goes deep.
 
