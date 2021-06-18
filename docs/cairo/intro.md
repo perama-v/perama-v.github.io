@@ -28,6 +28,7 @@ The benefit of STARKs can be summarised in this python pseudocode.
 How to use Cairo?
 - Check out some [**building blocks**]({{ site.baseurl }}{% link cairo/building_blocks.md %})
 - [**Build an application**]({{ site.baseurl }}{% link cairo/examples/solidity_skeleton.md %})
+- Examine different [**deployment options**]({{ site.baseurl }}{% link cairo/deployment_options.md %})
 
 The Cairo rabbit hole goes deep.
 
