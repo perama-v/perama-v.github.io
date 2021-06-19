@@ -23,6 +23,7 @@ transaction that is highly compressed and represents the final outcome from some
 agreement is desirable because it allows other transactions to fit.
 
 Parameters:
+
 - Block size: 15 million gas.
 - Block time: 14 seconds.
 - Transaction sizes:
@@ -33,10 +34,11 @@ Parameters:
     - Tornado cash deposit: 950,000 gas (~15 per block).
 
 STARK Proof size:
-    - Given an estimated [1100 gas per transaction](https://twitter.com/StarkWareLtd/status/1405133782118809602).
-    - With a STARK proof approximately [5,000,000 gas per proof](https://ethresear.ch/t/checkpoints-for-faster-finality-in-starknet/9633)
-    (~3 per block).
-    - A proof this size might represent around 4500 transactions (~13,500 per block).
+
+- Given an estimated [1100 gas per transaction](https://twitter.com/StarkWareLtd/status/1405133782118809602).
+- With a STARK proof approximately [5,000,000 gas per proof](https://ethresear.ch/t/checkpoints-for-faster-finality-in-starknet/9633)
+(~3 per block).
+- A proof this size might represent around 4500 transactions (~13,500 per block).
 
 So a single STARK proof occupies the same space as about 238 ETH transfers. If a proof
 represents the 238 ETH transfers, "utility density" is the same as performing those
