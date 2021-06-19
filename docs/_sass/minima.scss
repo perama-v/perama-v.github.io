@@ -11,10 +11,16 @@ $base-line-height: 1.5 !default;
 $spacing-unit:     30px !default;
 
 $text-color:       #111 !default;
-$background-color: #fdfdfd !default;
-$brand-color:      #2a7ae2 !default;
+$background-color: lighten(#a7bec4, 15%) !default;
+//$background-color: #a7bec4 !default;
+// $background-color: #fdfdfd !default;
+$brand-color:      #a7542e !default;
 
-$grey-color:       #828282 !default;
+
+$grey-color:       #a7bec4 !default;
+//$grey-color:       #a6c0c7 !default;
+//$grey-color:       #8fa6ac !default;
+//$grey-color:       #828282 !default;
 $grey-color-light: lighten($grey-color, 40%) !default;
 $grey-color-dark:  darken($grey-color, 25%) !default;
 
@@ -24,7 +30,7 @@ $table-text-align: left !default;
 $content-width:    800px !default;
 
 $on-palm:          600px !default;
-$on-laptop:        800px !default;
+$on-laptop:        2000px !default;
 
 // Use media queries like this:
 // @include media-query($on-palm) {
