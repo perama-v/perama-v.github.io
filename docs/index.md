@@ -4,3 +4,9 @@
 
 layout: home
 ---
+
+:seedling:
+
+Perhaps you are interested in the
+[**Cairo programming language**]({{ site.baseurl }}{% link cairo/intro.md %})?
+
