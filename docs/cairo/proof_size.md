@@ -5,23 +5,20 @@ permalink: /cairo/proof-size/
 toc: false
 ---
 
-This page outlines the "space-time" constraints prevalent in scaling discussions. How
-are proofs best visualised, and who are the agents that coordinate and create them?
-
-With Cairo programs and their associated STARK proofs, there are different terminologies,
-referring to various size- and time-properties. The purpose here is to aggregate these
-factors for quick and easy grokking.
+This page explores proof sizes, how they are important for scaling discussions and how
+they relate to the proofs produced by Cairo applications. This post only explores rollups,
+where all layer 2 transaction data is available on-chain.
 
 ## Restating the premise
 
 Ethereum block size is a fixed resource:
-- Fixed in-protocol
-- Changed by voting during block production
-- Large values allow more transactions, but make participation burdensome
+- Fixed in-protocol.
+- Changed by voting during block production.
+- Large values allow more transactions, but make participation burdensome.
 - Small values reduce throughput, but make participation practical.
 - The social agreement is that an "everyday" computer can participate.
 
-Throughput can be increased by increasing the information density of within a block. A
+Throughput can be increased by increasing the information density within a block. A
 transaction that is highly compressed and represents the final outcome from some off-chain
 agreement is desirable because it allows other transactions to fit.
 
@@ -34,11 +31,16 @@ Parameters:
     - Token trade: 100-130,000 gas (~115 per block).
     - Mint NFT, lend, borrow : 150-200,000 gas (~75 per block).
     - Tornado cash deposit: 950,000 gas (~15 per block).
-    - STARK proof: 5,000,000 gas (~3 per block).
+
+STARK Proof size:
+    - Given an estimated [1100 gas per transaction](https://twitter.com/StarkWareLtd/status/1405133782118809602).
+    - With a STARK proof approximately [5,000,000 gas per proof](https://ethresear.ch/t/checkpoints-for-faster-finality-in-starknet/9633)
+    (~3 per block).
+    - A proof this size might represent around 4500 transactions (~13,500 per block).
 
 So a single STARK proof occupies the same space as about 238 ETH transfers. If a proof
 represents the 238 ETH transfers, "utility density" is the same as performing those
-individual transactions. For a proof representing 1000 transfers, the density is 4x greater.
+individual transactions. For a proof representing 4500 transfers, the density is 18x greater.
 
 The **core premise** is that it is preferable to represent transactions at a higher density
 because it delivers access to Ethereum to more people.
@@ -47,15 +49,28 @@ because it delivers access to Ethereum to more people.
 
 **1. Submit and verify proof**
 
+The size of a proof is practically proportional to the number of transactions it contains.
+
+Different types of transactions may be represented in different degrees of efficiency. An
+aggregate of simple transfers may be organised more efficiently for proving than a collection
+of non-homogeneous transaction types. Practical "in-production" measures are the truest test,
+and 5 million gas proofs, at 1100 gas per transaction are the approximate current measures.
+
+An estimate for how much much smaller transaction data can be represented places transactions
+at [10x-100x smaller size](https://vitalik.ca/general/2021/01/05/rollup.html). Trades
+on Ethereum cost around 100,000 gas, so the 1100 gas per trade real-world measure
+of StarkEx and Deversi [trades](https://twitter.com/StarkWareLtd/status/1405133782118809602)
+place on-chain in-production STARK proof compression at around ~100x.
+
 5 million gas for a single proof.
 
 This includes a data storage cost and a cost for registering each fact. The
-facts are represented by a merkle tree and the cost is polylogarithmic with
+facts are represented by a merkle tree and the cost is poly-logarithmic with
 the number of facts. Thus adding new facts adds minimal overhead to the total cost.
 
 The example below shows how a "poly-logarithmic" cost to register facts
 changes with increasing batch size (that is, with more facts).
-This is the rought structure of a polylogarithmic relationship.
+This is the rough structure of a poly-logarithmic relationship.
 
 ```
 cost = log(facts)^constant
@@ -82,16 +97,18 @@ cost = (log(1000) + log(100000))^5 = (3 + 5)^5 = 32768 "cost units"
 ```
 
 This basic example shows that the cost for every additional fact drops as more facts are
-added. Practically, each new Cairo program proof adds only a negligible additional cost.
-
-This amortizes the cost of the proof.
-[More info here](https://medium.com/starkware/the-fact-registry-a64aafb598b6).
+added. Practically, each new Cairo program proof adds only a negligible additional verification
+cost. The cost of verification is shared across the different applications, more
+details on how this works can be found
+[here](https://medium.com/starkware/the-fact-registry-a64aafb598b6).
 
 **2. Store new state**
 
-This is a transaction sent to the application contract, which contains data used
-for application logic. This may be thought of as fact integration.
-For example: "The trading system new total balance is x, with user balances a, b, c, d".
+Every fact must be integrated into the smart contract of the application that will use it.
+This requires a transaction sent to the application contract, which contains data used
+for application logic. The data is corroborated with the Verfier contract before
+storage and integration.
+For example: "The trading system new total balance is x, with user balances a, b, c and d".
 This transaction will incur a minimum cost of 20,000 gas per application.
 
 Consider a proof that represents state updates for 30 applications.
@@ -101,9 +118,11 @@ following the proof, then this would incur a minimum of an additional 600,000 ga
 Ideally, these state updates represent many users performing complex L2 operations,
 such that the density of the system is greater than that possible with normal transactions.
 
-In this example if the transactions were trades, then the "better than naive L1" threshold
-is crossed at 28 trades (`(5,000,000 + 600,000) / 200,000)`) that cost 200,000 gas each.
-At 280 trades, the cost is 10x cheaper.
+A STARK rollup is more dense than mainnnet when the proof costs and the costs to integrate
+facts are, in total, less than the mainnet transactions they replace. For 100,000 gas trades
+being replaced by a 5 million gas proof with 600,000 gas fact integration costs, the
+crossver value is `(5,000,000 + 600,000) / 200,000) = 56 trades`. For more than 56 trades, it is
+more efficient to use the rollup.
 
 ## Proof limits
 
@@ -112,18 +131,18 @@ What are the limits of the system?
 The answer lies in the wait time acceptable for applications.
 
 Proofs can be arbitrarily large. Many transactions can be accumulated and the cost per
-transaction continues to drop. A rough figure is on the order of ~300 gas per transaction
-for simple transfers, as demonstrated in the
+transaction continues to drop. An example is the 94 million gas used to prove 300,000
+simple transfers for the
 [Great Reddit Bake-Off](https://medium.com/starkware/the-great-reddit-bake-off-2020-c93196bad9ce).
 The bake-off allowed for a showcase of costs where timeliness was not a restriction.
-300,000 transactions were processed, but in what time frame would an app want to verify
-that many transactions? Weekly reddit point deliveries might be one example.
+Transactions were only ~300 gas each and were designed to represent the summary for one week's
+worth of reddit community points. It would be a different scenario to want to process
+300,000 margin trades, which have greater time restrictions.
 
-However, what if you wanted a state update every day, or every ten minutes? The
-time interval between proof delivery is important.
+What is the ideal inter-proof interval? Every day, or every ten minutes?
 
 A proof is most dense when allowed to "fill up". Like a bamboo
-[鹿威し "shishi-odoshi" (deer scarer)"](https://upload.wikimedia.org/wikipedia/commons/5/52/Shishi_odoshi_2017-02-28.webm)
+[鹿威し "shishi-odoshi" (deer scarer)](https://upload.wikimedia.org/wikipedia/commons/5/52/Shishi_odoshi_2017-02-28.webm)
 with a large bore, as the size of a proof grows, the longer it takes to fill. If apps can
 wait for twice as long, they can enjoy cheaper fees. Creating proofs at twice the
 frequency (like a smaller, faster, shishi-odoshi), halves the number of transactions per proof.
@@ -156,7 +175,10 @@ this is a single operator. Int the Universe phase, the role is appointed by lead
 9. The Sequencer and Prover repeat their tasks, this time linking the proof to the previous
 proof, forming a **chain of checkpoint proofs**. This is a recursive proof.
 10. Once per hour, the proof is submitted to Ethereum (the "shishi-odoshi" clunks).
-11. The **hour checkpoint** is accepted and the minute checkpoints continue.
+11. The **hour checkpoint** transaction is accepted and the minute checkpoints continue.
+
+Failsafe scenario.
+
 12. A new user creates a transaction.
 13. The user records the checkpoint proof that their transaction was incorporated into.
 14. They execute another transaction that depends on the first transaction.
@@ -168,13 +190,11 @@ proof, forming a **chain of checkpoint proofs**. This is a recursive proof.
 20. Users continue to make use of minute checkpoints to for convenient, secure and
 optimistically low-cost advantage.
 
-
-More information about checkpoints can be found here in this
-[ethresear.ch post](https://ethresear.ch/t/checkpoints-for-faster-finality-in-starknet/9633).
-
 ## Resource estimates
 
 The gas used for this system design is approximated as follows:
+
+Assumptions:
 
 - Ethereum blocks per hour: 257 (60*60/14).
 - Total gas available: 3,855 million gas (257*15000000).
@@ -182,6 +202,9 @@ The gas used for this system design is approximated as follows:
 - Gas used by applications updating state (rough estimate for 15 applications with
 60,000 gas per transaction): ~1 million gas (15*60000).
 - Gas used per hour: 6 million gas.
+
+Estimate:
+
 - Percentage network capacity used: 0.16% (6/3855).
 
 These are napkin calculations only, and they suggest that the system requirements are
