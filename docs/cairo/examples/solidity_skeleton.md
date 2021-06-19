@@ -123,7 +123,7 @@ contract storage.
 
 ``bytes32 fact = keccak256(abi.encodePacked(cairoProgramHash_, outputHash));``.
 
-Calls the `Fact Registry`_ read method ``isValid(fact)`` to determine if the proof
+Calls the `Fact Registry` read method ``isValid(fact)`` to determine if the proof
 should be accepted. The address of the verifier is permament and can be
 retrieved from contract storage.
 
