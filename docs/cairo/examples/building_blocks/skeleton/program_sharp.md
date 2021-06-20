@@ -8,11 +8,13 @@ toc: false
 
 Cairo programs directed straight to Ethereum through SHARP
 differ from Cairo contracts deployed to StarkNet. This page addresses
-SHARP-based programs only. They are the original Cairo program style, and are the most generic, free-form and flexible.
+SHARP-based programs only. They are the original Cairo program style, and are the most generic,
+free-form and flexible.
 
 ### **Minimum Verfifiable Program**
 
-This is the structure of the most basic Cairo program. Comments are anything with "#" before it, the rest is code.
+This is the structure of the most basic Cairo program. Comments are anything with "#" before it,
+the rest is code.
 
 ```
 func main():
@@ -57,9 +59,6 @@ end
 
 ```
 
-This program
-
-
 Okay, what does this do? Well, firstly, the program is now different. It has a different hash!
 
 ```
@@ -72,7 +71,8 @@ and a proof can be built to confirm that. The will be saved in the fact registry
 proving service, which won't be explained right now.
 
 The important part here is the fact of the matter! As a matter of fact, the program fact starts
-with `0x1c7a9`. It is calculated as keccak(program_hash, output_hash). Read more about the hash calculation [here](https://www.cairo-lang.org/playground-sharp-alpha/). The fact is what
+with `0x1c7a9`. It is calculated as keccak(program_hash, output_hash). Read more about the hash
+calculation [here](https://www.cairo-lang.org/playground-sharp-alpha/). The fact is what
 the proof will attest to, it is a unique hash that represents the one-of-a-kind
 output/program pair.
 
@@ -97,7 +97,8 @@ real Cairo program. Powerful stuff...
 ### **Fending off Fraud**
 
 But what would that be useful for? Well, not much, but this is progress. Another contract
-could have the program hash `0x2b342` saved in storage. A user could come to that contract and make the claim "the program output is 555, I claim the prize".
+could have the program hash `0x2b342` saved in storage. A user could come to that contract and make
+the claim "the program output is 555, I claim the prize".
 
 That contract, reticent to deliver the prize to anyone who makes a false claim, could do the
 following:
@@ -136,7 +137,7 @@ It is time to introduce user input.
 
 Users can feed values to a Cairo program. The program can use these inputs for
 various tasks, such as executing a transfer or a trade. The program hash does not depend on
-the inputs. In the code below, the user creates a .json file with their input.
+the inputs. In the code below, the user creates a `.json` file with their input.
 
 ```
 {
