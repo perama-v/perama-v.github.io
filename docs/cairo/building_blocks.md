@@ -7,4 +7,5 @@ toc: false
 
 Here are some examples that can be used to build more complex programs:
 
-- [Program skeleton](examples/building_blocks/skeleton/program.md)
+- [Program skeleton - SHARP](examples/building_blocks/skeleton/program_sharp.md)
+- [Program skeleton - StarkNet](examples/building_blocks/skeleton/program_starknet.md)
