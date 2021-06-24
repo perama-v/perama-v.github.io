@@ -30,6 +30,7 @@ How to use Cairo?
 - [**Build an application**]({{ site.baseurl }}{% link cairo/examples/solidity_skeleton.md %})
 - Examine different [**deployment options**]({{ site.baseurl }}{% link cairo/deployment_options.md %})
 - Understand [**proof sizes**]({{ site.baseurl }}{% link cairo/proof_size.md %}).
+- Follow a walkthrough of an [**AMM deployment**]({{ site.baseurl }}{% link cairo/amm_demo.md %}).
 
 The Cairo rabbit hole goes deep.
 

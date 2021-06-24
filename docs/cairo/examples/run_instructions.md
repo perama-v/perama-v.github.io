@@ -38,6 +38,18 @@ Activate the python virtual environment `cairo_venv`.
 source cairo_venv/bin/activate
 ```
 
+### Use the command line interface
+
+There are different commands available, each command can be called with the `-h` flag
+for an explanation of what it is and how to use it (e.g., `cairo-compile -h`).
+The commands are:
+
+- `cairo-compile`
+- `cairo-format`
+- `cairo-hash-program`
+- `cairo-run`
+- `cairo-sharp`
+
 ### Compile code
 
 Compile the code to produce and output called `compiled_program.json`.
