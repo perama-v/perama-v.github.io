@@ -5,6 +5,8 @@ permalink: /cairo/amm-demo/
 toc: false
 ---
 
+## Part I
+
 Deploying a Cairo-cased AMM, Variation II, Part I.
 
 Automated market makers (AMM) are a relatively familiar Ethereum contract. The Cairo docs
@@ -262,7 +264,7 @@ file, `pragma solidity ^x.y.z;`. A smart contract is designed for a particular c
 version, and using another version may introduce a compilation error or change in contract
 behaviour.
 
-### Contract deployment
+### Contract deployment: Local Testnet
 
 **Constructor arguments**
 
@@ -406,7 +408,8 @@ Then run the script to deploy the contract to temporary local network:
 ```
 npx hardhat run scripts/amm-deploy.js
 ```
-The address of the AmmDemo contract be displayed in the console.
+The address of the AmmDemo contract be displayed in the console:
+`amm deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3`.
 
 **Summary**
 
@@ -425,7 +428,233 @@ and a STARK-based rollup stores state changes on-chain.
   - The Ropsten address of the live STARK proof Verifier contract.
   - The merkle root, representing the unique state of the 5 accounts.
 
-In part II:
+## Part II
+
+Deploying a Cairo-cased AMM, Variation II, Part II.
+
+- The Solidity contract will be deployed to a local testnet.
+- A transaction will be sent to try to update the state of the AMM.
+
+### Contract deployment: Persistent local testnet
+
+Before deploying to Ropsten, it will be nice to test interacting with
+the contract. Skip straight to the Ropsten section if you like.
+
+The steps will be:
+
+1. Create the network.
+2. Deploy the AMM.
+3. Make a pretend fact registry contract and deploy it.
+4. Send a transaction to the AMM to update the state.
+
+Spin up a local persistent network with Hardhat.
+
+```
+npx hardhat node
+```
+
+**Local AMM deployment**
+
+This network will watch for and integrate transactions sent by Hardhat.
+Leave the network running and in another window, run the deployment scripts specifying the
+network (`--network localhost`).
+
+**Local verifier**
+
+Make the file `contracts/PretendFactRegistry.sol`, populate it with the following:
+```
+// SPDX-License-Identifier: Cairo Program License (Source Available),
+// Version 1.0, November 2020.
+pragma solidity ^0.5.2;
+
+contract PretendFactRegistry {
+
+    constructor() public {}
+    /*
+      Returns true if the given fact was previously registered in the contract.
+    */
+    function isValid(bytes32 fact) external view returns (bool) {
+        // Fact is evaluated, true/false returned.
+        // This fake contract always returns true.
+        return true;
+    }
+}
+```
+Make the file `scripts/verifier-deploy.js`, populate it with the following:
+
+```
+const hre = require("hardhat");
+
+async function main() {
+    // Get the contract by name.
+    const VerifierContract = await hre.ethers.getContractFactory("PretendFactRegistry");
+    // Deploy it.
+    const verifier = await VerifierContract.deploy();
+    // Wait for deployment confirmation.
+    await verifier.deployed();
+    // Return the address it is deployed to.
+    console.log("verifier deployed to:", verifier.address);
+}
+main()
+    .then(() => process.exit(0))
+    .catch(error => {
+        console.error(error);
+        process.exit(1);
+    });
+```
+Deploy it:
+
+```
+npx hardhat run scripts/verifier-deploy.js --network localhost
+```
+
+Note the the address:`verifier deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3`.
+
+**Local AMM that trusts the pretend verifier**
+
+The deployment script `scripts/amm-deploy.js` needs to contain the address of the pretend verifier.
+
+```
+const hre = require("hardhat");
+
+const accountRoot = "3262995978462033705189630496750790514901299827561453807468505774450708589253";
+const tokenA = 100;
+const tokenB = 1000;
+const programHash = "0x594483e1afa95f330c44d858fef134551766e73cf2ecb7dab915fcf36435a21";
+const verifierAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+
+async function main() {
+    // Get the contract by name.
+    const AmmContract = await hre.ethers.getContractFactory("AmmDemo");
+    // Deploy it, passing important values to the constructor
+    const amm = await AmmContract.deploy(
+        accountRoot,
+        tokenA,
+        tokenB,
+        programHash,
+        verifierAddress);
+    // Wait for deployment confirmation.
+    await amm.deployed();
+    // Return the address it is deployed to.
+    console.log("amm deployed to:", amm.address);
+}
+main()
+    .then(() => process.exit(0))
+    .catch(error => {
+        console.error(error);
+        process.exit(1);
+    });
+
+```
+
+Deploy it:
+
+```
+npx hardhat run scripts/amm-deploy.js --network localhost
+```
+See that the network has registered the contract deployment. The contract may
+now be called by another script. This mimics calling a function on a script
+deployed on Ropsten.
+
+**Local AMM state update**
+
+Finally, test what it looks like to update the state of the AmmDemo.
+
+Recall what the goal is for every update:
+
+- Pass the Cairo program output to the AmmDemo contract.
+- AMM contract computes the Fact (a hash based on the program hash
+and the program outputs).
+- Fact is sent to to the FactRegistry.
+- If the Verifier has the Fact, return true.
+- AMM contract process the program output, which consists of a 6 element array, corresponding to:
+    - 0: Current Token A quantity in AMM.
+    - 1: Current Token B quantity in AMM.
+    - 2: New Token A quantity in AMM.
+    - 3: New Token B quantity in AMM.
+    - 4: Current account tree Merkle root.
+    - 5: New account tree Merkle root.
+- The AMM contract checks the old values match the stored values,
+then updates them to the new values.
+
+Recall that a pretend FactRegistry contract is used, which returns
+`true` for every fact queried.
+
+populate the ``scripts/amm-interact.js`` file with the following contents:
+
+```
+const hre = require("hardhat");
+
+async function main() {
+    const programOutput = [
+        100,  // Current A.
+        1000,  // Current B.
+        110,  // New A.
+        900,  // New B.
+        "3262995978462033705189630496750790514901299827561453807468505774450708589253",  // Current Merkle root.
+        "12345678"];  // New Merkle root (placeholder).
+
+    // Get the contract details.
+    const AmmContract = await hre.ethers.getContractFactory("AmmDemo");
+
+    // Get deployed contract by its address.
+    const amm = await AmmContract.attach(
+        // The deployed contract address.
+        "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+    );
+
+    // Call the function to store a new state.
+    await amm.updateState(programOutput);
+}
+main()
+    .then(() => process.exit(0))
+    .catch(error => {
+        console.error(error);
+        process.exit(1);
+    });
+
+```
+
+Interact with the contract using that script:
+
+```
+npx hardhat run scripts/amm-interact.js --network localhost
+```
+
+Observe that the local node processes the update state transaction.
+A second execution of the above script fails with the error:
+
+```
+Error: VM Exception while processing transaction:
+reverted with reason string 'ACCOUNT_TREE_ROOT_MISMATCH'
+```
+
+Which stems from the fact that the update script on the second call
+no longer has function arguments that match the current state of the AMM contract.
+
+The account root update in this example is left as a placeholder
+value `12345678` for simplicity. Note that the AMM contract accepts the
+fabricated state root in this example. If the verifier was operational,
+it would have rejected a Fact representing an incorrectly computed root.
+A proper state update will be calculated for the Ropsten testnet example below.
+
+**Summary**
+
+That concludes Vairation II, part II.
+
+Steps completed:
+
+- A local testnet was created that mines transactions produced by Hardhat.
+- The AmmDemo.sol and a PretendFactRegistry.sol contracts were deployed.
+- The AMM was updated was performed using a fabricated program output that was
+verified by an "everything is true" verifier.
+- The AMM succeeded in refusing a second update when program outputs in the submitted
+update did not contain the current state of the contract.
+
+## Part III (pending)
+
+Deploying a Cairo-cased AMM, Variation II, Part III.
+
+- The Solidity contract will be deployed to Ropsten.
 - The Cairo program will be used to execute a L2 trades.
 - The Solidity contract will be triggered to include updated post-trade state.
-
