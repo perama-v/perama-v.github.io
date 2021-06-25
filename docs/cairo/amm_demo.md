@@ -408,6 +408,7 @@ Then run the script to deploy the contract to temporary local network:
 ```
 npx hardhat run scripts/amm-deploy.js
 ```
+
 The address of the AmmDemo contract be displayed in the console:
 `amm deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3`.
 
@@ -658,3 +659,4 @@ Deploying a Cairo-cased AMM, Variation II, Part III.
 - The Solidity contract will be deployed to Ropsten.
 - The Cairo program will be used to execute a L2 trades.
 - The Solidity contract will be triggered to include updated post-trade state.
+
