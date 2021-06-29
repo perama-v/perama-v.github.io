@@ -5,10 +5,6 @@ permalink: /cairo/amm-demo/
 toc: false
 ---
 
-## Part I
-
-Deploying a Cairo-cased AMM, Variation II, Part I.
-
 Automated market makers (AMM) are a relatively familiar Ethereum contract. The Cairo docs
 have a
 [tutorial](https://www.cairo-lang.org/build-a-scalable-cairo-basesd-automated-market-maker/)
@@ -19,6 +15,12 @@ using Hardhat for contract deployment and contract interaction. This "Variation 
 might be useful for comparison, and for learning how to integrate Cairo into your toolset
 if you already use Hardhat. Those unfamiliar with Hardhat are recommended to follow
 along and give it a try.
+
+The page gradually works through deployment and is broken into three sections:
+
+- [Part I - Local transient testnet](#part-i)
+- [Part II - Local persistent testnet](#part-ii)
+- [Part III - Public testnet (Ropsten)](#part-iii)
 
 ### **Tools**
 
@@ -56,8 +58,8 @@ Solidity **contract interaction** steps. This is where a solidity contract is de
 the facts that the Cairo program generated. This transaction converts facts to state changes.
 ```
 amm.sol
-  -> design update-amm.js  # Decide what values to send to L1 AMM.
-    -> hardhat run scripts/update-amm.js  # Run interaction script.
+  -> design interact-amm.js  # Decide what values to send to L1 AMM.
+    -> hardhat run scripts/interact-amm.js  # Run interaction script.
 ```
 Cairo **program interaction** steps. This is where a user creates a new trade by specifying new
 inputs to the program, which is unmodified from the initial design. The new inputs are converted
@@ -68,6 +70,10 @@ program.cairo  # Use existing program code.
     -> cairo-sharp submit  # Send the trade for proving
       -> verifyAndRegister  # (passive) await Ropsten proof.
 ```
+
+## Part I
+
+Deploying a Cairo-cased AMM, Variation II, Part I.
 
 ### **First set up Cairo**
 
@@ -300,11 +306,12 @@ used. For every token A, the AMM has 10 token B. Thus for the first trade, appro
 10 of token B can purchased for every token A.
 
 ```
-# Accounts ordered by index, with public key and balances A and B.
+# Accounts with indices `0` to `4`, with
+# public keys both set to `0x0`, and balances (A, B).
 accounts_dictionary = {
-    0: Account(0x1a, Balance(100, 50)),  # 100 A, 50 B.
-    1: Account(0x3a, Balance(125, 500)),  # Public key 0x3a.
-    2: Account(0xff, Balance(550, 200)),  # Account number 2.
+    0: Account(0x1a, Balance(100, 50)),
+    1: Account(0x3a, Balance(125, 500)),
+    2: Account(0xff, Balance(550, 200)),
     3: Account(0x7e, Balance(165, 40)),
     4: Account(0x33, Balance(750, 200))
 }
@@ -363,7 +370,7 @@ print(account_tree_root)
 
 ```
 The Merkle root is:
-`3262995978462033705189630496750790514901299827561453807468505774450708589253`
+`3262995978462033705189630496750790514901299827561453807468505774450708589253`.
 
 Once the hash has been obtained, the contract can be deployed. From then, all modifications
 to the system happen as state updates triggered by Cairo program proofs, manifesting
@@ -553,6 +560,9 @@ Deploy it:
 ```
 npx hardhat run scripts/amm-deploy.js --network localhost
 ```
+
+Note the deployment address, `amm deployed to: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512`.
+
 See that the network has registered the contract deployment. The contract may
 now be called by another script. This mimics calling a function on a script
 deployed on Ropsten.
@@ -652,11 +662,397 @@ verified by an "everything is true" verifier.
 - The AMM succeeded in refusing a second update when program outputs in the submitted
 update did not contain the current state of the contract.
 
-## Part III (pending)
+## Part III
 
 Deploying a Cairo-cased AMM, Variation II, Part III.
 
 - The Solidity contract will be deployed to Ropsten.
-- The Cairo program will be used to execute a L2 trades.
-- The Solidity contract will be triggered to include updated post-trade state.
+- The Cairo program will be used to execute a L2 trades by pretend users.
+- A new state root will be calculated based on the trades.
+- The Solidity contract will be triggered to include the updated post-trade state.
 
+### Ropsten account
+
+A Hardhat can send transactions to any network by changing configuration details.
+To send a transaction to Ropsten to deploy the AMM, and account must be
+created and funded with Ropsten ether.
+
+**Account creation**
+
+One way to create an account is to specify a mnemonic. Hardhat will use the mnemonic
+to derive addresses and their associated private key. To create a mnemonic (that
+is insecure and should only be used for low importance testnet transactions),
+run the following command:
+
+```
+npx mnemonics
+```
+
+That will produce a set of twelve words. Copy the words to a new file
+`secrets.json` and populate it:
+
+```
+{
+    mnemonic: "first second third ... twelfth",
+    infuraApiKey: ""
+}
+```
+
+Now if you are not using a local Ropsten node and will be connecting to a third party
+provider to interact with Ropsten, generate a Ropsten API key using that service and
+save it in the file above.
+
+**Account funding**
+
+Ropsten ether can be obtained from a friend or faucet. First generate an address
+derived from the mnemonic. Note that the `hardhat.config.js` file was already set up
+to read from the `secrets.json` file for the Ropsten network in Part I.
+Generate potential addresses:
+
+```
+npx hardhat accounts --network ropsten
+```
+
+Select an address (E.g. the first one on the list).
+
+Visit [the faucet](https://faucet.ropsten.be/)
+and request funds by pasting the chosen address.
+
+### Contract deployment: Ropsten public testnet
+
+Confirm that the contract deployment script `scripts/amm-deploy.js` targets the
+real Ropsten verifier address. If it was changed in Part II to target the pretend
+verifier, chanage it back to:
+
+```
+const verifierAddress = "0x2886D2A190f00aA324Ac5BF5a5b90217121D5756";
+```
+
+Adda new section to the  `scripts/amm-deploy.js` deployment script, specifying the funded address
+as the "signer" responsible for deployment.
+
+```
+const hre = require("hardhat");
+
+const accountRoot = "3262995978462033705189630496750790514901299827561453807468505774450708589253";
+const tokenA = 100;
+const tokenB = 1000;
+const programHash = "0x594483e1afa95f330c44d858fef134551766e73cf2ecb7dab915fcf36435a21";
+const verifierAddress = "0x2886D2A190f00aA324Ac5BF5a5b90217121D5756";
+
+async function main() {
+    // Get the address that was funded (here it was the first one)
+    // The signer will be used in .connect().
+    const [address1] = await ethers.getSigners();
+
+    // Get the contract by name.
+    const AmmContract = await hre.ethers.getContractFactory("AmmDemo");
+    // Deploy it, passing important values to the constructor
+    const amm = await AmmContract.connect(address1).deploy(
+        accountRoot,
+        tokenA,
+        tokenB,
+        programHash,
+        verifierAddress);
+    // Wait for deployment confirmation.
+    await amm.deployed();
+    // Return the address it is deployed to.
+    console.log("amm deployed to:", amm.address);
+}
+main()
+    .then(() => process.exit(0))
+    .catch(error => {
+        console.error(error);
+        process.exit(1);
+    });
+
+```
+Then run the script to deploy the contract:
+```
+npx hardhat run scripts/amm-deploy.js --network ropsten
+```
+
+While it is being deployed, consider what is happening:
+- Hardhat uses the mnemonic to generate the address.
+- The script uses the first signer.
+- The contract is compiled.
+- The contract is deployed with custom inputs passed to the constructor.
+- The transaction is signed, committing test ether to the deployment.
+- The transaction is passed to a node (E.g. third party API) for broadcasting to the network.
+- A miner picks up the transaction, executes the bytecode which deploys the contract.
+- The node API returns the address that the contract was deployed to.
+- Hardhat displays the address.
+
+The address of the AmmDemo contract be displayed in the console:
+`amm deployed to: 0x30e477A98efA09425C679D010502628468639B98`.
+
+Visit a ropsten block explorer to see the contract. (E.g. ropsten.etherscan.io).
+In this instance, the AMM contract deployment cost 471,999 gas.
+
+### Trade on L2 using Cairo program
+
+Now it is time to use the Cairo program to execute trades. Make a
+file called `input.json`, populate it with the following:
+
+```
+{
+    "token_a_balance": 100,
+    "token_b_balance": 1000,
+    "accounts": {
+        "0": {
+            "public_key": "0x1a",
+            "token_a_balance": 100,
+            "token_b_balance": 50
+        },
+        "1": {
+            "public_key": "0x3a",
+            "token_a_balance": 125,
+            "token_b_balance": 500
+        },
+        "2": {
+            "public_key": "0xff",
+            "token_a_balance": 550,
+            "token_b_balance": 200
+        },
+        "3": {
+            "public_key": "0x7e",
+            "token_a_balance": 165,
+            "token_b_balance": 40
+        },
+        "4": {
+            "public_key": "0x33",
+            "token_a_balance": 750,
+            "token_b_balance": 200
+        }
+    },
+    "transactions": [
+        {
+            "account_id": 4,
+            "token_a_amount": 10
+        },
+        {
+            "account_id": 3,
+            "token_a_amount": 30
+        },
+        {
+            "account_id": 1,
+            "token_a_amount": 10
+        }
+    ]
+}
+```
+Recall that the AmmDemo.sol contract that was just deployed had a Merkle
+root that matches the above `inputs.json` file. As shown below:
+
+```
+accounts_dictionary = {
+    0: Account(0x1a, Balance(100, 50)),  # 100 A, 50 B.
+    1: Account(0x3a, Balance(125, 500)),  # Pub key 0x3a.
+    2: Account(0xff, Balance(550, 200)),  # Account 2.
+    3: Account(0x7e, Balance(165, 40)),
+    4: Account(0x33, Balance(750, 200))
+}
+```
+
+The purpose of the Cairo program is to execute a legal set of trades, moving
+tokens between accounts. Thus, it is passed the curent account state, the current
+AMM balances and some trades. Execute the trades:
+
+First compile:
+```
+cairo-compile program.cairo --output=compiled_program.json
+```
+Then run
+```
+cairo-run --program=compiled_program.json \
+    --program_input=input.json --print_output --layout=small
+```
+The program will print the six element list:
+```
+Swap: Account 4 gave 10 tokens of type token_a and received 90 tokens of type token_b.
+Swap: Account 3 gave 30 tokens of type token_a and received 195 tokens of type token_b.
+Swap: Account 1 gave 10 tokens of type token_a and received 47 tokens of type token_b.
+Program output:
+  100  # initial A.
+  1000  # initial B.
+  150  # final A.
+  668  # final B.
+  -355506810204097508507692286344279590721807387770142892504586281685163431228  # Initial root.
+  1622509827930584539345631867696805402069094562999655131379370292475291925489  # New root.
+  ```
+
+**Confirming that the output makes sense**
+
+The AMM received 50 of token A (100->150), and delivered 332 of token B (1000->668).
+Now that the traders have purchased token B, the market has automatically
+repriced the exchange rate:
+
+Initial rate: (1000/10) ~10 token B for every token A.
+
+New rate: (668/150) ~4.5 token B for every token A.
+
+The next item to note is the fourth element in the program output, the initial Merkle root.
+Note that this is the Cairo-based calculation of the initial state. The root is
+based on the public keys of all 5 accounts, and their token balances. This was the number that
+was calculated earlier using StarkWare's `MerkleTree` implementation. That number was:
+
+`3262995978462033705189630496750790514901299827561453807468505774450708589253`
+
+Yet the Cairo program has:
+
+`-355506810204097508507692286344279590721807387770142892504586281685163431228`
+
+What is this discrepancy? They are the same numbers, when taken modulo the
+[defaul prime number](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/lang/cairo_constants.py)
+used in Cairo. See below for more information.
+
+**A note about field arithmetic**.
+In Cairo, calculations are computed within the a
+finite field defined by `prime`, a large prime number with 75 decimal digits
+`2**251 + 17 * 2**192 + 1` or ~`3.619E+75`. The Merkle roots are also calculated in this field.
+Any number that exceeds this will wrap around in the same way that on a clock 9 o'clock plus
+5 hours is 2 o'clock. In other words, 9 + 5 modulo 12 is 2, or in python `(9+5) % 12` is `2`.
+
+A number may also be defined moving in the negative direction, where 'minus 2' on a clock is 10
+o'clock, and 'minus 3' is 9 o'clock. In python this can be calculated as `-3 % 12`, or 'minus
+three modulo twelve'.
+
+Similarly, sometimes the hash of a Cairo program is a negative number, `num`. The equivalent
+positive number can be found by taking `num mod prime`
+
+```
+    prime is 2**251 + 17 * 2**192 + 1
+    python derived root (num1) 3262995978462033705189630496750790514901299827561453807468505774450708589253
+    num1 mod prime             3262995978462033705189630496750790514901299827561453807468505774450708589253
+    Cairo derived root (num2) -355506810204097508507692286344279590721807387770142892504586281685163431228
+    num2 mod prime             3262995978462033705189630496750790514901299827561453807468505774450708589253
+```
+Thus `num1 % prime` and `num2 % prime` are the same. Keep this in mind if you have a negative
+Merkle root that doesn't match what you expected. This is important when passing the
+root to the smart contract. The positive root must be passed. If the Cairo program outputs
+a negative Merkle root, perform the calculation in python:
+
+```
+prime = 2**251 + 17 * 2**192 + 1
+neg_root = -355506810204097508507692286344279590721807387770142892504586281685163431228
+pos_root = neg_root % prime
+print(pos_root)
+# prints 3262995978462033705189630496750790514901299827561453807468505774450708589253
+```
+
+The sixth and final element in the program output is
+the new root `16225...`. This is what will be inserted into the deployed
+AmmDemo contract via a proof.
+
+### Submit trades for proving
+
+The Cairo program can now be sent to SHARP:
+
+```
+cairo-sharp submit --source program.cairo \
+    --program_input input.json
+```
+The SHARP API will respond:
+```
+Job key: 46638b33-4284-4d0d-a732-56efb188b2cc
+Fact: 0x5e8763c5a0eee11be8f3622e6aadb0ecb6f496a188e1d90175df1e389641dd00
+```
+The job key gives access to the job status:
+```
+cairo-sharp status 46638b33-4284-4d0d-a732-56efb188b2cc
+```
+This will return `IN_PROGRESS` initially and then `PROCESSED` when complete.
+
+Finally this is the "Fact" that will be used to update the Merkle root for all accounts.
+This fact could represent many trades, but in this case only 3 trades were performed. Once
+the SHARP service has included the fact on chain, this fact can be queried directly in
+the `FactRegistry` at address `0x2886D2A190f00aA324Ac5BF5a5b90217121D5756` using the read
+method `isValid(0x5e8763c5a0eee11be8f3622e6aadb0ecb6f496a188e1d90175df1e389641dd00)`.
+
+For interest, go to the fact registry contract. The contract uses a
+[proxy pattern](https://docs.openzeppelin.com/upgrades-plugins/1.x/proxies), so visit the
+[readProxyContract method](https://ropsten.etherscan.io/address/0x2886D2A190f00aA324Ac5BF5a5b90217121D5756#readProxyContract)
+and paste the fact `0x5e876` into `isValid()`. It should return `true`. This is a read-only
+method, and costs no gas.
+
+Ultimately, this is not useful for updating the AMM.
+
+Instead, the AmmDemo will be passed the values corresponding to
+the state update. It will calculate the Fact by performing on-chain hashing (note that
+every node in the Ethereum network will be confirming that this is performed correctly). Then
+it will query the FactRegistry. Only then will it accept that the state update is valid.
+
+**AmmDemo state update transaction**
+
+This is the final step in which the AmmDemo will update its state. This means that it
+will contain a Merkle root that is aware of the recent trade in which accounts 4 and 1
+both traded in 10 token A, and account 3 traded in 30 token A, with each receiving some token
+B in return.
+
+Populate the the `scripts/amm-interact.js` file with the following. Note that the
+roots are so large that they must be passed in quotes. Also note that
+
+```
+const hre = require("hardhat");
+
+async function main() {
+    const programOutput = [
+        100,   // initial A.
+        1000,  // initial B.
+        150,   // final A.
+        668,   // final B.
+        "3262995978462033705189630496750790514901299827561453807468505774450708589253",  // Initial root.
+        "1622509827930584539345631867696805402069094562999655131379370292475291925489"  // New root.
+    ]
+
+    // Get the address that was funded (here it was the first one)
+    // The signer will be used in .connect().
+    const [address1] = await ethers.getSigners();
+
+    // Get the contract details.
+    const AmmContract = await hre.ethers.getContractFactory("AmmDemo");
+
+    // Get deployed contract by its address.
+    const amm = await AmmContract.connect(address1).attach(
+        // The deployed contract address.
+        "0x30e477A98efA09425C679D010502628468639B98"
+    );
+
+    // Call the function to store a new state.
+    await amm.updateState(programOutput);
+}
+main()
+    .then(() => process.exit(0))
+    .catch(error => {
+        console.error(error);
+        process.exit(1);
+    });
+```
+
+Send the transaction:
+
+```
+npx hardhat run scripts/amm-interact.js --network ropsten
+```
+
+Visit the contract address `0x30e477A98efA09425C679D010502628468639B98`
+to see the
+[state update transaction](https://ropsten.etherscan.io/tx/0x1e80d0bf1dfee0bc660eebd0494795f2b227ff6a6e04f8656aeb12a0096b9e9a).
+It used `60,069` gas and clicking 'decode input data' reveals the list of six elements
+that were submitted. Note that to stranger observing the chain, they can see that the AMM
+balances have changed, but do not see the individual accounts. The account balances are
+'provable' because of their representation in a Merkle tree, but their on-chain footprint is
+small.
+
+**Summary**
+
+That concludes Vairation II, part III.
+
+Steps completed:
+
+- The AmmDemo.sol Solidity contract was be deployed to Ropsten.
+- The Cairo program was be used to execute a L2 trades.
+- A new state root was calculated based on the trades.
+- The Solidity contract was be triggered to include the updated post-trade state.
+
+That concludes the AMM demo using the SHARP proving service and a Hardhat deployment suite.
