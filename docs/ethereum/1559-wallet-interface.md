@@ -22,15 +22,19 @@ placed on *hiding* this flexibility from the user.
 Here is what I imagine a wallet interface to feel like:
 
 ```
-        Transaction fee:
-        x.xxx ETH (y USD).
+Maximum transaction fee:
+x.xxx ETH (y USD).
 
-        |info|        |Send|
+|info|        |Send|
 ```
 
 The user is sending a transaction, they see the cost, they send.
 
-- The fee in ETH would have 3 significant figures (E.g., 0.0322 ETH or 0.000100 ETH).
+- The fee in ETH would have 3 significant figures (E.g., 0.0322 ETH or 0.100 milliETH).
+    - Where ether values are small, use SI notation rather than many decimal places
+(0.100 milliETH or milliether instead of 0.000100 ETH).
+    - Where "Gwei" is considered (elsewhere in the UI), use nanoETH or nanoether instead.
+
 - The USD (or local currency) would have the same (E.g., $69.8 or $0.217).
 - The `info` button is outlined below.
 - The `send` button sends the transaction.
@@ -49,17 +53,17 @@ is accessed through the feeHistory API from the
 The user is not entirely satisfied with the simple inferface and wants more.
 
 ```
-        |<- back|
-        x.xxx ETH fee is
-        m times the current fee.
-        Any excess will be refunded.
+|<- save & back|
+x.xxx ETH fee is
+m times the current fee.
+Any excess will be refunded.
 
-        This covers n minutes of
-        full congestion.
+This covers n minutes of
+full congestion.
 
-        -1-----------2-----------10-
-                     ^
-        |refine|              |send|
+-1-----------2-----------10-
+             ^
+|refine|              |send|
 ```
 
 This informs those who are curious about what the fee gets them.
@@ -83,37 +87,40 @@ take a quick look and then return.
 
 (**implementation note**, `n` minutes is calculated by taking the slider `val` and
 multiplying by the block time `14 * val` before converting to mins and secs. The x.xxx ETH
-fee is calculated as protocol BaseFee, slider val, transaction gas and Gwei-to-ether
-conversion: `BaseFee * val * TxGasLimit * 0.000000001`)
+fee is calculated as protocol BaseFee, slider val and transaction gas
+conversion: `BaseFee * val * TxGasLimit`)
 
 
 ## The `|refine|` button
 
 Here the user may want to express their preference for urgency. This is expressed in terms
-of changing an urgency tip.
+of changing a Gas Premium.
 
 ```
-        |<- back|        |limit & nonce|
-        x.xxx ETH fee includes:
-        m times basefee (refundable).
+|<- save & back|        |limit & nonce|
+x.xxx ETH fee includes:
+m times basefee (excess refunded).
 
-        -1-----------2-----------10-
-                     ^
+-1-----------2-----------10-
+             ^
 
-        Plus a z Gwei tip (always paid).
-        Current urgency tips are:
+Plus a Gas Premium (always paid):
+2 nanoether
+Recent Gas Premium values are:
 
-        [low 2]  [median 20]  [high 121]
+[low 1]  [median 2]  [high 5]
 
-        Select or Enter urgency tip [ 2 ].
+Or enter Gas Premium: [ 1 ] nanoether.
 
-        |tip stats|              |send|
+|Gas Premium stats|              |send|
 ```
 
+Not that the low, med, high values are the 1st, 50th and 90th percentiles.
+See *implementation notes* at the bottom of this section.
 Now the user is exposed to the breakdown of their transaction.
 
 They can clearly see that:
-- One parts is refundable
+- One part is refunded
 - One part is for urgency and will not be refunded.
 
 The user can importantly make the changes here and send their transaction
@@ -121,8 +128,8 @@ from this window, without having to return. The slider here does not
 have to repeat the time estimates that the previous page showed, because they have
 passed through that window already, and if need, can return.
 
-The tip can be selected from the range presented, suiting a user who is in a hurry.
-The tip is pre-selected to be `|low|` as an endorsement that this is normal behaviour.
+The Gas Premium can be selected from the range presented, suiting a user who is in a hurry.
+The Gas Premium is pre-selected to be `|low|` as an endorsement that this is normal behaviour.
 
 To summarise the journey of a user 'in a rush to send an urgent transaction':
 
@@ -142,16 +149,16 @@ clear to those who need it what that means. It separates the transaction
 composition (gas limit and nonce) from the price of the transaction. The details
 of this are not described here, for they do not differ after EIP1559.
 
-The final button is the tip stats button.
+The final button is the Gas Premium stats button.
 
-(**implementation note**, the tip is obtained by querying the feeHistory API from
-the json RPC for percentile tip values. The API query will be to the most recently mined
+(**implementation note**, the Gas Premium is obtained by querying the feeHistory API from
+the json RPC for percentile Gas Premium values. The API query will be to the most recently mined
 block. In this instance, percentiles queried are: 0th, 50th and 90th percentile.
 The slider calculations are outlined in the previous section.)
 
-## The `|tip stats|` button
+## The `|Gas Premium stats|` button
 
-The `|tip stats|` button provides more information that could be actioned
+The `|Gas Premium stats|` button provides more information that could be actioned
 by a rational and interested user. The word 'stats' implies that the
 page is extra information, but not important for sending a transaction.
 The stats convey the 'state of the fee market', and can visually
@@ -160,9 +167,11 @@ illustrate the 'context' in which a transaction will be competing.
 The stats that this page exposes are:
 
 - 12 most recent basefees. *What is the trend?*
-- The tips from the last block. *What is the competitiion?*
+- The Gas Premium values from the last block. *What is the competitiion?*
 
 ```
+|<- back|
+
 Base fee
 of last 12 blocks.
 |                  |
@@ -173,7 +182,7 @@ of last 12 blocks.
 |          .....   |
   Older       Newer
 
-Tip distribution
+Gas Premium distribution
 of last block.
 |                 .| %
 |                . | B
