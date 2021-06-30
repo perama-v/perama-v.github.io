@@ -34,7 +34,6 @@ The user is sending a transaction, they see the cost, they send.
     - Where ether values are small, use SI notation rather than many decimal places
 (0.100 milliETH or milliether instead of 0.000100 ETH).
     - Where "Gwei" is considered (elsewhere in the UI), use nanoETH or nanoether instead.
-
 - The USD (or local currency) would have the same (E.g., $69.8 or $0.217).
 - The `info` button is outlined below.
 - The `send` button sends the transaction.
@@ -90,7 +89,6 @@ multiplying by the block time `14 * val` before converting to mins and secs. The
 fee is calculated as protocol BaseFee, slider val and transaction gas
 conversion: `BaseFee * val * TxGasLimit`)
 
-
 ## The `|refine|` button
 
 Here the user may want to express their preference for urgency. This is expressed in terms
@@ -120,7 +118,7 @@ See *implementation notes* at the bottom of this section.
 Now the user is exposed to the breakdown of their transaction.
 
 They can clearly see that:
-- One part is refunded
+- One part is refunded.
 - One part is for urgency and will not be refunded.
 
 The user can importantly make the changes here and send their transaction
