@@ -7,6 +7,10 @@ layout: home
 
 :seedling:
 
-Perhaps you are interested in the
+Perhaps you are interested in:
+
+- The
 [**Cairo programming language**]({{ site.baseurl }}{% link cairo/intro.md %})?
+- Ethereum
+[**wallet UI design**]({{ site.baseurl }}{% link ethereum/1559-wallet-interface.md %})?
 
