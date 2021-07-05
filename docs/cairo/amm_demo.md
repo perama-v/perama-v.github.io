@@ -421,7 +421,7 @@ The address of the AmmDemo contract be displayed in the console:
 
 **Summary**
 
-That concludes Vairation II, part I.
+That concludes Variation II, part I.
 
 Steps completed:
 - Automated market maker was considered, where trades occur on layer 2,
@@ -651,7 +651,7 @@ A proper state update will be calculated for the Ropsten testnet example below.
 
 **Summary**
 
-That concludes Vairation II, part II.
+That concludes Variation II, part II.
 
 Steps completed:
 
@@ -1046,7 +1046,7 @@ small.
 
 **Summary**
 
-That concludes Vairation II, part III.
+That concludes Variation II, part III.
 
 Steps completed:
 
