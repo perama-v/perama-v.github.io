@@ -1,7 +1,7 @@
 ---
 layout: page
 title:  "Local data"
-permalink: /cairo/ethereum/local-data
+permalink: /ethereum/local-data
 toc: true
 ---
 
