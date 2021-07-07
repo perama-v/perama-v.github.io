@@ -153,6 +153,11 @@ module for more details.
 
 ## default_dict
 
+Returns a new dictionary with all values of the key-value pairs all with the same value.
+The dictionary is used by StarkNet contracts, because to immediately assign a value requires
+a hint (only available in Cairo programs, not contracts).
+
+
 See the [default_dict](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/common/default_dict.cairo)
 module for more details.
 
