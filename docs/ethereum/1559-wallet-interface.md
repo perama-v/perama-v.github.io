@@ -1,7 +1,7 @@
 ---
 layout: page
 title:  "Wallet design"
-permalink: /cairo/ethereum/wallet-design
+permalink: /ethereum/wallet-design
 toc: true
 ---
 
