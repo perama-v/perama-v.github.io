@@ -17,11 +17,6 @@ from starkware.starknet.core.storage.storage import Storage
 # Multiple types of storage (A, B and C)
 @storage_var
 func store_a() -> (count : felt):
-    let AMM.a = 2
-end
-
-struct AMM():
-    member a : felt
 end
 
 # Multiple instances of a storage type (id_0, id_1).
