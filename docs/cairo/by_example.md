@@ -10,3 +10,6 @@ toc: false
 - [Data types]({{ site.baseurl }}{% link cairo/examples/data_types.md %})
 - [Variables]({{ site.baseurl }}{% link cairo/examples/variables.md %})
 - [Read and write]({{ site.baseurl }}{% link cairo/examples/read_write.md %})
+- [Currency]({{ site.baseurl }}{% link cairo/examples/currency.md %})
+
+
