@@ -8,3 +8,4 @@ toc: false
 - [Hello, World!]({{ site.baseurl }}{% link cairo/examples/hello_world.md %})
 - [First application]({{ site.baseurl }}{% link cairo/examples/first_application.md %})
 - [Data types]({{ site.baseurl }}{% link cairo/examples/data_types.md %})
+- [Variables]({{ site.baseurl }}{% link cairo/examples/variables.md %})

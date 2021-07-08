@@ -63,7 +63,15 @@ Check the status of the transaction:
 
 ```
 starknet tx_status --network=alpha --id=497954
+
+Returns:
+{
+    "block_id": 23889,
+    "tx_status": "ACCEPTED_ONCHAIN"
+}
 ```
+The [block](https://voyager.online/block/23889) and the
+[contract](https://voyager.online/contract/0x6df56691fd57868034e2d48489e35859888d86659f748fec8c26db19b21d6dd#state)
 
 Status options:
 
