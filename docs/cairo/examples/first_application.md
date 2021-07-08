@@ -9,7 +9,7 @@ toc: false
 In this contract a balance is stored. A call may increase
 the balance.
 
-```
+```sh
 %lang starknet
 %builtins pedersen
 

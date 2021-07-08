@@ -8,7 +8,7 @@ toc: false
 
 `%lang starknet` tells the compiler that this is a contract,
 rather than a Cairo program.
-```
+```sh
 %lang starknet
 
 @view

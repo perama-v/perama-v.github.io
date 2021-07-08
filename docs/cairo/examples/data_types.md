@@ -9,7 +9,7 @@ There is only one data type in Cairo: a [field element](https://www.cairo-lang.o
 
 A field element is best considered an unsigned 252-bit integer (uint252) for practical purposes.
 
-```
+```sh
 %lang starknet
 %builtins pedersen
 

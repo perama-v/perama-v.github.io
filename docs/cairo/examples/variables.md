@@ -23,7 +23,7 @@ There are two types of variables in Cairo contracts:
 
 Global variables that access blockchain data are not available as of Cairo v0.2.0.
 
-```
+```shell
 %lang starknet
 %builtins pedersen
 
