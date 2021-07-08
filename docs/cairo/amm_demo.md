@@ -908,7 +908,7 @@ used in Cairo. See below for more information.
 
 **A note about field arithmetic**.
 In Cairo, calculations are computed within the a
-finite field defined by `prime`, a large prime number with 75 decimal digits
+finite field defined by `prime`, a large prime number with 76 decimal digits
 `2**251 + 17 * 2**192 + 1` or ~`3.619E+75`. The Merkle roots are also calculated in this field.
 Any number that exceeds this will wrap around in the same way that on a clock 9 o'clock plus
 5 hours is 2 o'clock. In other words, 9 + 5 modulo 12 is 2, or in python `(9+5) % 12` is `2`.
