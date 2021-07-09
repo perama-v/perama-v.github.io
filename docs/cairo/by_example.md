@@ -11,5 +11,6 @@ toc: false
 - [Variables]({{ site.baseurl }}{% link cairo/examples/variables.md %})
 - [Read and write]({{ site.baseurl }}{% link cairo/examples/read_write.md %})
 - [Currency]({{ site.baseurl }}{% link cairo/examples/currency.md %})
+- [If-Else]({{ site.baseurl }}{% link cairo/examples/if_else.md %})
 
 
