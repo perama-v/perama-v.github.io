@@ -63,8 +63,9 @@ func use_variables{
     # Redefine state.
     persistent_state.write(81)
 
-    # A local can be assigned to a function output:
-    # let (local loc_name ) = func()
+    # A variable can be assigned to a function output:
+    # let (my_var) = func().
+    let (my_reference_2) = persistent_state.read()
     let (local my_local_2) = persistent_state.read()
 
     return ()
