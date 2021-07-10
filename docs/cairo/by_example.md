@@ -15,5 +15,4 @@ toc: false
 - [Loop]({{ site.baseurl }}{% link cairo/examples/loop.md %})
 - [Mapping]({{ site.baseurl }}{% link cairo/examples/mapping.md %})
 - [Array]({{ site.baseurl }}{% link cairo/examples/array.md %})
-
-
+- [Struct]({{ site.baseurl }}{% link cairo/examples/struct.md %})
