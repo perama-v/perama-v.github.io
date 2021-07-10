@@ -5,7 +5,10 @@ permalink: /cairo/examples/read_write/
 toc: false
 ---
 
-Multiple values in contract storage can be written to and read from.
+To write to a state variable, you need to send a transaction. This is stored in StarkNet
+and is included as rollup data on Ethereum.
+
+To read a state variable, no transaction is needed.
 
 ```sh
 %lang starknet
@@ -14,46 +17,23 @@ Multiple values in contract storage can be written to and read from.
 from starkware.cairo.common.cairo_builtins import HashBuiltin
 from starkware.starknet.core.storage.storage import Storage
 
-# Multiple types of storage (A, B and C)
 @storage_var
-func store_a() -> (count : felt):
+func stored_felt() -> (res : felt):
 end
 
-# Multiple instances of a storage type (id_0, id_1).
-@storage_var
-func store_b(id_number : felt) -> (count : felt):
-end
-
-# Multiple mappings within a storage type (large_cheap, small_expensive).
-@storage_var
-func store_c(size : felt, price : felt) -> (count : felt):
-end
-
-@external
-func record_inventory{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
-        a_val : felt, b_id : felt, b_val : felt,
-        c_size : felt, c_price : felt, c_val : felt):
-
-    store_a.write(a_val)
-    store_b.write(b_id, b_val)
-    store_c.write(c_size, c_price, c_val)
-    return ()
-end
-
+# Function to get the stored number.
 @view
-func read_inventory{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
-        b_id : felt, c_size : felt, c_price : felt) -> (
-        storage_a : felt, storage_b : felt, storage_c : felt):
-    alloc_locals
-    # Read the requested parts of each inventory.
-    # "let (local xyz)" = func() pattern is used for function return values.
+func get{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}() -> (res : felt):
+    let (res) = stored_felt.read()
+    return (res)
+end
 
-    let (local count_a) = store_a.read()
-    let (local count_b) = store_b.read(b_id)
-    let (local count_c) = store_c.read(c_size, c_price)
-    return (count_a, count_b, count_c)
+# Function to update the stored a number (field element).
+@external
+func save{
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(input : felt):
+    stored_felt.write(input)
+    return ()
 end
 
 ```
@@ -76,8 +56,8 @@ starknet deploy --contract read_write_compiled.json \
 
 Returns:
 Deploy transaction was sent.
-Contract address: 0x03408bba79d86ab45ee5ee2b93f36c7fac8786baf6f05d6a666d1d9aa239c86d.
-Transaction ID: 497986.
+Contract address: 0x033402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9.
+Transaction ID: 497976.
 ```
 
 *Note:* Remove the zero after the `x`, 0x[0]12345. E.g., 0x0123abc becomes 0x123abc.
@@ -87,72 +67,100 @@ Transaction ID: 497986.
 Check the status of the transaction:
 
 ```
-starknet tx_status --network=alpha --id=497986
+starknet tx_status --network=alpha --id=497976
 
 Returns:
 {
-    "block_id": 23910,
+    "block_id": 23896,
     "tx_status": "PENDING"
 }
 ```
-The [block](https://voyager.online/block/23910) and the
-[contract](https://voyager.online/contract/0x3408bba79d86ab45ee5ee2b93f36c7fac8786baf6f05d6a666d1d9aa239c86d#state)
+The [block](https://voyager.online/block/23896) and the
+[contract](https://voyager.online/contract/0x33402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9#state)
 
 ### Interact
 
-Then, to interact, set the inputs to match the order they appear. In this case,
-recording the inventory of
-
-- 100 type A goods
-- 3030 type B goods (with ID 37)
-- 44 type C goods that are size 9889, and price $12.
-
-```
-a_val b_id b_val c_size c_price c_val
-100   37   3030  9889   12      44
-```
+Then, to interact, invoke the save function with any number. This requires a transaction:
 
 ```
 starknet invoke \
     --network=alpha \
-    --address 0x3408bba79d86ab45ee5ee2b93f36c7fac8786baf6f05d6a666d1d9aa239c86d \
+    --address 0x33402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9 \
     --abi read_write_contract_abi.json \
-    --function record_inventory \
-    --inputs 100 37 3030 9889 12 44
+    --function save \
+    --inputs 10000000000
 
 Returns:
 Invoke transaction was sent.
-Contract address: 0x03408bba79d86ab45ee5ee2b93f36c7fac8786baf6f05d6a666d1d9aa239c86d.
-Transaction ID: 497987.
+Contract address: 0x033402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9.
+Transaction ID: 497977.
 ```
-
-```
-starknet tx_status --network=alpha --id=497987
-
-Returns:
-{
-    "block_id": 23911,
-    "tx_status": "PENDING"
-}
-```
-Read the inventory, specifying the nature of the items from b and c that
-were stored in the last transaction:
-```
-b_id c_size c_price
-37   9889   12
-```
-Where invoke requires a transaction, call does not.
+Read the stored number using a call to the get() function. This does not required a
+transaction:
 ```
 starknet call \
     --network=alpha \
-    --address 0x3408bba79d86ab45ee5ee2b93f36c7fac8786baf6f05d6a666d1d9aa239c86d \
+    --address 0x33402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9 \
     --abi read_write_contract_abi.json \
-    --function read_inventory \
-    --inputs 37 9889 12
+    --function get
 
 Returns:
-100 3030 44
+10000000000
 ```
+
+All field elements are from a finite field defined by the specific prime number:
+
+`prime = 2**251 + 17 * 2**192 + 1`
+
+Which:
+
+- In binary is a 252 digit number (~1.00 * 2**251): `100000000000000000000000000000000000000000000000000000010001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001`
+- In decimal is a 76 digit number (~3.62 * 10**75): `3618502788666131213697322783095070105623107215331596699973092056135872020481`
+- In hexadecimal is a 65 digit number (~8.00 * 16**64): `0x800000000000011000000000000000000000000000000000000000000000001`
+
+Everything in Cairo is represented in decimal form. Storing the a number of equal size to the
+prime number causes failure:
+
+```
+starknet invoke \
+    --network=alpha \
+    --address 0x33402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9 \
+    --abi read_write_contract_abi.json \
+    --function save \
+    --inputs 3618502788666131213697322783095070105623107215331596699973092056135872020481
+
+Returns:
+Error: StarkException: (500, {'code': <StarknetErrorCode.OUT_OF_RANGE_ENTRY_POINT_SELECTOR: 12>, 'message': 'Call data element 3618502788666131213697322783095070105623107215331596699973092056135872020481 is out of range'})
+```
+
+Storing the prime number minus 1 suceeds:
+```
+starknet invoke \
+    --network=alpha \
+    --address 0x33402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9 \
+    --abi read_write_contract_abi.json \
+    --function save \
+    --inputs 3618502788666131213697322783095070105623107215331596699973092056135872020480
+
+Returns:
+Invoke transaction was sent.
+Contract address: 0x033402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9.
+Transaction ID: 497979.
+```
+
+Trying with other values yields these results:
+
+- Valid
+    - save(0). Zero allowed.
+    - save(1). Numbers 1 onward allowed.
+    - save(prime - 1). This is the largest allowed number.
+- Not valid
+    - save(prime). No using the prime number of the field.
+    - save(prime + 1). No overflow beyond the prime.
+    - save(-1). No negative numbers.
+    - save(-(prime) - 1). No wrap around below from negative prime.
+    - save(0x20). No hexadecimal numbers where field elements are expected.
+    - save(0b1101). No binary numbers where field elements are expected.
 
 Status options:
 

@@ -13,6 +13,7 @@ toc: false
 - [Currency]({{ site.baseurl }}{% link cairo/examples/currency.md %})
 - [If-Else]({{ site.baseurl }}{% link cairo/examples/if_else.md %})
 - [Loop]({{ site.baseurl }}{% link cairo/examples/loop.md %})
+- [Mapping]({{ site.baseurl }}{% link cairo/examples/mapping.md %})
 - [Array]({{ site.baseurl }}{% link cairo/examples/array.md %})
 
 
