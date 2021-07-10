@@ -30,6 +30,9 @@ Global variables that access blockchain data are not available as of Cairo v0.2.
 from starkware.cairo.common.cairo_builtins import HashBuiltin
 from starkware.starknet.core.storage.storage import Storage
 
+# Constant variables defined here are available to all functions.
+# E.g., const my_const_2 = 10
+
 # All persistent state appears in @storage_var
 @storage_var
 func persistent_state() -> (res : felt):
