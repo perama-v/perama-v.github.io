@@ -83,9 +83,9 @@ Returns:
 ```
 
 Note the following:
-- An `else` must follow an `if` statement.
+- An `if` statements may optionally be followed by an `else`.
 - Both `if` and `else` statments must contain a `return()` statement.
-- An `end` statement must follow an `if-else` pair.
+- An `end` statement must follow an `if` statement or an `if-else` pair.
 - `else if` statements are not supported.
 
 Status options:
