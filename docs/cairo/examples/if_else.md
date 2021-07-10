@@ -1,7 +1,7 @@
 ---
 layout: page
 title:  "If-Else"
-permalink: /cairo/examples/if_else/
+permalink: /cairo/examples/if_else_variable/
 toc: false
 ---
 
@@ -14,38 +14,51 @@ Cairo supports the condition statements `if` and `else`.
 from starkware.cairo.common.cairo_builtins import HashBuiltin
 from starkware.starknet.core.storage.storage import Storage
 
+@storage_var
+func criterion() -> (val : felt):
+end
+
 @view
-func is_fifty{
+func is_match{
         storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
         number : felt) -> (result : felt):
-    if number == 50:
+    let (condition) = criterion.read()
+    if number == condition:
         return (1)
     else:
         return (0)
     end
 end
+
+@external
+func store_criterion{
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
+        number : felt):
+    criterion.write(number)
+    return()
+end
 ```
-Save as `if_else.cairo`.
+Save as `if_else_variable.cairo`.
 
 ### Compile
 
 Then, to compile:
 ```
-starknet-compile if_else.cairo \
-    --output if_else_compiled.json \
-    --abi if_else_contract_abi.json
+starknet-compile if_else_variable.cairo \
+    --output if_else_variable_compiled.json \
+    --abi if_else_variable_contract_abi.json
 ```
 ### Deploy
 
 Then, to deploy:
 ```
-starknet deploy --contract if_else_compiled.json \
+starknet deploy --contract if_else_variable_compiled.json \
     --network=alpha
 
 Returns:
 Deploy transaction was sent.
-Contract address: 0x064eb772a0130110252c3a5d26b48466675352b4d7e3c17fa47263bb2ebfd5a1.
-Transaction ID: 507985.
+Contract address: 0x050fe7a489650d9851d0fae0237c604af1ddfa9f4ebbc1008f7d9f689511b8d0.
+Transaction ID: 529003.
 ```
 
 *Note:* Remove the zero after the `x`, 0x[0]12345. E.g., 0x0123abc becomes 0x123abc.
@@ -55,32 +68,49 @@ Transaction ID: 507985.
 Check the status of the transaction:
 
 ```
-starknet tx_status --network=alpha --id=507985
+starknet tx_status --network=alpha --id=529003
 
 Returns:
 {
-    "block_id": 24354,
+    "block_id": 25272,
     "tx_status": "PENDING"
 }
 ```
-The [block](https://voyager.online/block/) and the
-[contract](https://voyager.online/contract/0x64eb772a0130110252c3a5d26b48466675352b4d7e3c17fa47263bb2ebfd5a1#state)
+The [block](https://voyager.online/block/25272) and the
+[contract](https://voyager.online/contract/0x50fe7a489650d9851d0fae0237c604af1ddfa9f4ebbc1008f7d9f689511b8d0#state)
 
 ### Interact
 
-Then, use the function to detect if 50 was an input.
+Then, set the condition.
+
+```
+starknet invoke \
+    --network=alpha \
+    --address 0x50fe7a489650d9851d0fae0237c604af1ddfa9f4ebbc1008f7d9f689511b8d0 \
+    --abi if_else_variable_contract_abi.json \
+    --function store_criterion \
+    --inputs 88
+
+Returns:
+Invoke transaction was sent.
+Contract address: 0x050fe7a489650d9851d0fae0237c604af1ddfa9f4ebbc1008f7d9f689511b8d0.
+Transaction ID: 529032.
+```
+
+Then test with a new value as a call function:
 
 ```
 starknet call \
     --network=alpha \
-    --address 0x64eb772a0130110252c3a5d26b48466675352b4d7e3c17fa47263bb2ebfd5a1 \
-    --abi if_else_contract_abi.json \
-    --function is_fifty \
-    --inputs 49
+    --address 0x50fe7a489650d9851d0fae0237c604af1ddfa9f4ebbc1008f7d9f689511b8d0 \
+    --abi if_else_variable_contract_abi.json \
+    --function is_match \
+    --inputs 88
 
 Returns:
-0
+1
 ```
+
 
 Note the following:
 - An `if` statements may optionally be followed by an `else`.
