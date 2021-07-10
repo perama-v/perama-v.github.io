@@ -5,12 +5,30 @@ permalink: /cairo/examples/array/
 toc: false
 ---
 
-Arrays are defined as a pointer. Their values are addressed by their location
+Arrays are defined using a pointer. Their values are addressed by their location
 in memory, relative to the pointer.
 
 ```sh
-CONTRACT
+%lang starknet
 
+from starkware.cairo.common.alloc import alloc
+
+@view
+func read_array(index : felt) -> (value : felt):
+    alloc_locals
+    # A pointer to the start of an array.
+    let (felt_array : felt*) = alloc()
+
+    # [felt_array] is 'the value at the pointer'.
+    # 'assert' sets the value at index
+    assert [felt_array] = 9
+    assert [felt_array + 1] = 8
+    assert [felt_array + 2] = 7  # Set index 2 to value 7.
+    assert [felt_array + 9] = 18
+    # Access the list at the selected index.
+    let val = felt_array[index]
+    return (val)
+end
 ```
 Save as `array.cairo`.
 
