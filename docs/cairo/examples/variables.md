@@ -5,23 +5,21 @@ permalink: /cairo/examples/variables/
 toc: false
 ---
 
-There are two types of variables in Cairo contracts:
+Variables may be aliased or evaluated:
 
-- **Transient (Non-State)**
-    - Declared inside a `@view` or `@external` function.
-    - Not stored in StarkNet or in the Ethereum blockchain.
-    - Further divided into four:
-        - Revocable
-            - **Reference**:`let a = 5` (felt only).
-            - **Temporary variable**: `tempvar a = 5 * b` (expressions).
-        - Non-revocable
-            - **Constant**: `const a = 5` (felt only, known at compile time)
-            - **Local**: `local a = 5 * b` (expressions, defined during contract interaction).
-- **Persistent (State)**
-    - Declared inside a `@storage_var` function.
-    - Stored in StarkNet and in the Ethereum blockchain.
+- Aliased
+    - Value **Reference**: `let a = 5`.
+    - Expression **Reference**: `let a = x`.
+        - An alias may be evaluated with `assert a = b` (checks x equals b).
+- Evaluated
+    - **Temporary variable**: `tempvar a = 5 * b`.
+    - **Local**: `local a = 5 * b`.
+    - **Constant**: `const a = 5`.
 
-Global variables that access blockchain data are not available as of Cairo v0.2.0.
+A variable may be assigned to a function output:
+
+- `let (a) = foo()`.
+- `let (local a) = foo()`.
 
 ```shell
 %lang starknet
@@ -61,7 +59,7 @@ func use_variables{
     local my_local = 70
     # Cannot redefine local (local my_local = 71).
 
-    # Persistent (@storage_var).
+    # Persistent (@storage_var) storage, without a variable.
     persistent_state.write(80)
     # Redefine state.
     persistent_state.write(81)

@@ -16,3 +16,4 @@ toc: false
 - [Mapping]({{ site.baseurl }}{% link cairo/examples/mapping.md %})
 - [Array]({{ site.baseurl }}{% link cairo/examples/array.md %})
 - [Struct]({{ site.baseurl }}{% link cairo/examples/struct.md %})
+- [Data locations]({{ site.baseurl }}{% link cairo/examples/data_locations.md %})
