@@ -38,8 +38,12 @@ func register_user{
         storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
         id : felt, admin : felt, votes : felt):
     alloc_locals
+    # A struct constructor is used to declare member values.
     local new_user : User = User(id_number=id, is_admin=admin,
     vote_count=votes)
+    # Struct values can also be changed with:
+    # `assert new_user.is_admin = 0`.
+
     if new_user.is_admin == 1:
         admin_votes.write(new_user.id_number, new_user.vote_count)
         return()
