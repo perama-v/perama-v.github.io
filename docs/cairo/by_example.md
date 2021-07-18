@@ -20,3 +20,4 @@ toc: false
 - [Pointer]({{ site.baseurl }}{% link cairo/examples/pointer.md %})
 - [Data locations]({{ site.baseurl }}{% link cairo/examples/data_locations.md %})
 - [Function]({{ site.baseurl }}{% link cairo/examples/function.md %})
+- [Assert]({{ site.baseurl }}{% link cairo/examples/assert.md %})
