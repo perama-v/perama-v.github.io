@@ -19,10 +19,10 @@ accessed.
 
 ```sh
 %lang starknet
-%builtins pedersen
+%builtins pedersen range_check
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
-from starkware.starknet.core.storage.storage import Storage
+from starkware.starknet.common.storage import Storage
 from starkware.cairo.common.alloc import alloc
 
 struct dataStruct:
@@ -37,8 +37,8 @@ end
 
 # Only felt arguments
 @external
-func write{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
-        val : felt):
+func write{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}(val : felt):
     helper_1(val)
     # Write functions are a transaction and should not return values.
     return ()
@@ -46,8 +46,9 @@ end
 
 # Only felt arguments
 @view
-func read{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
-        ) -> (val_1 : felt, val_2 : felt, val_3 : felt):
+func read{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}() -> (val_1 : felt, val_2 : felt,
+        val_3 : felt):
     # Brackets around val_1 to receive the value from the helper_2() function.
     let (val_2) = helper_2()
     let (stored_val) = storage.read()
@@ -57,8 +58,8 @@ func read{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
 end
 
 # Other arguments including felt allowed.
-func helper_1{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
-        val : felt):
+func helper_1{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}(val : felt):
     # Implicit arguments in curly brackets when required, such as for
     # storage-related pointers.
     storage.write(val)

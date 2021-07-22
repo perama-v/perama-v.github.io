@@ -17,10 +17,10 @@ contract execution.
 
 ```sh
 %lang starknet
-%builtins pedersen
+%builtins pedersen range_check
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
-from starkware.starknet.core.storage.storage import Storage
+from starkware.starknet.common.storage import Storage
 from starkware.cairo.common.alloc import alloc
 
 # Memory
@@ -33,7 +33,8 @@ end
 
 @external
 func data_locations{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}():
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}():
     alloc_locals
 
     # Storage (@storage_var).
@@ -57,7 +58,8 @@ end
 
 @view
 func read_values{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}(
         ) -> (val_1 : felt, val_2 : felt):
     # Only the Storage is avaliable to someone calling this contract.
     # Of all the variables in this contract, only one is available.

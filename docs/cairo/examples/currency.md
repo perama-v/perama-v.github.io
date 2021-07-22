@@ -14,10 +14,10 @@ authority to control a given wallet.
 
 ```sh
 %lang starknet
-%builtins pedersen
+%builtins pedersen range_check
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
-from starkware.starknet.core.storage.storage import Storage
+from starkware.starknet.common.storage import Storage
 
 @storage_var
 func wallet_balance(user : felt) -> (res : felt):
@@ -25,7 +25,8 @@ end
 
 @external
 func register_currency{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}(
         user : felt, register_amount : felt):
     alloc_locals
     let (local balance) = wallet_balance.read(user)
@@ -35,7 +36,8 @@ end
 
 @external
 func move_currency{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}(
         from_user : felt, to_user : felt, move_amount : felt):
     alloc_locals
     let (local sender_balance) = wallet_balance.read(from_user)
@@ -47,7 +49,8 @@ end
 
 @view
 func check_wallet{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}(
         user : felt) -> (balance : felt):
     alloc_locals
     let (local balance) = wallet_balance.read(user)

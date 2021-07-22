@@ -23,10 +23,10 @@ A variable may be assigned to a function output:
 
 ```shell
 %lang starknet
-%builtins pedersen
+%builtins pedersen range_check
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
-from starkware.starknet.core.storage.storage import Storage
+from starkware.starknet.common.storage import Storage
 
 # Constant variables defined here are available to all functions.
 # E.g., const my_const_2 = 10
@@ -38,7 +38,8 @@ end
 
 @external
 func use_variables{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}():
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}():
     alloc_locals  # needed for "local" variables.
 
     # Transient, revocable felt (reference).

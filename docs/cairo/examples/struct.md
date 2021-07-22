@@ -10,10 +10,10 @@ stored in contract state.
 
 ```sh
 %lang starknet
-%builtins pedersen
+%builtins pedersen range_check
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
-from starkware.starknet.core.storage.storage import Storage
+from starkware.starknet.common.storage import Storage
 
 struct User:
     member id_number : felt
@@ -27,16 +27,16 @@ end
 
 @view
 func query_user{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
-        user_id : felt) -> (value : felt):
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}(user_id : felt) -> (value : felt):
     let (votes) = admin_votes.read(user_id)
     return (votes)
 end
 
 @external
 func register_user{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
-        id : felt, admin : felt, votes : felt):
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}(id : felt, admin : felt, votes : felt):
     alloc_locals
     # A struct constructor is used to declare member values.
     local new_user : User = User(id_number=id, is_admin=admin,

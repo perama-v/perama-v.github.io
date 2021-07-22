@@ -9,10 +9,10 @@ Cairo supports the condition statements `if` and `else`.
 
 ```sh
 %lang starknet
-%builtins pedersen
+%builtins pedersen range_check
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
-from starkware.starknet.core.storage.storage import Storage
+from starkware.starknet.common.storage import Storage
 
 @storage_var
 func criterion() -> (val : felt):
@@ -24,16 +24,16 @@ end
 
 @view
 func match_count{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}() -> (
-        count : felt):
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}() -> (count : felt):
     let (num) = met_criteria_memory.read()
     return (num)
 end
 
 @external
 func is_match{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
-        number : felt) -> (result : felt):
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}(number : felt) -> (result : felt):
     let (condition) = criterion.read()
     if number == condition:
         let (total) = do_thing()
@@ -45,14 +45,15 @@ end
 
 @external
 func store_criterion{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
-        number : felt):
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}(number : felt):
     criterion.write(number)
     return ()
 end
 
 func do_thing{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}() -> (total : felt):
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}() -> (total : felt):
     let (mem) = met_criteria_memory.read()
     met_criteria_memory.write(mem + 1)
     return (mem + 1)
