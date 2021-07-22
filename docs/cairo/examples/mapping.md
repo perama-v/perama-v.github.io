@@ -16,10 +16,10 @@ Nested maps are created by adding more parameters:
 
 ```sh
 %lang starknet
-%builtins pedersen
+%builtins pedersen range_check
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
-from starkware.starknet.core.storage.storage import Storage
+from starkware.starknet.common.storage import Storage
 
 # A single value.
 @storage_var
@@ -34,15 +34,15 @@ end
 
 # Nested mapping of key1 and key2 -> value
 # Specific item size and item price combination -> count.
-within a storage type (large_cheap, small_expensive).
+# Within a storage type (large_cheap, small_expensive).
 @storage_var
 func store_c(size : felt, price : felt) -> (count : felt):
 end
 
 @external
 func record_inventory{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
-        a_val : felt, b_id : felt, b_val : felt,
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}(a_val : felt, b_id : felt, b_val : felt,
         c_size : felt, c_price : felt, c_val : felt):
 
     store_a.write(a_val)
@@ -53,9 +53,10 @@ end
 
 @view
 func read_inventory{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}(
-        b_id : felt, c_size : felt, c_price : felt) -> (
-        storage_a : felt, storage_b : felt, storage_c : felt):
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}(b_id : felt, c_size : felt,
+        c_price : felt) -> (storage_a : felt, storage_b : felt,
+        storage_c : felt):
     alloc_locals
     # Read the requested parts of each inventory.
     # "let (local xyz)" = func() pattern is used for function return values.

@@ -22,8 +22,9 @@ end
 # Function to get the stored tuple.
 @view
 func get{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-        ) -> (res_1 : felt, res_2 : felt, res_3 : felt):
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}() -> (res_1 : felt, res_2 : felt,
+        res_3 : felt):
     let (stored_tuple) = stored_felt.read()
     let res_1 = stored_tuple[0]
     let res_2 = stored_tuple[1]
@@ -34,8 +35,9 @@ end
 # Function to update the stored tuple of field elements.
 @external
 func save{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-        input_1 : felt, input_2 : felt, input_3 : felt):
+        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}(input_1 : felt, input_2 : felt,
+        input_3 : felt):
     # The tuple is declared with round brackets.
     stored_felt.write((input_1, input_2, input_3))
     return ()
