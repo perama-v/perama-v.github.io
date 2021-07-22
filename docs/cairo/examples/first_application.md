@@ -11,10 +11,10 @@ the balance.
 
 ```sh
 %lang starknet
-%builtins pedersen
+%builtins pedersen range_check
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
-from starkware.starknet.core.storage.storage import Storage
+from starkware.starknet.common.storage import Storage
 
 @storage_var
 func balance() -> (res : felt):
@@ -22,14 +22,16 @@ end
 
 # Function to get the current balance.
 @view
-func get{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}() -> (res : felt):
+func get{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}() -> (res : felt):
     let (res) = balance.read()
     return (res)
 end
 
 # Function to increase the balance by 1.
 @external
-func increase{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*}():
+func increase{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
+        range_check_ptr}():
     let (res) = balance.read()
     balance.write(res + 1)
     return ()
