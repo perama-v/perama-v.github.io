@@ -149,10 +149,12 @@ Then, to interact, specify the nature of the message (withdraw is message type `
 the L1L2Demo.sol contract), a user and an amount to withdraw.
 
 The [L1 contract](https://ropsten.etherscan.io/tx/0x12859dd33f925e6547c94215118b802bbb27fe53b6e4f24af9ae931c7d7b2a17)
-reveals some details about the L2 contract, such as the [L2 address](https://voyager.online/contract/0x5469ab95d459f0759ed907e6e872760fcf668467c92b66f5bcfb4b4d568de55),
-and the users. Their balances can be obtained by using the `userBalances()` function on L1
-and the .
-The transactions also reveal the User IDs:
+reveals some details about the L2 contract, such as the
+[L2 address](https://voyager.online/contract/0x5469ab95d459f0759ed907e6e872760fcf668467c92b66f5bcfb4b4d568de55),
+and the users. Their balances can be obtained by using the
+[`userBalances()`](https://ropsten.etherscan.io/address/0xce08635cc6477f3634551db7613cc4f36b4e49dc#readContract)
+function on L1 and the [`get_balance()`](https://voyager.online/contract/0x5469ab95d459f0759ed907e6e872760fcf668467c92b66f5bcfb4b4d568de55#readContract)
+function on L2.
 
 - User `12345678` has balances:
     - `2933` on L2, which can be `withdrawn` to L1 by:
@@ -162,7 +164,7 @@ The transactions also reveal the User IDs:
         2. Waiting for the STARK proof to be verified and registered on Ropsten
         in the `StarkNet.sol` contract by the StarkNet sequencer.
         3. Sending an L1 `withdraw()` transaction containing the
-        L2 contract address, user and amount.
+        L2 contract address (`0x02b01d30...`), user and amount.
     - `400` on L1
         - Able to be 'Deposited' to L2 by using a mechanism not discussed here.
 - User `887626622922744218685404352696443021086987437120` has balances:
@@ -172,7 +174,7 @@ The transactions also reveal the User IDs:
 
 Create a message that signals the intent to withdraw (message type `0`) `3`
 from the L2 balance of user `12345678`. Note that these values are hard coded
-into this `message_l1.cairo` contract.
+into this `message_L1.cairo` contract.
 
 The L1 system does not require that the L2 contract has the authority to do so,
 and in this way breaks the accounting balance with any other StarkNet contracts
@@ -193,11 +195,27 @@ Transaction ID: 67707
 
 Once the proof is generated and the smart contract verifies the fact on chain,
 the L1 contract on Ropsten can be called. The transaction would invoke
-the external `withdraw(0, 12345678, 3)` function and that contract would call the
+the external `withdraw()` function with arguments `l2ContractAddress`, `user`, and `amount`
+as follows:
+
+```
+withdraw(
+   0x02b01d301c8bec1bc6d4bdfb42de29fa3cbb0fa1c62949732224bd6528ce7509,
+   12345678,
+   3
+)
+```
+
+That contract would call the
 StarkNet L1 contract to check for the validity of the message. It would then increase
 the balance of user `12345678` by `3`. It would understand this message to "be a true message
-from L2" but it would not distinguish which L2 contract sent the message. In this regard,
+from L2" but it would not distinguish which L2 contract sent the message.
+
+In this regard,
 it is open to accepting messages from any contract, such as the one in this example.
+This could be mitigated by storing the L2 contract address inside the L1 contract and
+either asserting that value of the `l2ContractAddress` supplied as an argument to the L1
+`withdraw()` function is correct, or by having the L1 contract use the stored value.
 
 Status options:
 
