@@ -22,3 +22,4 @@ toc: false
 - [Data locations]({{ site.baseurl }}{% link cairo/examples/data_locations.md %})
 - [Function]({{ site.baseurl }}{% link cairo/examples/function.md %})
 - [Assert]({{ site.baseurl }}{% link cairo/examples/assert.md %})
+- [Message L1]({{ site.baseurl }}{% link cairo/examples/message_L1.md %})
