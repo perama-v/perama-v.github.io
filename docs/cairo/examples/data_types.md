@@ -60,7 +60,7 @@ Contract address: 0x06df56691fd57868034e2d48489e35859888d86659f748fec8c26db19b21
 Transaction ID: 497954.
 ```
 
-## Monitor
+### Monitor
 
 Check the status of the transaction:
 

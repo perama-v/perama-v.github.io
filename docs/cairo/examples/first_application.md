@@ -62,7 +62,7 @@ Transaction ID: 497971.
 ```
 *Remove the leading zero* 0x02f becomes 0x2f
 
-## Monitor
+### Monitor
 
 Check the status of the transaction:
 

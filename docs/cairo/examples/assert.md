@@ -64,7 +64,7 @@ Transaction ID: 649197.
 
 *Note:* Remove the zero after the `x`, 0x[0]12345. E.g., 0x0123abc becomes 0x123abc.
 
-## Monitor
+### Monitor
 
 Check the status of the transaction:
 
