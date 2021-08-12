@@ -25,3 +25,4 @@ toc: false
 - [Generate message]({{ site.baseurl }}{% link cairo/examples/generate_message.md %})
 - [Message L1]({{ site.baseurl }}{% link cairo/examples/message_L1.md %})
 - [Receive message]({{ site.baseurl }}{% link cairo/examples/receive_message.md %})
+- [Verify ECDSA signature]({{ site.baseurl }}{% link cairo/examples/verify_ECDSA.md %})
