@@ -321,7 +321,7 @@ as the sum of the user balances plus the initial 100 token A and 1000 toke B in 
 
 The Merkle root is based on the user balances, and can be calculated with a series of
 hash operations. This
-[merkle tree guide]({{ site.baseurl }}{% link cairo/examples/merkle_trees.md %}) outlines
+[merkle tree guide]({{ site.baseurl }}{% link cairo/background/merkle_trees.md %}) outlines
 the steps by which this occurs, and exposes the code used to calculate the hash.
 
 With the python cairo-lang environment activated, StarkWare's Merkle tree algorithm

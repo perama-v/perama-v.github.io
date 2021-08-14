@@ -1,7 +1,7 @@
 ---
 layout: page
 title:  "Merkle trees"
-permalink: /cairo/examples/merkle_trees/
+permalink: /cairo/background/merkle_trees/
 toc: false
 ---
 
@@ -21,8 +21,10 @@ Below is a merkle tree implementation used in StarkWare's AMM demonstration
 [tutorial](https://www.cairo-lang.org/build-a-scalable-cairo-basesd-automated-market-maker/),
 which uses a transaction
 [simulator](https://github.com/starkware-libs/cairo-lang/blob/master/src/demo/amm_demo/demo.py)
-with accompanying [tree helper](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/common/small_merkle_tree.py)
-and [Pedersen hash helper](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/crypto/starkware/crypto/signature/fast_pedersen_hash.py).
+with accompanying
+[tree helper](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/common/small_merkle_tree.py)
+and
+[Pedersen hash helper](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/crypto/starkware/crypto/signature/fast_pedersen_hash.py).
 The code has been aggregated so it can be poked and explored
 on its own more easily. Different system use different hash functions to build Merkle trees,
 this implementation uses the Pedersen hash function.
