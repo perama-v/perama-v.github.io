@@ -26,4 +26,5 @@ toc: false
 - [Message L1]({{ site.baseurl }}{% link cairo/examples/message_L1.md %})
 - [Receive message]({{ site.baseurl }}{% link cairo/examples/receive_message.md %})
 - [Verify ECDSA signature]({{ site.baseurl }}{% link cairo/examples/verify_ECDSA.md %})
+- [Math]({{ site.baseurl }}{% link cairo/examples/math.md %})
 - [Math comparison operators]({{ site.baseurl }}{% link cairo/examples/math_comparison.md %})
