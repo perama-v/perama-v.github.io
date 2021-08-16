@@ -48,6 +48,8 @@ The following are available:
 - Signed division remainder:
     - `signed_div_rem(value, div)`. Returns the quotient `q` and remainder `r` from integer
     division of `value/div`, with quotient sign either positive or negative.
+    - Handles integer and modulo operations with negative numbers the same way Python does, where
+    `-100 // 3` returns `-34` and `-100 % 3` returns `2`.
 
 ```sh
 %lang starknet
@@ -134,8 +136,8 @@ func check_values{range_check_ptr}(
     let (local f, g) = signed_div_rem(-100, 3, RANGE_CHECK_BOUND)
     # To have these asserts pass, the -1 and +1 have been added to
     # the expected values.
-    assert f = -33 - 1
-    assert g = 1 + 1
+    assert f = -34
+    assert g = 3
 
     let (local s_quot, s_rem) = signed_div_rem(-num_1, num_2,
         RANGE_CHECK_BOUND)
@@ -199,11 +201,25 @@ starknet call \
 Returns:
 1 499 3618502788666131213697322783095070105623107215331596699973092056135872020479 2
 ```
-The responses from unsigned_div_rem() appear normal.
+Recall that the prime used for Cairo is:
 
-The responses from signed_div_rem() are interesting. In the field, a negative number
-is equivalent to another positive number, similar to a clockface (-2 is the same as 10 o'clock).
-However, the remainder seems to be off by one, as suggested by the asserts in the contract
+```
+>>> prime = 2**251 + 17 * 2**192 + 1`
+>>> prime
+3618502788666131213697322783095070105623107215331596699973092056135872020481
+```
+So the result (`...0479`) is two less than the largest number (`...0481`),
+it is therefore qeuivalent to `-2`.
+
+So the result for signed_div_rem(-1000, 501) is (-2, 2), which matches the Python equivalent:
+
+```
+>>> -1000 // 501
+-2
+>>> -1000 % 501
+2
+```
+
 
 Status options:
 
