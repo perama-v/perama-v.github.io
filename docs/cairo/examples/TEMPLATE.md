@@ -65,7 +65,7 @@ Returns:
 RESULT
 ```
 
-Status options:
+### Status options:
 
 - NOT_RECEIVED: The transaction has not been received yet (i.e., not written to storage).
 - RECEIVED: The transaction was received by the operator.
