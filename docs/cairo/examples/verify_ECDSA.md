@@ -86,7 +86,7 @@ from starkware.cairo.common.cairo_builtins import SignatureBuiltin
 func check_signature{ecdsa_ptr: SignatureBuiltin*}(
         message, public_key, sig_r, sig_s) -> ():
     # If the signature is incorrect, this will fail.
-    verify_ecdsa_signature(message, public_key, sig_r, sig_s)
+    verify_ecdsa_signature(message_hash, public_key, sig_r, sig_s)
     return ()
 end
 ```
@@ -134,7 +134,7 @@ The [block](https://voyager.online/block/34065) and the
 ### Interact
 
 Then, to interact, call the function using the arguments from above (in same order,
-message, public_key, sig_r, sig_s). This call would fail if the signature did not pass
+message_hash, public_key, sig_r, sig_s). This call would fail if the signature did not pass
 the checks enforced by the contract.
 
 ```
