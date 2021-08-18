@@ -28,3 +28,4 @@ toc: false
 - [Verify ECDSA signature]({{ site.baseurl }}{% link cairo/examples/verify_ECDSA.md %})
 - [Math]({{ site.baseurl }}{% link cairo/examples/math.md %})
 - [Math comparison operators]({{ site.baseurl }}{% link cairo/examples/math_comparison.md %})
+- [Bitwise operations]({{ site.baseurl }}{% link cairo/examples/bitwise.md %})
