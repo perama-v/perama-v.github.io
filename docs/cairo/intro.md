@@ -9,9 +9,12 @@ Cairo is programming language that can be used to write blockchain applications.
 The language is novel in that it converts program logic into STARK proofs. This
 enables an extremely favourable increase in the throughput of a given application.
 
+- Learn [**Cairo by example**]({{ site.baseurl }}{% link cairo/by_example.md %})
+
 The benefit of STARKs can be summarised in this python pseudocode.
 
 {% highlight python %}
+    # This is not Cairo code.
 
     from mainnet import security
 
@@ -25,21 +28,14 @@ The benefit of STARKs can be summarised in this python pseudocode.
     print(batch)
 {% endhighlight %}
 
-How to use Cairo?
-- Check out some [**building blocks**]({{ site.baseurl }}{% link cairo/building_blocks.md %})
-- Look at library [**modules**]({{ site.baseurl }}{% link cairo/cairo_common_lib.md %}) that can be imported.
-- [**Build an application**]({{ site.baseurl }}{% link cairo/examples/solidity_skeleton.md %})
+More topics?
+
+- Learn what it means to [**build an application**]({{ site.baseurl }}{% link cairo/examples/solidity_skeleton.md %})
+- Learn about [**different frameworks**]({{ site.baseurl }}{% link cairo/frameworks.md %})
 - Examine different [**deployment options**]({{ site.baseurl }}{% link cairo/deployment_options.md %})
-- Understand [**proof sizes**]({{ site.baseurl }}{% link cairo/proof_size.md %}).
-- Follow a walkthrough of an [**AMM deployment**]({{ site.baseurl }}{% link cairo/amm_demo.md %}).
-
-The Cairo rabbit hole goes deep.
-
-For fast explanation what Cairo is, from the foundation up, read this
-[**written description**]({{ site.baseurl }}{% link cairo/descriptive_summary.md %})
-
-To dive a little deeper into some technical details along the way, read this
-more [**technical description**]({{ site.baseurl }}{% link cairo/technical_summary.md %})
+- Learn more about [**proofs**]({{ site.baseurl }}{% link cairo/proof_size.md %}).
+- Follow a walkthrough of an [**AMM program deployed to Ropsten with SHARP**]({{ site.baseurl }}{% link cairo/amm_demo.md %}).
+- Cover the basics. What is Cairo, and why does it matter? [**Level I**]({{ site.baseurl }}{% link cairo/descriptive_summary.md %}) and [**Level II**]({{ site.baseurl }}{% link cairo/technical_summary.md %})
 
 Cairo was invented at [Starkware](https://www.cairo-lang.org/), and for complete and
 accurate information on how to use the language, see

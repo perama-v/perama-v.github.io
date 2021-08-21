@@ -321,7 +321,7 @@ as the sum of the user balances plus the initial 100 token A and 1000 toke B in 
 
 The Merkle root is based on the user balances, and can be calculated with a series of
 hash operations. This
-[merkle tree guide]({{ site.baseurl }}{% link cairo/examples/merkle_trees.md %}) outlines
+[merkle tree guide]({{ site.baseurl }}{% link cairo/background/merkle_trees.md %}) outlines
 the steps by which this occurs, and exposes the code used to calculate the hash.
 
 With the python cairo-lang environment activated, StarkWare's Merkle tree algorithm
@@ -421,7 +421,7 @@ The address of the AmmDemo contract be displayed in the console:
 
 **Summary**
 
-That concludes Vairation II, part I.
+That concludes Variation II, part I.
 
 Steps completed:
 - Automated market maker was considered, where trades occur on layer 2,
@@ -651,7 +651,7 @@ A proper state update will be calculated for the Ropsten testnet example below.
 
 **Summary**
 
-That concludes Vairation II, part II.
+That concludes Variation II, part II.
 
 Steps completed:
 
@@ -908,7 +908,7 @@ used in Cairo. See below for more information.
 
 **A note about field arithmetic**.
 In Cairo, calculations are computed within the a
-finite field defined by `prime`, a large prime number with 75 decimal digits
+finite field defined by `prime`, a large prime number with 76 decimal digits
 `2**251 + 17 * 2**192 + 1` or ~`3.619E+75`. The Merkle roots are also calculated in this field.
 Any number that exceeds this will wrap around in the same way that on a clock 9 o'clock plus
 5 hours is 2 o'clock. In other words, 9 + 5 modulo 12 is 2, or in python `(9+5) % 12` is `2`.
@@ -1046,7 +1046,7 @@ small.
 
 **Summary**
 
-That concludes Vairation II, part III.
+That concludes Variation II, part III.
 
 Steps completed:
 

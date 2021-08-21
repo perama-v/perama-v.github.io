@@ -1,11 +1,11 @@
 ---
 layout: page
-title:  "Building blocks"
-permalink: /cairo/building-blocks/
+title:  "Frameworks"
+permalink: /cairo/frameworks/
 toc: false
 ---
 
-Here are some examples that can be used to build more complex programs:
+Here are the two frameworks that can be used to build Cairo-based applications:
 
 - [Program skeleton - SHARP](examples/building_blocks/skeleton/program_sharp.md)
 - [Program skeleton - StarkNet](examples/building_blocks/skeleton/program_starknet.md)
