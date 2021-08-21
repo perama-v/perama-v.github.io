@@ -161,10 +161,10 @@ module for more details.
 
 ## default_dict
 
-Returns a new dictionary with all values of the key-value pairs all with the same value.
-The dictionary is used by StarkNet contracts, because to immediately assign a value requires
-a hint, which is not availbale in StarkNet). Operations on a default dict can be performed by
-using the [dict](#dict) module.
+A module for creating a new dictionary in StarkNet. Unlike `dict_new()` in the [dict](#module),
+module, no hints are required. Operations on a default dict can be performed by
+using the [dict](#dict) module. A default dictionary is a dictionary that will return a
+uniform value for all keys that have not otherwise been set.
 
 There are two functions:
 
@@ -218,7 +218,103 @@ both be set to the pointer returned from `default_dict_new()`.
 ## dict
 
 See the [dict](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/common/dict.cairo)
-module for more details.
+module for more details. See a deployed
+[dictionary]({{ site.baseurl }}{% link cairo/examples/default_dict.md %}) for an example.
+
+
+### dict_new()
+
+Creates a new dictionary, populated using a hint. Not available in StarkNet, where
+`default_dict_new()` is used instead.
+
+Returns:
+
+- `res` of type `DictAccess*`, a pointer to a struct from the [dict_access](#dict_access)
+module.
+
+Values may be initialized by first declaring a dictionary inside a hint using the special
+variable name `initial_dict`.
+
+    %{
+        initial_dict = {
+            1: 5,
+            3: 15,
+            5: 25
+        }
+    %}
+    let (new_dict) = dict_new()  # Has three key-value pairs.
+
+### dict_read()
+
+Returns the value of a key-value pair in a dictionary.
+
+Accepts one implicit argument:
+
+- `dict_ptr` of type `DictAccess*`, a pointer to the dictionary.
+
+Accepts one explicit argument:
+
+- `key` of type `felt`, the key of the key-value pair.
+
+Returns one argument:
+
+- `value` of type `felt`, the value of the key-value pair.
+
+### dict_write()
+
+Sets the value of a key-value pair in a dictionary.
+
+Accepts one implicit argument:
+
+- `dict_ptr` of type `DictAccess*`, a pointer to the dictionary.
+
+Accepts two explicit arguments:
+
+- `key` of type `felt`, the key of the key-value pair.
+- `new_value` of type `felt`, the new value of the key-value pair.
+
+### dict_update()
+
+Sets the value of a key-value pair in a dictionary, requiring that the previous
+value be known.
+
+Accepts one implicit argument:
+
+- `dict_ptr` of type `DictAccess*`, a pointer to the dictionary.
+
+Accepts three explicit arguments:
+
+- `key` of type `felt`, the key of the key-value pair.
+- `prev_value` of type `felt`, the old value of the key-value pair.
+- `new_value` of type `felt`, the new value of the key-value pair.
+
+### dict_squash()
+
+Takes a dictionary that has been modified and returns a new dictionary
+with the modifications applied. The act of modifying a dictionary in Cairo
+creates intermediate entries for each key-value update. The squash operation
+summarizes those such that each key only has one entry.
+
+Accepts one implicit argument:
+
+- `dict_ptr` of type `DictAccess*`, a pointer to the dictionary.
+
+Accepts two explicit arguments:
+
+- `dict_accesses_start` of type `DictAccess*`, a pointer to the first state in a series of
+dictionary state updates.
+- `dict_accesses_end` of type `DictAccess*`, a pointer to the last state in a series of
+dictionary state updates.
+
+Returns:
+
+- `squashed_dict_start` of type `DictAccess*`, a pointer to the first state in a series of
+dictionary state updates.
+- `squashed_dict_end` of type `DictAccess*`, a pointer to the last state in a series of
+dictionary state updates.
+
+The pointers that are returned are use to represent the start and end of the
+summarized dictionary.
 
 ## dict_access
 
