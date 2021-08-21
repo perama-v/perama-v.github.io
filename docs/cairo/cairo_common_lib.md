@@ -22,6 +22,7 @@ Available modules and their components:
 - [alloc](#alloc)
     - `alloc()`. Allocate new memory segment.
 - [cairo_builtins](#cairo_builtins)
+    - `BitwiseBuiltin`. The struct used for a bitwise operation.
     - `HashBuiltin`. The struct used for a hash.
     - `SignatureBuiltin`. The struct used for an ECDSA signature.
 - [default_dict](#default_dict)
@@ -48,6 +49,8 @@ Available modules and their components:
     - `hash_init()`. Initialize a state hash.
     - `hash_update()`. Add an array to a state hash.
     - `hash_update_single()`. Add a single item to state hash.
+- [keccak](#keccak)
+    - `unsafe_keccak()`. Compute the Keccak hash.
 - [math](#math)
     - `assert_not_zero()`. Verify `value ! = 0`.
     - `assert_not_equal()`. Verify `a! = b`.
@@ -73,7 +76,9 @@ Available modules and their components:
 - [merkle_multi_update](#merkle_multi_update)
     - `merkle_multi_update()`. Update multiple leaves of merkle tree.
 - [merkle_update](#merkle_update)
-    - `merkle_update()` Update single leaf of merle tree.
+    - `merkle_update()`. Update single leaf of merle tree.
+- [pow](#pow)
+    - `pow()`. Get `base ** exp`.
 - [registers](#registers)
     - `get_fp_and_pc()`. Get contents of `fp` and `pc`.
     - `get_ap()`. Get content of `ap`.
@@ -83,7 +88,7 @@ Available modules and their components:
     - `array_rfold()`. Append an array to the program output, from right to left.
     - `serialize_array()`. Append an array to the program output, from left to right.
 - [set](#set)
-    - `set_add()`. Add an element to an array,
+    - `set_add()`. Add an element to a set.
 - [signature](#signature)
     - `verify_ecdsa_signature()`. verifies the prover knows signature)
 - [small_merkle_tree](#small_merkle_tree)
@@ -115,8 +120,9 @@ arrays. As more elements are added, more memory will be allocated.
 
 ## cairo_builtins
 
-Contains two predefined structs:
+Contains three predefined structs:
 
+- `BitwiseBuiltin`
 - `HashBuiltin`
 - `SignatureBuiltin`
 
@@ -127,6 +133,7 @@ predefined members.
 
 The members are:
 
+- `BitwiseBuiltin`: `x`, `y`, `x_and_y`, `x_xor_y`, and `x_or_y`.
 - `HashBuiltin`: `x`, `y` and `result`.
 - `SignatureBuiltin`: `pub_key` and `message`.
 
@@ -135,6 +142,7 @@ would access the public key of `my_signature`.
 
 The builtin is used to standardise these components and to make type declaration simple.
 
+- A pointer to my_bitwise would be of type `BitwiseBuiltin*`.
 - A pointer to my_hash would be of type `HashBuiltin*`.
 - A pointer to my_signature would be of type `SignatureBuiltin*`.
 
@@ -284,6 +292,11 @@ let hash = hash_finalize{hash_state_ptr : HashState*}(hash_state_ptr)
 See the [hash_state](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/common/hash_state.cairo)
 module for more details.
 
+## keccak
+
+See the [keccak](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/common/keccak.cairo)
+module for more details.
+
 ## math
 
 Contains 14 functions:
@@ -398,77 +411,8 @@ The function requires the implicit argument ``range_check_ptr``.
 let (high, low) = split_felt(value)
 ```
 
-**Explanation:**
-
-Informally, the function accepts a value, divides it into left and right components and
-returns those components as numbers. Those numbers allow other operations to be performed.
-
-In decimal, splitting the number `38,292,276` into two components might look like this:
-
-```
-high, low = split_decimal(38292276)
-# high = 3829, low = 2276
-```
-
-In the above example, the number the high and low components of `38,292,276`
-can be easily identified when the number is written in the following form:
-
-```
-3829 * 10^4 + 2276
-# 3829 is shifted left by four places.
-# 10^x is used in decimal to shift a number to the left by x places.
-# 2^x is used in binary to shift a number left by x places.
-```
-To recombine a 128-bit split binary number, compute:
-```
-value = high * 2^128 + low
-```
-
-In the implementation of the function in the Cairo `math` module, the number to be split
-is parsed in the python hint as follows using bitwise shifts.
-
-```
-ids.high = ids.value >> 128
-```
-
-The high split is calculated by taking the 256-bit python integer, shifting it to the right
-by 128 places, thus removing the right-hand most 128 binary digits.
-
-```
-         128 bits                128 bits        = 256 bits total
-|----------------------||----------------------|
-1110101010101...010101011011011...11011011011011
-^Highest bit           ^^split point           ^Lowest bit
-(lost significant)                              (least significant)
-
-value >> 128, the left half moves right, the right half is lost.
-                                 128 bits         = 128 bits total
-         --->           |----------------------|xxxxxxxx(lost)xxxxxxx
-                        1110101010101...01010101
-                        ^Highest bit          ^^split point
-```
-
-The low split is calculated by:
-```
-ids.low = ids.value & ((1 << 128) - 1)
-```
-Which saves the low 128 bits by creating a new number comprising only 128 1's.
-Bitwise AND (&) is then used, which results in the loss of the high 128 bits.
-```
-         128 bits                128 bits        = 256 bits total
-|----------------------||----------------------|
-1110101010101...010101011011011...11011011011011
-^Highest bit           ^^split point           ^Lowest bit
-(lost significant)                              (least significant)
-
-Bitwise AND on the 128 bit 1's.
-000000000000000000000000111111111111111111111111
-
-                                 128 bits         = 128 bits total
-xxxxxxxxx(lost)xxxxxxxxx|----------------------|
-                        1011011...11011011011011
-                       ^^split point
-```
+See notes on [integer lift]({{ site.baseurl }}{% link cairo/background/integer_lift.md %})
+for more information.
 
 ### assert_le_felt()
 
@@ -535,6 +479,11 @@ module for more details.
 ## merkle_update
 
 See the [merkle_update](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/common/merkle_update.cairo)
+module for more details.
+
+## pow
+
+See the [pow](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/common/pow.cairo)
 module for more details.
 
 ## registers
