@@ -121,5 +121,51 @@ It would return:
 This method of checking the size of two numbers is more efficient (than a standard
 comparison) in some situations.
 
+## Split felt implementation in Cairo
 
+In the implementation of the function in the Cairo `math` module, the number to be split
+is parsed in the python hint as follows using bitwise shifts.
+
+```
+ids.high = ids.value >> 128
+```
+
+The high split is calculated by taking the 256-bit python integer, shifting it to the right
+by 128 places, thus removing the right-hand most 128 binary digits.
+
+```
+         128 bits                128 bits        = 256 bits total
+|----------------------||----------------------|
+1110101010101...010101011011011...11011011011011
+^Highest bit           ^^split point           ^Lowest bit
+(lost significant)                              (least significant)
+
+value >> 128, the left half moves right, the right half is lost.
+                                 128 bits         = 128 bits total
+         --->           |----------------------|xxxxxxxx(lost)xxxxxxx
+                        1110101010101...01010101
+                        ^Highest bit          ^^split point
+```
+
+The low split is calculated by:
+```
+ids.low = ids.value & ((1 << 128) - 1)
+```
+Which saves the low 128 bits by creating a new number comprising only 128 1's.
+Bitwise AND (&) is then used, which results in the loss of the high 128 bits.
+```
+         128 bits                128 bits        = 256 bits total
+|----------------------||----------------------|
+1110101010101...010101011011011...11011011011011
+^Highest bit           ^^split point           ^Lowest bit
+(lost significant)                              (least significant)
+
+Bitwise AND on the 128 bit 1's.
+000000000000000000000000111111111111111111111111
+
+                                 128 bits         = 128 bits total
+xxxxxxxxx(lost)xxxxxxxxx|----------------------|
+                        1011011...11011011011011
+                       ^^split point
+```
 

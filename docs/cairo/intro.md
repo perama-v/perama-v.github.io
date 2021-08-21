@@ -9,7 +9,9 @@ Cairo is programming language that can be used to write blockchain applications.
 The language is novel in that it converts program logic into STARK proofs. This
 enables an extremely favourable increase in the throughput of a given application.
 
-- Learn [**Cairo by example**]({{ site.baseurl }}{% link cairo/by_example.md %})
+- Learn [**Cairo by example**]({{ site.baseurl }}{% link cairo/by_example.md %}).
+- Explore modules from the
+[**common library**]({{ site.baseurl }}{% link cairo/cairo_common_lib.md %}).
 
 The benefit of STARKs can be summarised in this python pseudocode.
 
