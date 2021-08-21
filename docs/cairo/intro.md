@@ -38,6 +38,7 @@ More topics?
 - Learn more about [**proofs**]({{ site.baseurl }}{% link cairo/proof_size.md %}).
 - Follow a walkthrough of an [**AMM program deployed to Ropsten with SHARP**]({{ site.baseurl }}{% link cairo/amm_demo.md %}).
 - Cover the basics. What is Cairo, and why does it matter? [**Level I**]({{ site.baseurl }}{% link cairo/descriptive_summary.md %}) and [**Level II**]({{ site.baseurl }}{% link cairo/technical_summary.md %})
+- Explore what [ENS on StarkNet]({{ site.baseurl }}{% link cairo/ens/bridge.md %}) might look like
 
 Cairo was invented at [Starkware](https://www.cairo-lang.org/), and for complete and
 accurate information on how to use the language, see
