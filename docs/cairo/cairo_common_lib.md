@@ -163,11 +163,57 @@ module for more details.
 
 Returns a new dictionary with all values of the key-value pairs all with the same value.
 The dictionary is used by StarkNet contracts, because to immediately assign a value requires
-a hint (only available in Cairo programs, not contracts).
+a hint, which is not availbale in StarkNet). Operations on a default dict can be performed by
+using the [dict](#dict) module.
 
+There are two functions:
+
+- `default_dict_new()`. Create new dictionary without a hint.
+- `default_dict_finalize()`. Check the default dictionary.
 
 See the [default_dict](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/common/default_dict.cairo)
-module for more details.
+module for more details. See a deployed
+[dictionary]({{ site.baseurl }}{% link cairo/examples/default_dict.md %}) for an example.
+
+### default_dict_new()
+
+Used to create a new dictionary. Returns a pointer to a dictionary that is empty, but
+will return a default value for all keys.
+
+Accepts one explicit argument:
+
+- `default_value`, a felt representing the value that will be returned for all
+undeclared keys.
+
+Returns:
+
+- `res`, a pointer to the `DictAccess` struct from the [dict_access](#dict_access) module.
+
+### default_dict_finalize()
+
+Used to ensure that the prover has correctly set the default value of a new dictionary
+properly.
+
+Accepts one implicit argument:
+
+- `range_check_ptr`
+
+Accepts three explicit arguments:
+
+- `dict_accesses_start` of type `DictAccess*`, a pointer to the first instance of a dictionary
+modification.
+- `dict_accesses_end` of type `DictAccess*`, a pointer to the the last instance of a dictionary
+modification.
+
+Returns:
+
+- `dict_accesses_start` of type `DictAccess*`, a pointer to the first instance of a dictionary
+modification.
+- `dict_accesses_end` of type `DictAccess*`, a pointer to the the last instance of a dictionary
+modification.
+
+When a new dictionary is being made, the `dict_access_start` and `dict_access_end` may
+both be set to the pointer returned from `default_dict_new()`.
 
 ## dict
 
