@@ -23,9 +23,7 @@ bitwise_and, bitwise_xor, bitwise_or)
 
 
 func main{bitwise_ptr: BitwiseBuiltin*}() -> ():
-
-    # Cairo works with felts, which are integers in decimal
-    # representation. Define two binary numbers, a and b,
+    # Define two binary numbers, a and b,
     # using powers of 2 representation.
 
     # Binary: a = 1100.
@@ -95,13 +93,9 @@ from starkware.cairo.common.cairo_builtins import BitwiseBuiltin
 from starkware.cairo.common.bitwise import (bitwise_operations,
 bitwise_and, bitwise_xor, bitwise_or)
 
-# Preview only.
-# StarkNet does not currently allow bitwise operations.
 @view
 func check_bitwise{bitwise_ptr: BitwiseBuiltin*}() -> ():
-
-    # Cairo works with felts, which are integers in decimal
-    # representation. Define two binary numbers, a and b,
+    # Define two binary numbers, a and b,
     # using powers of 2 representation.
 
     # Binary: a = 1100.
