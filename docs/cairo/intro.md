@@ -30,15 +30,21 @@ The benefit of STARKs can be summarised in this python pseudocode.
     print(batch)
 {% endhighlight %}
 
-More topics?
+Some topics:
 
-- Learn what it means to [**build an application**]({{ site.baseurl }}{% link cairo/examples/solidity_skeleton.md %})
-- Learn about [**different frameworks**]({{ site.baseurl }}{% link cairo/frameworks.md %})
-- Examine different [**deployment options**]({{ site.baseurl }}{% link cairo/deployment_options.md %})
-- Learn more about [**proofs**]({{ site.baseurl }}{% link cairo/proof_size.md %}).
-- Follow a walkthrough of an [**AMM program deployed to Ropsten with SHARP**]({{ site.baseurl }}{% link cairo/amm_demo.md %}).
-- Cover the basics. What is Cairo, and why does it matter? [**Level I**]({{ site.baseurl }}{% link cairo/descriptive_summary.md %}) and [**Level II**]({{ site.baseurl }}{% link cairo/technical_summary.md %})
+- Write StarkNet contract [unit tests]({{ site.baseurl }}{% link cairo/examples/unit_test.md %}).
+- Compare and contrast:
+    - Cairo [programs](examples/building_blocks/skeleton/program_sharp.md), for creating provable facts on L1.
+    - Cairo [contracts](examples/building_blocks/skeleton/program_starknet.md), for creating composable L2 applications. They are built from Cairo programs.
+- Use the StarkNet [command line interface]({{ site.baseurl }}{% link cairo/starknet_cli.md %})
+- Review the StarkNet roadmap [here]({{ site.baseurl }}{% link cairo/deployment_options.md %})
+- Learn more about [proofs]({{ site.baseurl }}{% link cairo/proof_size.md %}).
+- Cover the basics. What is Cairo, and why does it matter?
+    - [Introductory]({{ site.baseurl }}{% link cairo/descriptive_summary.md %})
+    - [More detail]({{ site.baseurl }}{% link cairo/technical_summary.md %})
 - Explore what [ENS on StarkNet]({{ site.baseurl }}{% link cairo/ens/bridge.md %}) might look like
+- Use an L1 solidity contract to ingest an arbitrary Cairo program proof [here]({{ site.baseurl }}{% link cairo/examples/solidity_skeleton.md %}).
+- Follow a walkthrough of an AMM program deployed to Ropsten with SHARP [here]({{ site.baseurl }}{% link cairo/amm_demo.md %}).
 
 Cairo was invented at [Starkware](https://www.cairo-lang.org/), and for complete and
 accurate information on how to use the language, see
