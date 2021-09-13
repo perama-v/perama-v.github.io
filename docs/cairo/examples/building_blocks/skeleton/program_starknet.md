@@ -6,24 +6,30 @@ toc: false
 
 ### **Foreword**
 
-Cairo programs for StarkNet applications differ from Cairo programs sent
-through SHARP directly to Ethereum. In StarkNet, Cairo programs are contracts.
+The Cairo language may be used to write custom programs and custom contracts.
 
-If you are new to Cairo, think of Cairo contracts just like Solidity contracts. They are stateful, can be deployed and interacted with, and
+Most developers will use StarkNet contracts to write applications because
+they offer composability with other L2 applications.
+
+- Cairo program (proof-based applications)
+    - Programs that may be compiled and sent to SHARP
+    - Generate 'facts' on mainnet
+    - Used for highly customizable applications
+    - Are the backend of StarkNet OS, which powers StarkNet
+- Cairo contract (L2 blockchain applications)
+    - Cairo program that is passed to the StarkNet OS
+    - Has a subset Cairo language available
+    - Used for programs that interact with each other on L2 StarkNet
+
+StarkNet contracts are just like Solidity contracts.
+They are stateful, can be deployed and interacted with, and
 and exist inside blocks chained together. Cairo contracts are stapled
-back to Ethereum as aggregate STARK proofs that summarise key state updates. Proofs make state data available on Ethereum, and a Solidity
+back to Ethereum as aggregate STARK proofs that summarise key state updates.
+Proofs make state data available on Ethereum, and a Solidity
 contract can verify proofs to police StarkNet state. StarkNet is a
 an L2 in the sense that it inherets the security of Ethereum.
 
-If you are used to Cairo programs already, behold:
-
-Storage! Decorators! ABI! No hints! No `main()`!
-
-Pretty exciting, pretty fun. Much confuse? It's okay.
-
-Most of the program will look the same, but some parts will be different.
-
-Unpacking what this means:
+Main diferences between a Cairo program and a StarkNet contract.
 
 - Storage means that Cairo contracts can read and write values for access
 in between different Cairo contract invocations.
@@ -34,8 +40,6 @@ user to specify inputs.
 the priveilege of running python code.
 - No `main()`. Well, users are calling functions through the ABI now,
 so no need for a single entry point!
-
-The decision of how to decide whether to write a SHARP-based-programs or StarkNet-based-contracts will be addressed elsewhere.
 
 ### **Minimum Verfifiable Contract**
 
