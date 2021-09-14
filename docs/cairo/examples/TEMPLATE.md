@@ -14,6 +14,16 @@ CONTRACT
 ```
 Save as `TEMPLATE.cairo`.
 
+
+### Compile
+
+Then, to compile:
+```
+starknet-compile TEMPLATE.cairo \
+    --output TEMPLATE_compiled.json \
+    --abi TEMPLATE_contract_abi.json
+```
+
 ### Test
 
 Make a new file called `TEMPLATE_contract_test.py` and populate it:
@@ -72,15 +82,6 @@ Check that the tests passed:
 === 1 passed, 1 warning in xx.xxs ===
 ```
 
-
-### Compile
-
-Then, to compile:
-```
-starknet-compile TEMPLATE.cairo \
-    --output TEMPLATE_compiled.json \
-    --abi TEMPLATE_contract_abi.json
-```
 ### Deploy
 
 Then, to deploy:

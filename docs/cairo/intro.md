@@ -45,6 +45,7 @@ Some topics:
 - Explore what [ENS on StarkNet]({{ site.baseurl }}{% link cairo/ens/bridge.md %}) might look like
 - Use an L1 solidity contract to ingest an arbitrary Cairo program proof [here]({{ site.baseurl }}{% link cairo/examples/solidity_skeleton.md %}).
 - Follow a walkthrough of an AMM program deployed to Ropsten with SHARP [here]({{ site.baseurl }}{% link cairo/amm_demo.md %}).
+- Build a game on L2 [here]({{ site.baseurl }}{% link cairo/game/world_design.md %}).
 
 Cairo was invented at [Starkware](https://www.cairo-lang.org/), and for complete and
 accurate information on how to use the language, see
