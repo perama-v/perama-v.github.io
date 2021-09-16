@@ -12,7 +12,8 @@ This is an exploration in to how a community driven game called Dope Wars can be
 
 TL;DR
 [play with the engine](https://voyager.online/contract/0x02c9163ce5908b12a1d547e736f8ab6f5543f6ef1fd4994c7f1b146087f3279a#writeContract)
-or learn some Cairo by [reading the engine code](./game_engine_v1.md).
+or learn some Cairo by [reading the engine code](./game_engine_v1.md) and contribute to the repo
+[here](https://github.com/dopedao/RYO).
 
 ## Background
 
