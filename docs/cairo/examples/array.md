@@ -15,7 +15,6 @@ from starkware.cairo.common.alloc import alloc
 
 @view
 func read_array(index : felt) -> (value : felt):
-    alloc_locals
     # A pointer to the start of an array.
     let (felt_array : felt*) = alloc()
 
