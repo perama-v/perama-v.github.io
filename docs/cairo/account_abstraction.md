@@ -86,7 +86,7 @@ For an implementation of this model see
 [here](https://github.com/OpenZeppelin/cairo-contracts/blob/main/contracts/Account.cairo).
 
 A user can define what they want their account to "be". For many users,
-an account contract sill perform a signature check and then call the destination.
+an account contract will perform a signature check and then call the destination.
 
 However, the contract may do anything:
 
@@ -181,7 +181,7 @@ func store_number{
     ):
     # Fetch the address of the contract that called this function.
     let (account_address) = get_caller_address()
-    balance.write(number_to_store)
+    balance.write(account_address, number_to_store)
     return ()
 end
 
@@ -196,7 +196,7 @@ func view_number{
     ) -> (
         stored_number : felt
     ):
-    let (stored_number) = balance.read()
+    let (stored_number) = balance.read(account_address)
     return (stored_number)
 end
 ```
