@@ -377,10 +377,26 @@ async def test_number_application():
     # Deploy the number-storing application.
     application = await deploy(starknet, "contracts/Application.cairo")
 
-    initialize = signer.build_transaction(
-        account, erc20.contract_address, 'initialize', [], 0)
-    await initialize.invoke()
-    return starknet, erc20, account
+    # Obtain nonce for signin.
+    nonce = 0
+    
+    # The number to store for the store_number application
+    number_to_store = 88878
+    
+    # Store the number.
+    save_my_number = signer.build_transaction(
+        account, application.contract_address, 'store_number', 
+        [number_to_store], 0)
+    await save_my_number.invoke()
+    
+    # View number.
+    get_stored = signer.build_transactin(
+        account, application.contract_address, 'view_number')
+    stored = get_stored.invoke()
+    
+    # Check the value
+    assert stored == number_to_store
+    return 
 
 ```
 
