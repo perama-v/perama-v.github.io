@@ -126,11 +126,8 @@ The wallet is used to sign a transaction to deploy the contract and save their d
 The Account may then be used for all interactions with StarkNet, such as transferring, swapping
 or caling arbitrary contracts with arbitrary data.
 
-This may exist as a single operation as part of an L1 to L2 bridge. The bridge might receive the
-L1 funds and use those to deploy and initialize a contract using the information specified in
-the bridge transfer. E.g., A solidity contract with `bridgeToNewAccount(L2_StarkNetKey,
-L1_FallbackAddress, etherAmount)`. The address of the deployed account contract could then be
-fetched and saved for the user for their first L2 transaction.
+The details of how this manifests in relation to an onboarding-related account creation 
+with an L1 to L2 bridge will become clearer with time.
 
 
 Specific example
