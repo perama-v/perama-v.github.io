@@ -10,7 +10,7 @@ Nested maps are created by adding more parameters:
 
 - `func map_a(key : felt) -> (value : felt)`.
     - Equivalent to  `map_a[key]`.
-- `func map_b(key1 : felt, key2) -> (value : felt)`.
+- `func map_b(key1 : felt, key2 : felt) -> (value : felt)`.
     - Equivalent to `map_b[key1][key2]`.
 
 
