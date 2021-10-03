@@ -12,8 +12,11 @@ enables an extremely favourable increase in the throughput of a given applicatio
 - Learn [**Cairo by example**]({{ site.baseurl }}{% link cairo/by_example.md %}).
 - Explore modules from the
 [**common library**]({{ site.baseurl }}{% link cairo/cairo_common_lib.md %}).
-- Understand how accounts work in StarkNet, by exploring
-[**account abstraction**]({{ site.baseurl }}{% link cairo/account_abstraction.md %}).
+- Understand how accounts work in StarkNet, with **account abstraction**
+in a
+[first]({{ site.baseurl }}{% link cairo/account_abstraction.md %}) and
+[second]({{ site.baseurl }}{% link cairo/account_abstraction_test.md %}) exploration.
+
 
 The benefit of STARKs can be summarised in this python pseudocode.
 

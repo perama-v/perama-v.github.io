@@ -126,7 +126,7 @@ The wallet is used to sign a transaction to deploy the contract and save their d
 The Account may then be used for all interactions with StarkNet, such as transferring, swapping
 or caling arbitrary contracts with arbitrary data.
 
-The details of how this manifests in relation to an onboarding-related account creation 
+The details of how this manifests in relation to an onboarding-related account creation
 with an L1 to L2 bridge will become clearer with time.
 
 
@@ -170,7 +170,7 @@ end
 @external
 func store_number{
         storage_ptr : Storage*,
-        syscall_ptr : felt*
+        syscall_ptr : felt*,
         pedersen_ptr : HashBuiltin*,
         range_check_ptr
     }(
@@ -178,7 +178,7 @@ func store_number{
     ):
     # Fetch the address of the contract that called this function.
     let (account_address) = get_caller_address()
-    balance.write(account_address, number_to_store)
+    stored_number.write(account_address, number_to_store)
     return ()
 end
 
@@ -191,10 +191,10 @@ func view_number{
     }(
         account_address : felt
     ) -> (
-        stored_number : felt
+        stored_num : felt
     ):
-    let (stored_number) = balance.read(account_address)
-    return (stored_number)
+    let (stored_num) = stored_number.read(account_address)
+    return (stored_num)
 end
 ```
 
@@ -376,24 +376,24 @@ async def test_number_application():
 
     # Obtain nonce for signin.
     nonce = 0
-    
+
     # The number to store for the store_number application
     number_to_store = 88878
-    
+
     # Store the number.
     save_my_number = signer.build_transaction(
-        account, application.contract_address, 'store_number', 
+        account, application.contract_address, 'store_number',
         [number_to_store], 0)
     await save_my_number.invoke()
-    
+
     # View number.
     get_stored = signer.build_transactin(
         account, application.contract_address, 'view_number')
     stored = get_stored.invoke()
-    
+
     # Check the value
     assert stored == number_to_store
-    return 
+    return
 
 ```
 
