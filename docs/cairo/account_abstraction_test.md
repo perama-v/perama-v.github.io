@@ -23,6 +23,15 @@ The steps a user takes to interact with an application are:
     - The account contract checks the signature.
     - Then calls the specified function on application contract.
 
+
+```
+TL;DR
+
+A nonce-nanny helper is used to manage multiple local accounts.
+```
+
+## Local account intantiation flow
+
 This `pytest`-based framework is structured like so:
 
 - A blank, local `StarkNet` object is created
@@ -50,6 +59,8 @@ address of the user.
 - The account, being a contract on the simulated starknet, has a stored nonce
 that auto-increments.
 
+## Overview
+
 The purpose of the `Account` utility module is to allow the nonce management to
 be hidden, and to allow accounts to be created simply. E.g., a list of accounts
 where the first is an admin, and the rest are different users.
@@ -71,6 +82,8 @@ StarkWare library that is installed with `pip install cairo-lang`. It can
 be viewed
 [here](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/starknet/testing/starknet.py).
 
+## Practical motivation
+
 The application in this example is a contract that stores a personal number.
 It associates a the number with the contract (account) that calls the function.
 
@@ -83,6 +96,10 @@ account model, e.g., a `MultiSig.cairo` account that handles signatures from mul
 parties. The application contract could already be deployed and would handle this
 new contract as it would this simple singl owner `Account.cairo`. For an account is an
 abstract concept from the perspective of the application.
+
+## Framework execution
+
+First make sure to have installed cairo-lang. (e.g., `pip install cairo-lang`).
 
 Run the test command:
 
