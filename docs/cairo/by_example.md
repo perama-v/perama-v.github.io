@@ -31,3 +31,4 @@ toc: false
 - [Math comparison operators]({{ site.baseurl }}{% link cairo/examples/math_comparison.md %})
 - [Bitwise operations]({{ site.baseurl }}{% link cairo/examples/bitwise.md %})
 - [Dictionary]({{ site.baseurl }}{% link cairo/examples/default_dict.md %})
+- [Struct arguments]({{ site.baseurl }}{% link cairo/examples/struct_arguments.md %})
