@@ -1,6 +1,6 @@
 ---
 layout: page
-title:  "struct_arguments"
+title:  "Struct Arguments"
 permalink: /cairo/examples/struct_arguments/
 toc: false
 ---
