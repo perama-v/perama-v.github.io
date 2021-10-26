@@ -5,15 +5,17 @@ permalink: /cairo/game/world
 toc: false
 ---
 
+
 Ethereum allows Constant Product Market Makers (CPMMs), or Automated Market Makers to flourish.
 Layer 2 makes small value transactions viable. What magic may arise from the combination?
 
 This is an exploration in to how a community driven game called Dope Wars can be built on StarkNet.
 
-TL;DR
-[play with the engine](https://voyager.online/contract/0x02c9163ce5908b12a1d547e736f8ab6f5543f6ef1fd4994c7f1b146087f3279a#writeContract)
-or learn some Cairo by [reading the engine code](./game_engine_v1.md) and contribute to the repo
-[here](https://github.com/dopedao/RYO).
+Components
+
+- Initial design for the [engine code](./game_engine_v1.md), which visible on [testnet](https://voyager.online/contract/0x02c9163ce5908b12a1d547e736f8ab6f5543f6ef1fd4994c7f1b146087f3279a#writeContract).
+- Repo [here](https://github.com/dopedao/RYO).
+- Notes on an open-ended [aggregated architecture](./aggregated_architecture.md) model.
 
 ## Background
 
@@ -26,7 +28,7 @@ The inspiration for the DOPE universe stems from a long line of tersely-termed
 'business simulation games'. Titles include
 [Lemonade Stand](https://en.wikipedia.org/wiki/Lemonade_Stand) and
 [Drug Wars](https://en.wikipedia.org/wiki/Drug_Wars_(video_game)).
-These games have had smalle enough [game logic](https://gist.github.com/mattmanning/1002653)
+These games have had small enough [game logic](https://gist.github.com/mattmanning/1002653)
 to existed on low-capacity devices, such as graphing calculators. StarkNet is a calculator,
 whose sums are checked and proven by the EVM (another calculator) and made publicly availble
 for scrutiny by all.
