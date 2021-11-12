@@ -9,7 +9,7 @@ GACTANs are a derivative fan-art project I made for fun.
 
 The artwork is offered to the Community DAO ([safe address](0x15D0F64FFCf91c39810529F805Cc3595Dc3EF83f))
 
-## 2063
+## 2163
 
 ```
 Bleep bleep...
@@ -57,7 +57,9 @@ was lost when your terminal went inactive.
 
 >> The key revocation led to a cascade of permission losses across
 the system for many scientific groups - including, as you say,
-the tunneller. There was a period of chaos for months. We were unable to reach the main interstellar group and we sought to maintain
+the tunneller. There was a period of chaos for months.
+We were unable to reach the
+main interstellar group and we sought to maintain
 resources and bring about a stability through informal leadership.
 
 > Are you reunited with the main fleet?
@@ -93,13 +95,17 @@ She trailed off.
 Her colleague answered. "Surreal. A hyperbolic dream... I don't think
 I will ever truly believe it," they said, leaning backward to look up
 at the roof. "We see how the world unfolds week by week in a
-semi-real fashion. We have politics that are in retrospect almost comical overtures. If our future is even a small part unbelievable
-and fantastical, then given a multitude of futures long enough time..."
+semi-real fashion. We have politics that are in retrospect almost
+comical overtures.
+If our future is even a small part unbelievable
+and fantastical, then given a multitude of futures long enough
+time..."
 
 "Its unreasonable to expect the reasonable".
 
 They both stared at 355's image - a living descendant with a physical
-form curated and engineered. A bizarre combination of genetic supremacy, and inane memery.
+form curated and engineered. A bizarre combination of genetic
+supremacy, and inane memery.
 
 ![355](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/355.jpg)
 
@@ -121,14 +127,17 @@ We know that these worlds can snap out of connection - possibly
 out of existence."
 
 The operator stood. "I think I might go to the gallery. It will be
-good to walk the halls again. I believe they have made some more progress with the BGAN mappings."
+good to walk the halls again. I believe they have made some more progress
+with the BGAN mappings."
 
 ### Gallery
 
 The gallery may be viewed at the link below by replacing
 'ID' with the ID of a BGANPUNKv2.
 
+```
 https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/ID.jpg
+```
 
 ![355_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/355_double.jpg)
 
@@ -161,7 +170,8 @@ you only need to look hard enough.
 When I started generating these realistic bastard bastards, I
 was immediately struck by how they seemed like real people - with
 photo-studio like abstract backgrounds and beautiful expressions.
-Some looked almost deranged, others beautiful and some had an androidous feel. I was struck by the idea that humans are generated
+Some looked almost deranged, others beautiful and some had an androidous feel.
+I was struck by the idea that humans are generated
 from kernals that effectively produce faces in a procedural fashion
 similar to GANs. Ingredients for rough forms, with some variation.
 Noise between siblings, parents, twins. What is the form of the
@@ -178,11 +188,13 @@ So what then followed was the idea that you could use some CRISPR type
 technology to edit set of genes to have one visual trait rather than
 another. Moreover, that you wouldn't need to explicitly describe these
 features "large nose, short eyebrows", you could use a photo of a face
-and say - modify the facial genes so that they produce the same sort of appearance that this face has. Just like putting a BGANPUNKv2 into
+and say - modify the facial genes so that they produce the same sort of appearance
+that this face has. Just like putting a BGANPUNKv2 into
 a generator, you could upload a celebrity and have your baby come out
 looking like a mix of you and some arbitrary face.
 
-I then thought - okay in the future when this sophisticated gene-machine exists, and people can upload a photo, what would
+I then thought - okay in the future when this sophisticated gene-machine exists,
+and people can upload a photo, what would
 they upload? Surely this would sway with the trends of the time,
 coming and going with fashions. You could end up with entire
 generations all with a particular look that is dissimilar to their
@@ -198,14 +210,18 @@ where it became a fad to craft your baby to look like a historical
 cultural relic (e.g., a BGANPUNKv2), then the circle would be complete.
 
 That led to thoughts on probability. How likely is this fantastical
-scenario? Well given that it is plausible that a multitude of multiverses spawn from the current reality every femtosecond,
+scenario? Well given that it is plausible that a multitude of multiverses
+spawn from the current reality every femtosecond,
 I am inclinded to believe that it is haughty to claim it wont happen
 at least once in the near infinite pool of imaginary parallel worlds.
 
 Another factor to consider is that, relics created today might really
 persist for such an extraordinary length of time. Is it perhaps a
 possibility that the company that produces this
-gene-gan-curating machine is a derivative of some DAO that has been or will soon be made, and which maintains a system for accelerating the progress of  technology? Perhaps they also have the rights to the intellectual property of the images fed into this machine as a preset
+gene-gan-curating machine is a derivative of some DAO that has been or
+will soon be made, and which maintains a system for accelerating the progress
+of  technology? Perhaps they also have the rights to the intellectual property
+of the images fed into this machine as a preset
 mode. The Bastard DAO itself bringing into existence the gene editing
 technology and making available its native images for common use.
 
@@ -232,18 +248,21 @@ IPFS to have a look. It is incredible to see how the model
 draws elements in such intricate ways.
 
 I have not connected the images to a smart contract, but have made the
-path derivation such that this can be easily done by using ipfs's recursive and wrap flags: `ipfs add -r -w gactans`.
+path derivation such that this can be easily done by using ipfs's recursive
+and wrap flags: `ipfs add -r -w gactans`.
 
 Anyone can use and enjoy these images - up until a point that the
 DAO declares some form of ownership model. E.g., A DAO vote to deploy
 a contract on Ethereum L1/L2. I had some ideas of fun things to do,
 but got swept up doing other fun things. The DAO is welcome to use
-these to generate revenue to spend on other bastardous community projects. You can probably use them for video face-mapping easier
+these to generate revenue to spend on other bastardous community projects.
+You can probably use them for video face-mapping easier
 than with the bastards which don't all have clean hooks for
 expressions. So you could have these be stand-in avatars when
 human-like faces are needed.
 
-Look it's me, in the future! Bastard 8461 as a curated parallel dimension descendant fad baby produced from a gene printer built
+Look it's me, in the future! Bastard 8461 as a curated parallel dimension
+descendant fad baby produced from a gene printer built
 by a DAO to a civilisation that has invented wormholes.
 
 ![8461_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/8461_double.jpg)
@@ -285,51 +304,75 @@ These are abstract, feel free to breeze to the end for links to models.
 
 Hidden in the latent space of the neural network is a universality that spans multiple dimensions.
 
-Every microsecond the universe divides into tree-like blossoming of different worlds. Each sharing a common ancestor - the present.
+Every microsecond the universe divides into tree-like blossoming of different worlds.
+Each sharing a common ancestor - the present.
 
 A leaf falling a certain way, to land in a stream.
-A photon that ionises a molecule, cascade genetic mutation. A stray thought that stops the mind, you miss a bus.
+A photon that ionises a molecule, cascade genetic mutation. A stray thought that stops
+the mind, you miss a bus.
 
 We look to the future. To a blossoming of all potential paths for humankind. What do we see?
 
 ## DAWN
 
-We witness the spark of collective adoration. What we enjoy now will shape the desires of future generations. Humans, as a species will continue to evolve with an increasingly abstract set of selection mechanisms.
+We witness the spark of collective adoration. What we enjoy now will shape the desires
+of future generations. Humans, as a species will continue to evolve with an increasingly
+abstract set of selection mechanisms.
 
-What does it mean to have a species with the tools to control the genetics of future generations? In some branches of the multiverse, genetic engineering will be a conservative practice, for the interrrogation of disease-states. Yet in other worlds, a future exists where humans explore genetic protocols for enhancements in a plethora of domains.
+What does it mean to have a species with the tools to control the genetics of future
+generations? In some branches of the multiverse, genetic engineering will be a
+conservative practice, for the interrrogation of disease-states. Yet in other worlds,
+a future exists where humans explore genetic protocols for enhancements in a plethora of domains.
 
 ## ATTUNE
 
 Culture integrated on the single-generation level.
 
-It follows that there is some branch where there are cultural oddities that become the subject of genetic design. A civilisation that has created a mechanism by which the zeitgeist may be integrated into the embryos - perhaps benevolently - through routine genetic engineering.
+It follows that there is some branch where there are cultural oddities that become
+the subject of genetic design. A civilisation that has created a mechanism by which
+the zeitgeist may be integrated into the embryos - perhaps benevolently - through routine
+genetic engineering.
 
-Like the vector masks that navigate the latent space of a convolutional neural network, a slider bar for everything (physical, emotional, intellectual). dEsIgNerR BebEs.
+Like the vector masks that navigate the latent space of a convolutional neural network,
+a slider bar for everything (physical, emotional, intellectual). dEsIgNerR BebEs.
 
 What then, do we say about the future we have now cast, where jpg's drive the needle of desire?
 
-PUNKS are a distillation of the essence of the physical human face. They birthed BGANS, whose form takes that of the hidden representation of facial structure and adornment.
+PUNKS are a distillation of the essence of the physical human face. They birthed BGANS,
+whose form takes that of the hidden representation of facial structure and adornment.
 
 ## ILLUMIN
 
-How can a small number of pixels convey such richness to the beholder? BGAN may look hesitant, yet earnest, and optimistic about the world. Some of these interpretations probably have low inter-observer variability.
+How can a small number of pixels convey such richness to the beholder? BGAN may look
+hesitant, yet earnest, and optimistic about the world. Some of these interpretations
+probably have low inter-observer variability.
 
-What does it mean to ask an embryoMaster3000 to have a child that "looks optimistic, yet has a
+What does it mean to ask an embryoMaster3000 to have a child that "looks optimistic,
+yet has a
 cautious regard for the dangers of the future".
 
 Machines we build are increasingly able to form human-like abstractions.
 
 ## CREAT
 
-The works here explore the physical appearances of individuals from a future generation. Normal individuals, who are functional in normal society. Who have been genetically programmed based on a collection of jpgs (BGANS) that were created hundreds of years in the past. Members of the BGANGeneticSubDAO multisig in the previous generation had authorised the explicit use of jpg data as a direct input to the embryoMaster3000.
+The works here explore the physical appearances of individuals from a future generation.
+Normal individuals, who are functional in normal society. Who have been genetically
+programmed based on a collection of jpgs (BGANS) that were created hundreds of years
+in the past. Members of the BGANGeneticSubDAO multisig in the previous generation had
+authorised the explicit use of jpg data as a direct input to the embryoMaster3000.
 
-These are the first humans whose appearance is controlled by a BGAN. As children of the DAO, they each receive open licensing rights, as is custom for BGAN derivative works.
+These are the first humans whose appearance is controlled by a BGAN. As children of the
+DAO, they each receive open licensing rights, as is custom for BGAN derivative works.
 
-We explore the notion of latent space. To see familiarity of concept. To wander the parametric space between two seemingly binary features.
+We explore the notion of latent space. To see familiarity of concept. To wander the
+parametric space between two seemingly binary features.
 
-Where first, BGANs brought discerning eyes to the deep philocophical question like: Is that a tiara or a smudge? Is that the outline of a beanie or no?
+Where first, BGANs brought discerning eyes to the deep philocophical question like:
+Is that a tiara or a smudge? Is that the outline of a beanie or no?
 
-GACTANS ask the same question. Is that a glint of hope, mixed with a tiredness that comes from a long night at work? Is that a half-worn frown that hides a deeper self-loving and softness toward others?
+GACTANS ask the same question. Is that a glint of hope, mixed with a tiredness that
+comes from a long night at work? Is that a half-worn frown that hides a deeper
+self-loving and softness toward others?
 
 Look at the BGANS, and back to the GACTANS.
 
@@ -354,7 +397,8 @@ consider which companies are hosting your images for you. Will they
 always do that? Images lost from IPFS can be reuploaded because content
 is addressed by the hash of the image, which is unique.
 
-First download IPFS and run the daemon as a service (see [here](https://michalzalecki.com/set-up-ipfs-node-on-the-server/)), then
+First download IPFS and run the daemon as a service (see
+[here](https://michalzalecki.com/set-up-ipfs-node-on-the-server/)), then
 I think this will work:
 ```
 ipfs pin add -r QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k
@@ -362,7 +406,9 @@ ipfs pin add -r QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k
 
 ## GAN Talk
 
-I used MIT-licensed [pixel2style2pixel](https://github.com/eladrich/pixel2style2pixel) Generative Adversarial Network (GAN). It is a
+I used MIT-licensed
+[pixel2style2pixel](https://github.com/eladrich/pixel2style2pixel)
+Generative Adversarial Network (GAN). It is a
 pretrained model (and I did no extra fine tuning). Generated in
 three steps:
 
@@ -436,7 +482,9 @@ Currently the best way to view them is probably to download
 the set and then scroll through. Or you can go to the link below
 and walk the ID numbers.
 
+```
 https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/ID.jpg
+```
 
 Enjoy!
 
