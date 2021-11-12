@@ -273,21 +273,6 @@ and placement of the pizels.
 ![8461](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/8461.jpg)
 
 
-![8461](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/0.jpg)
-
-![8461](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/1.jpg)
-
-![8461](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/2.jpg)
-
-![8461](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/3.jpg)
-
-![8461](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/4.jpg)
-
-![8461](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/5.jpg)
-
-
-![8461](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/6.jpg)
-
 ----
 ____
 
@@ -358,9 +343,123 @@ ____
 
 # Technical details
 
-GANs - Generative Adversarial Networks
 
-GACT - Base pairs in genetic code
+## IPFS and creating redundancy.
 
-BGANPUNKsV2 - Bastard punks, a generative art derivative of PUNKs.
+Firstly it would be awesome if anyone values these images to store
+them as well. E.g., Pin them to your own IPFS node. I cannot promise
+to make them available. IPFS doesn't hold onto images on its own,
+if you are relying on IPFS for your prized NFTs, then you should
+consider which companies are hosting your images for you. Will they
+always do that? Images lost from IPFS can be reuploaded because content
+is addressed by the hash of the image, which is unique.
 
+First download IPFS and run the daemon as a service (see [here](https://michalzalecki.com/set-up-ipfs-node-on-the-server/)), then
+I think this will work:
+```
+ipfs pin add -r QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k
+```
+
+## GAN Talk
+
+I used MIT-licensed [pixel2style2pixel](https://github.com/eladrich/pixel2style2pixel) Generative Adversarial Network (GAN). It is a
+pretrained model (and I did no extra fine tuning). Generated in
+three steps:
+
+- Passed each bastard through a green-limiting filter.
+  - This reduced a washout of effect I encountered with the strong
+  green backgrounds. Some of this is still noticable in some of the
+  images, but this filter helped significantly. The implication is
+  that the model perhaps did not have many green-backgrounds in the
+  initial training set and did not have the structure to handle them
+  well.
+- Generated an image with `ffhq_encode` using the low-green bastard.
+  - This model is good at taking a face and making it front-on. After
+  experimenting with different techniques I found that this one was
+  good at handling the abstract nature of some of the bastards. When
+  presented with an odd looking bastard, the model seems to squint
+  and imagine that there is some person there at a strange angle
+  in strange clothes. It makes the most of it and brings the image
+  to a 'reasonable state'.
+  - I have included these intermediate images in the collection
+  as `ID_first.jpg`. They are quite fun and perhaps more on the
+  bastardous side of life. I will include some below.
+- Generated an image with `celebs_super_resolution`.
+  - These images are drawing on the features in the latent
+  space of the model which was trained on celebrities. Celebrities
+  have perhaps some uniform features - like great photographic
+  poses and specific physical traits. The bastards inherit these.
+  - This step takes the front-on bastard and makes it hawt.
+  Everything has a sort of odd beauty to it that is a mix of
+  familiar and unfamiliar. Most look like real people with a
+  self-confident edge and a optimistic outlook for the future.
+
+
+
+
+
+![100_first](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/100_first.jpg)
+
+The intermediate image above has a sort of cheekiness to it.
+
+![100_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/100_double.jpg)
+
+
+
+![5_first](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/5_first.jpg)
+
+See how the first model pulls out a face that the second model can
+really build on.
+
+![5_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/5_double.jpg)
+
+
+![6_first](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/6_first.jpg)
+
+A good example showing how the first model picks the outline of the
+bastard as hair. The second model takes that and makes it more subtle.
+
+![6_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/6_double.jpg)
+
+Stats:
+
+- There are 11305 bastards.
+- The animated bastards I have just used the
+first frame of.
+- With four images per bastard, that is a 45220 image
+collection with 3.4GB total size.
+- The main images (`ID.jpg`) are about 100kB and are 1024x1024 pixels.
+
+Thank you for playing!
+
+Currently the best way to view them is probably to download
+the set and then scroll through. Or you can go to the link below
+and walk the ID numbers.
+
+https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/ID.jpg
+
+Enjoy!
+
+perama.eth
+
+
+# Sample
+
+
+![10_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/10_double.jpg)
+
+![20_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/20_double.jpg)
+
+![30_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/30_double.jpg)
+
+![40_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/40_double.jpg)
+
+![50_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/50_double.jpg)
+
+![60_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/60_double.jpg)
+
+![70_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/70_double.jpg)
+
+![80_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/80_double.jpg)
+
+![90_double](https://ipfs.io/ipfs/QmV7vA888YVzmhL2epitCobSZxSFSAjTaa1r5CWqe5YM2k/gactans/90_double.jpg)
