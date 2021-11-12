@@ -10,8 +10,9 @@ layout: home
 Perhaps you are interested in:
 
 - The
-[**Cairo programming language**]({{ site.baseurl }}{% link cairo/intro.md %})?
+[**Cairo programming language**]({{ site.baseurl }}{% link cairo/intro.md %})
 - Ethereum
-[**wallet UI design**]({{ site.baseurl }}{% link ethereum/1559-wallet-interface.md %})?
-- [**Local data extraction**]({{ site.baseurl }}{% link ethereum/local_data.md %})?
+[**wallet UI design**]({{ site.baseurl }}{% link ethereum/1559-wallet-interface.md %})
+- [**Local data extraction**]({{ site.baseurl }}{% link ethereum/local_data.md %})
+- [**Generative art**]({{ site.baseurl }}{% link ethereum/gactans.md %})
 
