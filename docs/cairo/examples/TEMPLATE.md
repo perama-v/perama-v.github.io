@@ -30,8 +30,8 @@ Make a new file called `test_TEMPLATE.py` and populate it:
 
 ```py
 import pytest
+import asyncio
 from starkware.starknet.testing.starknet import Starknet
-from starkware.starknet.testing.contract import StarknetContract
 
 # Enables modules.
 @pytest.fixture(scope='module')
@@ -58,7 +58,7 @@ async def test_contract(contract_factory):
 ```
 Run the test
 ```
-pytest test_TEMPLATE.py
+pytest tests/test_TEMPLATE.py
 ```
 
 ### Local Deployment
