@@ -10,6 +10,13 @@ toc: false
 makes managing files and command line calls to StarkNet simple.
 - Second have a look at how [pytest works]({{ site.baseurl }}{% link cairo/pytest.md %})
 
+
+
+# YMMV Examples
+
+These examples have core principles, but have not been tested with
+`cairo-lang version >0.5.0` and may not compile.
+
 - [Hello, World!]({{ site.baseurl }}{% link cairo/examples/hello_world.md %})
 - [First application]({{ site.baseurl }}{% link cairo/examples/first_application.md %})
 - [Data types]({{ site.baseurl }}{% link cairo/examples/data_types.md %})
