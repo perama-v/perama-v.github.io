@@ -5,106 +5,86 @@ permalink: /cairo/examples/TEMPLATE/
 toc: false
 ---
 
-
 DESCRIPTION
 
 ```sh
 CONTRACT
 
 ```
-Save as `TEMPLATE.cairo`.
-
+Save as `contracts/TEMPLATE.cairo`
 
 ### Compile
 
-Then, to compile:
+Compile
 ```
-starknet-compile TEMPLATE.cairo \
-    --output TEMPLATE_compiled.json \
-    --abi TEMPLATE_contract_abi.json
+nile compile
+```
+Or compile this specific contract
+```
+nile compile contracts/TEMPLATE.cairo
 ```
 
 ### Test
 
-Make a new file called `TEMPLATE_contract_test.py` and populate it:
+Make a new file called `test_TEMPLATE.py` and populate it:
 
 ```py
 import pytest
 from starkware.starknet.testing.starknet import Starknet
 from starkware.starknet.testing.contract import StarknetContract
 
-@pytest.mark.asyncio
-async def test_database():
+# Enables modules.
+@pytest.fixture(scope='module')
+def event_loop():
+    return asyncio.new_event_loop()
+
+# Reusable to save testing time.
+@pytest.fixture(scope='module')
+async def contract_factory():
     starknet = await Starknet.empty()
-    contract = await starknet.deploy("TEMPLATE.cairo")
+    contract = await starknet.deploy("contracts/TEMPLATE.cairo")
+    return starknet, contract
 
-    # Call a function.
-    await contract.FUNCTION_NAME(
-        INPUT_1, INPUT2).invoke()
+@pytest.mark.asyncio
+async def test_contract(contract_factory):
+    starknet, contract = contract_factory
 
-    # Check the result of a function.
-    VAL = await contract.FUNCTION_NAME().call()
-    assert VAL == EXPECTED_RES
+    # Modify contract.
+    await contract.EXTERNAL_FUNCTION_NAME(INPUT_1, INPUT2).invoke()
+
+    # Read from contract
+    response = await contract.VIEW_FUNCTION_NAME().call()
+    assert response.result.value == x
+```
+Run the test
+```
+pytest test_TEMPLATE.py
 ```
 
-The packages required for testing are installed by default with cairo-lang.
-Run the test:
+### Local Deployment
 
-`pytest TEMPLATE_contract_test.py`.
-
-Check that the tests passed:
+Deploy to the local devnet.
 ```
-=== 1 passed, 1 warning in xx.xxs ===
+nile deploy TEMPLATE --alias TEMPLATE
 ```
-
-### Deploy
-
-Then, to deploy:
-```
-starknet deploy --contract TEMPLATE_compiled.json \
-    --network=alpha
-
-Returns:
-RESULT
-```
-
-### Monitor
-
-Check the status of the transaction:
-
-```
-starknet tx_status --network=alpha --id=ID
-
-Returns:
-RESULT
-```
-The [block](https://voyager.online/block/ID) and the
-[contract](https://voyager.online/contract/ADDRESS)
 
 ### Interact
 
-Then, to interact:
-
+Read-only
+```
+nile call TEMPLATE FUNCTION_NAME ARG_1
+```
+Write
+```
+nile invoke TEMPLATE FUNCTION_NAME ARG_1
 
 ```
-starknet invoke \
-    --network=alpha \
-    --address ADDRESS \
-    --abi TEMPLATE_contract_abi.json \
-    --function FUNCTION_NAME \
-    --inputs INPUT1 INPUT2
 
-Returns:
-RESULT
+### Public deployment
+
+Will default to the Goerli/alpha testnet until mainnet is available.
 ```
-
-### Status options:
-
-- NOT_RECEIVED: The transaction has not been received yet (i.e., not written to storage).
-- RECEIVED: The transaction was received by the operator.
-    - PENDING: The transaction passed the validation and is waiting to be sent on-chain.
-        - REJECTED: The transaction failed validation and thus was skipped.
-        - ACCEPTED_ONCHAIN: The transaction was accepted on-chain.
-
-
-Visit the [voyager explorer](https://voyager.online/) to see the transactions.
+nile deploy TEMPLATE --alias TEMPLATE --network mainnet
+```
+Deployments can be viewed in the voyager explorer
+https://voyager.online

@@ -10,11 +10,18 @@ in memory, relative to the pointer.
 
 ```sh
 %lang starknet
+%builtins range_check
 
 from starkware.cairo.common.alloc import alloc
 
 @view
-func read_array(index : felt) -> (value : felt):
+func read_array{
+        range_check_ptr
+    }(
+        index : felt
+    ) -> (
+        value : felt
+    ):
     # A pointer to the start of an array.
     let (felt_array : felt*) = alloc()
 
@@ -33,66 +40,77 @@ Save as `array.cairo`.
 
 ### Compile
 
-Then, to compile:
+Compile all contracts
 ```
-starknet-compile array.cairo \
-    --output array_compiled.json \
-    --abi array_contract_abi.json
+nile compile
 ```
-### Deploy
-
-Then, to deploy:
+Or compile this specific contract
 ```
-starknet deploy --contract array_compiled.json \
-    --network=alpha
-
-Returns:
-Deploy transaction was sent.
-Contract address: 0x614d00a6c7e41df9d518f0af9484f848d95d9fe17d19b596dc4777b11c76134.
-Transaction ID: 526625.
+nile compile contracts/array.cairo
 ```
 
-*Note:* Remove the zero after the `x`, 0x[0]12345. E.g., 0x0123abc becomes 0x123abc.
+### Test
 
-### Monitor
+Make a new file called `array_test.py` and populate it:
 
-Check the status of the transaction:
+```py
+import pytest
+import asyncio
+from starkware.starknet.testing.starknet import Starknet
 
+# Enables modules.
+@pytest.fixture(scope='module')
+def event_loop():
+    return asyncio.new_event_loop()
+
+# Reusable to save testing time.
+@pytest.fixture(scope='module')
+async def contract_factory():
+    starknet = await Starknet.empty()
+    contract = await starknet.deploy("contracts/array.cairo")
+    return starknet, contract
+
+@pytest.mark.asyncio
+async def test_contract(contract_factory):
+    starknet, contract = contract_factory
+
+    # Modify contract.
+    await contract.read_array(9).invoke()
+
+    # Read from contract
+    response = await contract.read_array(9).call()
+    assert response.result.value == 18
 ```
-starknet tx_status --network=alpha --id=526625
-
-Returns:
-{
-    "block_id": 25169,
-    "tx_status": "PENDING"
-}
+Run the test.
 ```
-The [block](https://voyager.online/block/2516) and the
-[contract](https://voyager.online/contract/0x614d00a6c7e41df9d518f0af9484f848d95d9fe17d19b596dc4777b11c76134#state)
+pytest test_array.py
+```
+
+### Local Deployment
+
+Deploy to the local devnet.
+```
+nile deploy array --alias array
+```
 
 ### Interact
 
-Then, to interact:
-
+Read-only
 ```
-starknet call \
-    --network=alpha \
-    --address 0x614d00a6c7e41df9d518f0af9484f848d95d9fe17d19b596dc4777b11c76134 \
-    --abi array_contract_abi.json \
-    --function read_array \
-    --inputs 9
+nile call array read_array 0
 
-Returns:
-18
+# Returns the value 9.
 ```
 
-Status options:
+### Public deployment
 
-- NOT_RECEIVED: The transaction has not been received yet (i.e., not written to storage).
-- RECEIVED: The transaction was received by the operator.
-    - PENDING: The transaction passed the validation and is waiting to be sent on-chain.
-        - REJECTED: The transaction failed validation and thus was skipped.
-        - ACCEPTED_ONCHAIN: The transaction was accepted on-chain.
-
-
-Visit the [voyager explorer](https://voyager.online/) to see the transactions.
+```
+nile deploy array --alias array --network mainnet
+```
+```
+🚀 Deploying array
+🌕 artifacts/array.json successfully deployed to 0x059ecf357ff349d028d84f53f0a85981bb8ba53fa18e4fea82871d8c1fcf67ad
+📦 Registering deployment as array in mainnet.deployments.txt
+```
+Deployments can be viewed in the voyager explorer
+https://voyager.online
