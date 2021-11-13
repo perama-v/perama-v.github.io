@@ -8,6 +8,7 @@ toc: false
 
 - First [setup using Nile]({{ site.baseurl }}{% link cairo/nile.md %}) which
 makes managing files and command line calls to StarkNet simple.
+- Second have a look at how [pytest works]({{ site.baseurl }}{% link cairo/pytest.md %})
 
 - [Hello, World!]({{ site.baseurl }}{% link cairo/examples/hello_world.md %})
 - [First application]({{ site.baseurl }}{% link cairo/examples/first_application.md %})

@@ -44,6 +44,27 @@ to develop:
         - `nile deploy contract --alias my_contract --network mainnet`.
     - This will deploy the contract to the public network.
 
+# Test scenarios in python
+
+The python testing framework can be used by creating a test
+file and running:
+```
+pytest -s tests/vault_test.py
+```
+The '-s' flag allows print statements to be viewed during tests.
+
+Individual test functions can be called. Make sure to have test
+functions start with `test_` or they will fail.
+```
+pytest -s tests/vault_test.py::test_drain_vault
+```
+The testing framework creates a StarkNet object and deploys contracts
+to it. The pytest framework allows for these to be reused by using
+a `module` pattern to create a 'contract factory'. More on this
+in [pytest notes]({{ site.baseurl }}{% link cairo/pytest.md %})
+
+# Test deployments and interactions
+
 When you make a new contract, it is easy to keep the contract name and
 the alias the same. E.g. for `vault.cairo`:
 
