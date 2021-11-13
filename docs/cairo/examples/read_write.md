@@ -39,138 +39,80 @@ func save{
 end
 
 ```
-Save as `read_write.cairo`.
+Save as `contracts/read_write.cairo`
 
 ### Compile
 
-Then, to compile:
+Compile
 ```
-starknet-compile read_write.cairo \
-    --output read_write_compiled.json \
-    --abi read_write_contract_abi.json
+nile compile
 ```
-### Deploy
-
-Then, to deploy:
+Or compile this specific contract
 ```
-starknet deploy --contract read_write_compiled.json \
-    --network=alpha
-
-Returns:
-Deploy transaction was sent.
-Contract address: 0x033402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9.
-Transaction ID: 497976.
+nile compile contracts/read_write.cairo
 ```
 
-*Note:* Remove the zero after the `x`, 0x[0]12345. E.g., 0x0123abc becomes 0x123abc.
+### Test
 
-### Monitor
+Make a new file called `test_read_write.py` and populate it:
 
-Check the status of the transaction:
+```py
+import pytest
+import asyncio
+from starkware.starknet.testing.starknet import Starknet
 
+# Enables modules.
+@pytest.fixture(scope='module')
+def event_loop():
+    return asyncio.new_event_loop()
+
+# Reusable to save testing time.
+@pytest.fixture(scope='module')
+async def contract_factory():
+    starknet = await Starknet.empty()
+    contract = await starknet.deploy("contracts/read_write.cairo")
+    return starknet, contract
+
+@pytest.mark.asyncio
+async def test_contract(contract_factory):
+    starknet, contract = contract_factory
+
+    # Modify contract.
+    await contract.save(10009).invoke()
+
+    # Read from contract
+    response = await contract.get().call()
+    assert response.result.res == 10009
 ```
-starknet tx_status --network=alpha --id=497976
-
-Returns:
-{
-    "block_id": 23896,
-    "tx_status": "PENDING"
-}
+Run the test
 ```
-The [block](https://voyager.online/block/23896) and the
-[contract](https://voyager.online/contract/0x33402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9#state)
+pytest tests/test_read_write.py
+```
+
+### Local Deployment
+
+Deploy to the local devnet.
+```
+nile deploy read_write --alias read_write
+```
 
 ### Interact
 
-Then, to interact, invoke the save function with any number. This requires a transaction:
-
+Write
 ```
-starknet invoke \
-    --network=alpha \
-    --address 0x33402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9 \
-    --abi read_write_contract_abi.json \
-    --function save \
-    --inputs 10000000000
-
-Returns:
-Invoke transaction was sent.
-Contract address: 0x033402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9.
-Transaction ID: 497977.
+nile invoke read_write save 101017
 ```
-Read the stored number using a call to the get() function. This does not required a
-transaction:
+Read
 ```
-starknet call \
-    --network=alpha \
-    --address 0x33402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9 \
-    --abi read_write_contract_abi.json \
-    --function get
-
-Returns:
-10000000000
+nile call read_write get
 ```
+Returns: `101017`
 
-All field elements are from a finite field defined by the specific prime number:
+### Public deployment
 
-`prime = 2**251 + 17 * 2**192 + 1`
-
-Which:
-
-- In binary is a 252 digit number (~1.00 * 2**251): `100000000000000000000000000000000000000000000000000000010001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001`
-- In decimal is a 76 digit number (~3.62 * 10**75): `3618502788666131213697322783095070105623107215331596699973092056135872020481`
-- In hexadecimal is a 65 digit number (~8.00 * 16**64): `0x800000000000011000000000000000000000000000000000000000000000001`
-
-Everything in Cairo is represented in decimal form. Storing the a number of equal size to the
-prime number causes failure:
-
+Will default to the Goerli/alpha testnet until mainnet is available.
 ```
-starknet invoke \
-    --network=alpha \
-    --address 0x33402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9 \
-    --abi read_write_contract_abi.json \
-    --function save \
-    --inputs 3618502788666131213697322783095070105623107215331596699973092056135872020481
-
-Returns:
-Error: StarkException: (500, {'code': <StarknetErrorCode.OUT_OF_RANGE_ENTRY_POINT_SELECTOR: 12>, 'message': 'Call data element 3618502788666131213697322783095070105623107215331596699973092056135872020481 is out of range'})
+nile deploy read_write --alias read_write --network mainnet
 ```
-
-Storing the prime number minus 1 suceeds:
-```
-starknet invoke \
-    --network=alpha \
-    --address 0x33402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9 \
-    --abi read_write_contract_abi.json \
-    --function save \
-    --inputs 3618502788666131213697322783095070105623107215331596699973092056135872020480
-
-Returns:
-Invoke transaction was sent.
-Contract address: 0x033402a2a76ef75b36eec4689f601961a5b23b30ea4d3f5e83b4f095002823a9.
-Transaction ID: 497979.
-```
-
-Trying with other values yields these results:
-
-- Valid
-    - save(0). Zero allowed.
-    - save(1). Numbers 1 onward allowed.
-    - save(prime - 1). This is the largest allowed number.
-- Not valid
-    - save(prime). No using the prime number of the field.
-    - save(prime + 1). No overflow beyond the prime.
-    - save(-1). No negative numbers.
-    - save(-(prime) - 1). No wrap around below from negative prime.
-    - save(0x20). No hexadecimal numbers where field elements are expected.
-    - save(0b1101). No binary numbers where field elements are expected.
-
-Status options:
-
-- NOT_RECEIVED: The transaction has not been received yet (i.e., not written to storage).
-- RECEIVED: The transaction was received by the operator.
-    - PENDING: The transaction passed the validation and is waiting to be sent on-chain.
-        - REJECTED: The transaction failed validation and thus was skipped.
-        - ACCEPTED_ONCHAIN: The transaction was accepted on-chain.
-
-
-Visit the [voyager explorer](https://voyager.online/) to see the transactions.
+Deployments can be viewed in the voyager explorer
+https://voyager.online
