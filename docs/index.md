@@ -14,5 +14,6 @@ Perhaps you are interested in:
 - Ethereum
 [**wallet UI design**]({{ site.baseurl }}{% link ethereum/1559-wallet-interface.md %})
 - [**Local data extraction**]({{ site.baseurl }}{% link ethereum/local_data.md %})
-- [**Generative art**]({{ site.baseurl }}{% link ethereum/gactans.md %})
+- Generative art: [**narrative**]({{ site.baseurl }}{% link ethereum/gactans.md %}) and
+[**gallery**]({{ site.baseurl }}{% link ethereum/more_gactans.md %})
 
