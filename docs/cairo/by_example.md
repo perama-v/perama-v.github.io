@@ -15,15 +15,14 @@ Examples of different elements in Cairo and StarkNet.
 - [Hello, World!]({{ site.baseurl }}{% link cairo/examples/hello_world.md %})
 - [First application]({{ site.baseurl }}{% link cairo/examples/first_application.md %})
 - [Array]({{ site.baseurl }}{% link cairo/examples/array.md %})
+- [Data types]({{ site.baseurl }}{% link cairo/examples/data_types.md %})
+- [Variables]({{ site.baseurl }}{% link cairo/examples/variables.md %})
 
 # YMMV Examples
 
 These examples have core principles, but have not been tested with
 `cairo-lang version >0.5.0` and may not compile.
 
-
-- [Data types]({{ site.baseurl }}{% link cairo/examples/data_types.md %})
-- [Variables]({{ site.baseurl }}{% link cairo/examples/variables.md %})
 - [Read and write values]({{ site.baseurl }}{% link cairo/examples/read_write.md %})
 - [Read and write tuples]({{ site.baseurl }}{% link cairo/examples/read_write_tuple.md %})
 - [Currency]({{ site.baseurl }}{% link cairo/examples/currency.md %})

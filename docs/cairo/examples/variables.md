@@ -26,7 +26,6 @@ A variable may be assigned to a function output:
 %builtins pedersen range_check
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
-from starkware.starknet.common.storage import Storage
 
 # Constant variables defined here are available to all functions.
 # E.g., const my_const_2 = 10
@@ -38,8 +37,10 @@ end
 
 @external
 func use_variables{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
-        range_check_ptr}():
+        syscall_ptr : felt*,
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }():
     alloc_locals  # needed for "local" variables.
 
     # Transient, revocable felt (reference).
@@ -70,75 +71,58 @@ func use_variables{
     let (my_reference_2) = persistent_state.read()
     let (local my_local_2) = persistent_state.read()
 
+    assert my_local_2 = 81
+
     return ()
 end
 
 ```
-Save as `variables.cairo`.
+
+Things to note:
+
+- Locals are good when you want to assert that a variable has
+a certain value. If you use a reference with an assert statement,
+the reference is redefined (it assigns rather than checks). By using
+a local, the contract would perform the check and halt with an error.
+
+Save as `contracts/variables.cairo`
 
 ### Compile
 
-Then, to compile:
+Compile
 ```
-starknet-compile variables.cairo \
-    --output variables_compiled.json \
-    --abi variables_contract_abi.json
+nile compile
 ```
-### Deploy
-
-Then, to deploy:
+Or compile this specific contract
 ```
-starknet deploy --contract variables_compiled.json \
-    --network=alpha
-
-Returns:
-Deploy transaction was sent.
-Contract address: 0x06fac555b6910a5a778a0913ddc8234c1cd855bcd8fd2e57c728234a45bb171f.
-Transaction ID: 497984.
+nile compile contracts/variables.cairo
 ```
 
-*Note:* Remove the zero after the `x`, 0x[0]12345. E.g., 0x0123abc becomes 0x123abc.
+### Local Deployment
 
-### Monitor
-
-Check the status of the transaction:
-
+Deploy to the local devnet.
 ```
-starknet tx_status --network=alpha --id=497984
-
-Returns:
-{
-    "block_id": 23906,
-    "tx_status": "PENDING"
-}
+nile deploy variables --alias variables
 ```
-The [block](https://voyager.online/block/23906) and the
-[contract](https://voyager.online/contract/0x6fac555b6910a5a778a0913ddc8234c1cd855bcd8fd2e57c728234a45bb171f)
 
 ### Interact
 
-Then, to interact:
-
+Read
 ```
-starknet invoke \
-    --network=alpha \
-    --address 0x6fac555b6910a5a778a0913ddc8234c1cd855bcd8fd2e57c728234a45bb171f \
-    --abi variables_contract_abi.json \
-    --function use_variables
-
-Returns:
-Invoke transaction was sent.
-Contract address: 0x6fac555b6910a5a778a0913ddc8234c1cd855bcd8fd2e57c728234a45bb171f.
-Transaction ID: 497985.
+nile call variables use_variables
 ```
 
-Status options:
 
-- NOT_RECEIVED: The transaction has not been received yet (i.e., not written to storage).
-- RECEIVED: The transaction was received by the operator.
-    - PENDING: The transaction passed the validation and is waiting to be sent on-chain.
-        - REJECTED: The transaction failed validation and thus was skipped.
-        - ACCEPTED_ONCHAIN: The transaction was accepted on-chain.
+### Public deployment
 
-
-Visit the [voyager explorer](https://voyager.online/) to see the transactions.
+Will default to the Goerli/alpha testnet until mainnet is available.
+```
+nile deploy variables --alias variables --network mainnet
+```
+```
+🚀 Deploying variables
+🌕 artifacts/variables.json successfully deployed to 0x025dd2b60d1439b9e65a972930b8c5a35b3fdb0f50d523abdf3faa87dd42c79d
+📦 Registering deployment as variables in mainnet.deployments.txt
+```
+Deployments can be viewed in the voyager explorer
+https://voyager.online
