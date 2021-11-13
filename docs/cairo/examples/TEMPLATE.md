@@ -70,15 +70,15 @@ nile deploy TEMPLATE --alias TEMPLATE
 
 ### Interact
 
-Read-only
-```
-nile call TEMPLATE FUNCTION_NAME ARG_1
-```
 Write
 ```
 nile invoke TEMPLATE FUNCTION_NAME ARG_1
-
 ```
+Read
+```
+nile call TEMPLATE FUNCTION_NAME ARG_1
+```
+
 
 ### Public deployment
 

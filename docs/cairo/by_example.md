@@ -17,15 +17,16 @@ Examples of different elements in Cairo and StarkNet.
 - [Array]({{ site.baseurl }}{% link cairo/examples/array.md %})
 - [Data types]({{ site.baseurl }}{% link cairo/examples/data_types.md %})
 - [Variables]({{ site.baseurl }}{% link cairo/examples/variables.md %})
+- [Read and write values]({{ site.baseurl }}{% link cairo/examples/read_write.md %})
+- [Read and write tuples]({{ site.baseurl }}{% link cairo/examples/read_write_tuple.md %})
+- [Currency]({{ site.baseurl }}{% link cairo/examples/currency.md %})
 
 # YMMV Examples
 
 These examples have core principles, but have not been tested with
-`cairo-lang version >0.5.0` and may not compile.
+`cairo-lang version >0.5.0` and may not compile. I will move them to the
+section above after checking them and adding nile-based notes.
 
-- [Read and write values]({{ site.baseurl }}{% link cairo/examples/read_write.md %})
-- [Read and write tuples]({{ site.baseurl }}{% link cairo/examples/read_write_tuple.md %})
-- [Currency]({{ site.baseurl }}{% link cairo/examples/currency.md %})
 - [If-Else]({{ site.baseurl }}{% link cairo/examples/if_else.md %})
 - [Loop]({{ site.baseurl }}{% link cairo/examples/loop.md %})
 - [Mapping]({{ site.baseurl }}{% link cairo/examples/mapping.md %})
