@@ -10,7 +10,10 @@ toc: false
 makes managing files and command line calls to StarkNet simple.
 - Second have a look at how [pytest works]({{ site.baseurl }}{% link cairo/pytest.md %})
 
+Examples of different elements in Cairo and StarkNet.
 
+- [Hello, World!]({{ site.baseurl }}{% link cairo/examples/hello_world.md %})
+- [Array]({{ site.baseurl }}{% link cairo/examples/array.md %})
 
 # YMMV Examples
 
@@ -27,7 +30,6 @@ These examples have core principles, but have not been tested with
 - [If-Else]({{ site.baseurl }}{% link cairo/examples/if_else.md %})
 - [Loop]({{ site.baseurl }}{% link cairo/examples/loop.md %})
 - [Mapping]({{ site.baseurl }}{% link cairo/examples/mapping.md %})
-- [Array]({{ site.baseurl }}{% link cairo/examples/array.md %})
 - [Tuple]({{ site.baseurl }}{% link cairo/examples/tuple.md %})
 - [Struct]({{ site.baseurl }}{% link cairo/examples/struct.md %})
 - [Pointer]({{ site.baseurl }}{% link cairo/examples/pointer.md %})

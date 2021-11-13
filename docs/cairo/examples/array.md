@@ -55,8 +55,8 @@ Make a new file called `array_test.py` and populate it:
 
 ```py
 import pytest
+import asyncio
 from starkware.starknet.testing.starknet import Starknet
-from starkware.starknet.testing.contract import StarknetContract
 
 # Enables modules.
 @pytest.fixture(scope='module')
@@ -78,11 +78,13 @@ async def test_contract(contract_factory):
     await contract.read_array(9).invoke()
 
     # Read from contract
-    val = await contract.read_array(9).call()
-    assert val == 18
+    response = await contract.read_array(9).call()
+    assert response.result.value == 18
 ```
-
-`pytest test_array.py`.
+Run the test.
+```
+pytest test_array.py
+```
 
 ### Local Deployment
 
@@ -92,20 +94,23 @@ nile deploy array --alias array
 ```
 
 ### Interact
+
 Read-only
 ```
-nile call array FUNCTION_NAME ARG_1
-```
-Write
-```
-nile call array FUNCTION_NAME ARG_1
+nile call array read_array 0
 
+# Returns the value 9.
 ```
 
 ### Public deployment
 
 ```
 nile deploy array --alias array --network mainnet
+```
+```
+🚀 Deploying array
+🌕 artifacts/array.json successfully deployed to 0x059ecf357ff349d028d84f53f0a85981bb8ba53fa18e4fea82871d8c1fcf67ad
+📦 Registering deployment as array in mainnet.deployments.txt
 ```
 Deployments can be viewed in the voyager explorer
 https://voyager.online

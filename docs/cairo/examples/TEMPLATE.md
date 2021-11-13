@@ -15,7 +15,7 @@ Save as `contracts/TEMPLATE.cairo`
 
 ### Compile
 
-Compile all contracts
+Compile
 ```
 nile compile
 ```
@@ -53,7 +53,8 @@ async def test_contract(contract_factory):
     await contract.EXTERNAL_FUNCTION_NAME(INPUT_1, INPUT2).invoke()
 
     # Read from contract
-    VAL = await contract.VIEW_FUNCTION_NAME().call()
+    response = await contract.VIEW_FUNCTION_NAME().call()
+    assert response.result.value == x
 ```
 Run the test
 ```
@@ -68,6 +69,7 @@ nile deploy TEMPLATE --alias TEMPLATE
 ```
 
 ### Interact
+
 Read-only
 ```
 nile call TEMPLATE FUNCTION_NAME ARG_1
@@ -80,6 +82,7 @@ nile invoke TEMPLATE FUNCTION_NAME ARG_1
 
 ### Public deployment
 
+Will default to the Goerli/alpha testnet until mainnet is available.
 ```
 nile deploy TEMPLATE --alias TEMPLATE --network mainnet
 ```
