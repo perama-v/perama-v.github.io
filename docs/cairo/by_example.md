@@ -5,6 +5,10 @@ permalink: /cairo/by-example/
 toc: false
 ---
 
+
+- First [setup using Nile]({{ site.baseurl }}{% link cairo/nile.md %}) which
+makes managing files and command line calls to StarkNet simple.
+
 - [Hello, World!]({{ site.baseurl }}{% link cairo/examples/hello_world.md %})
 - [First application]({{ site.baseurl }}{% link cairo/examples/first_application.md %})
 - [Data types]({{ site.baseurl }}{% link cairo/examples/data_types.md %})
