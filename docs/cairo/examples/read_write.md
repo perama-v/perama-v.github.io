@@ -15,7 +15,6 @@ To read a state variable, no transaction is needed.
 %builtins pedersen range_check
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
-from starkware.starknet.common.storage import Storage
 
 @storage_var
 func stored_felt() -> (res : felt):
@@ -23,8 +22,13 @@ end
 
 # Function to get the stored number.
 @view
-func get{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
-        range_check_ptr}() -> (res : felt):
+func get{
+        syscall_ptr : felt*,
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }() -> (
+        res : felt
+    ):
     let (res) = stored_felt.read()
     return (res)
 end
@@ -32,8 +36,12 @@ end
 # Function to update the stored a number (field element).
 @external
 func save{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*,
-        range_check_ptr}(input : felt):
+        syscall_ptr : felt*,
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }(
+        input : felt
+    ):
     stored_felt.write(input)
     return ()
 end
