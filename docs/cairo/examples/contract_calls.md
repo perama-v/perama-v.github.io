@@ -1,7 +1,7 @@
 ---
 layout: page
 title:  "Contract Calls"
-permalink: /cairo/examples/contract_calls_A/
+permalink: /cairo/examples/contract_calls/
 toc: false
 ---
 
