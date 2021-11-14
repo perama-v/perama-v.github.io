@@ -117,16 +117,7 @@ pytest tests/test_constructor.py
 
 Deploy to the local devnet.
 ```
-# Not currently enabled in nile.
-
-# Option 1
 nile deploy constructor 345 876 --alias constructor
-
-# Option 2 Separate inputs flag (conflicts with the invoke/call pattern)
-nile deploy constructor --inputs 345 876 --alias constructor
-
-# Option 3 (option 1 with automatic aliasing of contract name)
-nile deploy constructor 345 876
 ```
 
 ### Interact
@@ -135,13 +126,19 @@ Read
 ```
 nile call constructor read_special_values
 ```
-
+Result: `345 876`
 
 ### Public deployment
 
 Will default to the Goerli/alpha testnet until mainnet is available.
 ```
 nile deploy constructor --alias constructor --network mainnet
+```
+Result:
+```
+🚀 Deploying constructor
+🌕 artifacts/constructor.json successfully deployed to 0x01d7d821b0316bc0f5f6c5a00a16ae48c33bdbf660e9a6fb3bb592869fd571e1
+📦 Registering deployment as constructor in mainnet.deployments.txt
 ```
 Deployments can be viewed in the voyager explorer
 https://voyager.online
