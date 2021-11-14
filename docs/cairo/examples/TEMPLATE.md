@@ -33,12 +33,10 @@ import pytest
 import asyncio
 from starkware.starknet.testing.starknet import Starknet
 
-# Enables modules.
 @pytest.fixture(scope='module')
 def event_loop():
     return asyncio.new_event_loop()
 
-# Reusable to save testing time.
 @pytest.fixture(scope='module')
 async def contract_factory():
     starknet = await Starknet.empty()

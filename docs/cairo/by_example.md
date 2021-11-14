@@ -9,6 +9,10 @@ toc: false
 - First [setup using Nile]({{ site.baseurl }}{% link cairo/nile.md %}) which
 makes managing files and command line calls to StarkNet simple.
 - Second have a look at how [pytest works]({{ site.baseurl }}{% link cairo/pytest.md %})
+- After you have set everything up, to run the examples:
+    - Open two terminals in the project folder and run `source env/bin/activate`
+    - In one run `nile node` to start a local devnet.
+    - In the other run the commands in the examples.
 
 Examples of different elements in Cairo and StarkNet.
 
