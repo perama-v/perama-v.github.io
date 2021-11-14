@@ -24,6 +24,7 @@ Examples of different elements in Cairo and StarkNet.
 - [Read and write values]({{ site.baseurl }}{% link cairo/examples/read_write.md %})
 - [Read and write tuples]({{ site.baseurl }}{% link cairo/examples/read_write_tuple.md %})
 - [Currency]({{ site.baseurl }}{% link cairo/examples/currency.md %})
+- [Constructor]({{ site.baseurl }}{% link cairo/examples/constructor.md %})
 
 # YMMV Examples
 
