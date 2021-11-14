@@ -20,6 +20,7 @@ mkdir nile-cairo-examples
 cd nile-cairo-examples
 python3 -m venv env
 source env/bin/activate
+pip install cairo-nile
 nile init
 ```
 
