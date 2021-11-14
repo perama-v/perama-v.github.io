@@ -33,7 +33,7 @@ func get{
     return (res)
 end
 
-# Function to update the stored a number (field element).
+# Function to update the stored number (field element).
 @external
 func save{
         syscall_ptr : felt*,

@@ -26,6 +26,7 @@ Examples of different elements in Cairo and StarkNet.
 - [Currency]({{ site.baseurl }}{% link cairo/examples/currency.md %})
 - [Constructor]({{ site.baseurl }}{% link cairo/examples/constructor.md %})
 - [Custom imports]({{ site.baseurl }}{% link cairo/examples/custom_imports.md %})
+- [Contract calls]({{ site.baseurl }}{% link cairo/examples/contract_calls.md %})
 
 # YMMV Examples
 

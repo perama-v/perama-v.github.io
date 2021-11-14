@@ -15,7 +15,6 @@ Save as `contracts/TEMPLATE.cairo`
 
 ### Compile
 
-Compile
 ```
 nile compile
 ```
