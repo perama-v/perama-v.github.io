@@ -28,7 +28,7 @@ Examples of different elements in Cairo and StarkNet.
 - [Custom imports]({{ site.baseurl }}{% link cairo/examples/custom_imports.md %})
 - [Contract calls]({{ site.baseurl }}{% link cairo/examples/contract_calls.md %})
 - [Array argument]({{ site.baseurl }}{% link cairo/examples/array_argument.md %})
-- [Struct arguments]({{ site.baseurl }}{% link cairo/examples/struct_arguments.md %})
+- [Struct returns]({{ site.baseurl }}{% link cairo/examples/struct_returns.md %})
 
 # YMMV Examples
 
