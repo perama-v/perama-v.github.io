@@ -7,117 +7,143 @@ toc: false
 
 A call to an `@external` function may accept an array as an argument.
 
+Below is a contract that accepts an array, performs a simple
+calculation using the first and last elements and saves the result.
+
 ```sh
 %lang starknet
 %builtins pedersen range_check
 
 from starkware.cairo.common.cairo_builtins import HashBuiltin
-from starkware.starknet.common.storage import Storage
 
 @storage_var
-func stored_felt() -> (res : felt):
+func stored_number() -> (res : felt):
 end
 
 # Function to get the stored value.
 @view
-func get{storage_ptr : Storage*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-        ) -> (res : felt):
-    let (stored_solution) = stored_felt.read()
-    return (stored_solution)
+func get{
+        syscall_ptr : felt*,
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }() -> (
+        stored : felt
+    ):
+    let (stored) = stored_number.read()
+    return (stored)
 end
 
 # Function to accept an array.
 @external
 func save{
-        storage_ptr : Storage*, pedersen_ptr : HashBuiltin*, range_check_ptr}(
-        input_array_len : felt, input_array : felt*):
+        syscall_ptr : felt*,
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }(
+        input_array_len : felt,
+        input_array : felt*
+    ):
     let first = input_array[0]
     let last = input_array[input_array_len - 1]
     let solution = first * 2 + last * 3
-    stored_felt.write(solution)
+    stored_number.write(solution)
     return ()
 end
 
 ```
-Save as `array_argument.cairo`.
+Save as `contracts/array_argument.cairo`
 
 ### Compile
 
-Then, to compile:
 ```
-starknet-compile array_argument.cairo \
-    --output array_argument_compiled.json \
-    --abi array_argument_contract_abi.json
+nile compile
 ```
-### Deploy
-
-Then, to deploy:
+Or compile this specific contract
 ```
-starknet deploy --contract array_argument_compiled.json \
-    --network=alpha
-
-Returns:
-Deploy transaction was sent.
-Contract address: 0x029caa6660d24ec2a2676c49b942d06f4fabf3f6525dc530ccaef5814afd96fb
-Transaction ID: 30455
+nile compile contracts/array_argument.cairo
 ```
 
-*Note:* Remove the zero after the `x`, 0x[0]12345. E.g., 0x0123abc becomes 0x123abc.
+### Test
 
-## Monitor
+Make a new file called `test_array_argument.py` and populate it:
 
-Check the status of the transaction:
+```py
+import pytest
+import asyncio
+from starkware.starknet.testing.starknet import Starknet
 
+@pytest.fixture(scope='module')
+def event_loop():
+    return asyncio.new_event_loop()
+
+@pytest.fixture(scope='module')
+async def contract_factory():
+    starknet = await Starknet.empty()
+    contract = await starknet.deploy("contracts/array_argument.cairo")
+    return starknet, contract
+
+@pytest.mark.asyncio
+async def test_contract(contract_factory):
+    starknet, contract = contract_factory
+
+    my_array = [2, 4, 6, 8, 9]
+    # Save the array.
+    # Notice how while the test function only expects the array,
+    # and does not require the explicit passing of the array length.
+    # The length is automatically passed to the Cairo function.
+    await contract.save(my_array).invoke()
+
+    # Read from contract
+    response = await contract.get().call()
+    # first * 2 + last * 3
+    expected = my_array[0] * 2 + my_array[-1] * 3
+    assert response.result.stored == expected
 ```
-starknet tx_status --network=alpha --id=30455
-
-Returns:
-{
-    "block_id": 4916,
-    "tx_status": "PENDING"
-}
+Run the test
 ```
-The [block](https://voyager.online/block/4916) and the
-[contract](https://voyager.online/contract/0x29caa6660d24ec2a2676c49b942d06f4fabf3f6525dc530ccaef5814afd96fb#state)
+pytest tests/test_array_argument.py
+```
+
+### Local Deployment
+
+Deploy to the local devnet.
+```
+nile deploy array_argument --alias array_argument
+```
 
 ### Interact
 
-Then, to interact:
+Send an array to the contract. The length of the array must be passed
+explicitly before the array itself. Note that in pytest this is handled
+automatically.
+
+Hence for an array: 1 2 3 4 10
+The length is 5, and the arguments passed are: 5 1 2 3 4 10
+
+Passing a non-5 number will cause an error.
 
 ```
-starknet invoke \
-    --network=alpha \
-    --address 0x29caa6660d24ec2a2676c49b942d06f4fabf3f6525dc530ccaef5814afd96fb \
-    --abi array_argument_contract_abi.json \
-    --function save \
-    --inputs 5 1 2 3 4 5
-
-Returns:
-Invoke transaction was sent.
-Contract address: 0x029caa6660d24ec2a2676c49b942d06f4fabf3f6525dc530ccaef5814afd96fb
-Transaction ID: 47065
+nile invoke array_argument save 5 1 2 3 4 10
 ```
-
-Test that the contract has stored the sum using the array correctly.
-
+Read.
+The contract returns `2*first + 3*last`
 ```
-starknet call \
-    --network=alpha \
-    --address 0x29caa6660d24ec2a2676c49b942d06f4fabf3f6525dc530ccaef5814afd96fb \
-    --abi array_argument_contract_abi.json \
-    --function get
-
-Returns:
-17
+nile call array_argument get
 ```
-
-Status options:
-
-- NOT_RECEIVED: The transaction has not been received yet (i.e., not written to storage).
-- RECEIVED: The transaction was received by the operator.
-    - PENDING: The transaction passed the validation and is waiting to be sent on-chain.
-        - REJECTED: The transaction failed validation and thus was skipped.
-        - ACCEPTED_ONCHAIN: The transaction was accepted on-chain.
+Result: `32` as expected (`2 * 1 + 3 * 10`).
 
 
-Visit the [voyager explorer](https://voyager.online/) to see the transactions.
+### Public deployment
+
+Will default to the Goerli/alpha testnet until mainnet is available.
+```
+nile deploy array_argument --alias array_argument --network mainnet
+```
+Result:
+```
+🚀 Deploying array_argument
+🌕 artifacts/array_argument.json successfully deployed to 0x00ebdf63de52e79a661bfc80faa361e7a96ed5675ac5f8a99944044bb27cfa6a
+📦 Registering deployment as array_argument in mainnet.deployments.txt
+```
+Deployments can be viewed in the voyager explorer
+https://voyager.online
