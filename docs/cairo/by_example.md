@@ -27,6 +27,7 @@ Examples of different elements in Cairo and StarkNet.
 - [Constructor]({{ site.baseurl }}{% link cairo/examples/constructor.md %})
 - [Custom imports]({{ site.baseurl }}{% link cairo/examples/custom_imports.md %})
 - [Contract calls]({{ site.baseurl }}{% link cairo/examples/contract_calls.md %})
+- [Array argument]({{ site.baseurl }}{% link cairo/examples/array_argument.md %})
 
 # YMMV Examples
 
@@ -42,7 +43,6 @@ section above after checking them and adding nile-based notes.
 - [Pointer]({{ site.baseurl }}{% link cairo/examples/pointer.md %})
 - [Data locations]({{ site.baseurl }}{% link cairo/examples/data_locations.md %})
 - [Function]({{ site.baseurl }}{% link cairo/examples/function.md %})
-- [Array argument]({{ site.baseurl }}{% link cairo/examples/array_argument.md %})
 - [Assert]({{ site.baseurl }}{% link cairo/examples/assert.md %})
 - [Generate message]({{ site.baseurl }}{% link cairo/examples/generate_message.md %})
 - [Message L1]({{ site.baseurl }}{% link cairo/examples/message_L1.md %})
