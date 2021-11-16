@@ -28,6 +28,7 @@ Examples of different elements in Cairo and StarkNet.
 - [Custom imports]({{ site.baseurl }}{% link cairo/examples/custom_imports.md %})
 - [Contract calls]({{ site.baseurl }}{% link cairo/examples/contract_calls.md %})
 - [Array argument]({{ site.baseurl }}{% link cairo/examples/array_argument.md %})
+- [Struct arguments]({{ site.baseurl }}{% link cairo/examples/struct_arguments.md %})
 
 # YMMV Examples
 
@@ -53,4 +54,3 @@ section above after checking them and adding nile-based notes.
 - [Math comparison operators]({{ site.baseurl }}{% link cairo/examples/math_comparison.md %})
 - [Bitwise operations]({{ site.baseurl }}{% link cairo/examples/bitwise.md %})
 - [Dictionary]({{ site.baseurl }}{% link cairo/examples/default_dict.md %})
-- [Struct arguments]({{ site.baseurl }}{% link cairo/examples/struct_arguments.md %})
