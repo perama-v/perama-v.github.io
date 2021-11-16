@@ -1,6 +1,6 @@
 ---
 layout: page
-title:  "array_returns"
+title:  "Array Returns"
 permalink: /cairo/examples/array_returns/
 toc: false
 ---
