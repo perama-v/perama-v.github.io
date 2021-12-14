@@ -16,4 +16,5 @@ Perhaps you are interested in:
 - [**Local data extraction**]({{ site.baseurl }}{% link ethereum/local_data.md %})
 - Generative art: [**narrative**]({{ site.baseurl }}{% link ethereum/gactans.md %}) and
 [**gallery**]({{ site.baseurl }}{% link ethereum/more_gactans.md %})
+- A [**mechanism**]({{ site.baseurl }}{% link ethereum/ideas.md %})  to increase the rate of ideation.
 
