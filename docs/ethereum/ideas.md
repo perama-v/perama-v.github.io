@@ -14,6 +14,7 @@ Contents
 - [Background](#background)
 - [Design](#design)
 - [Future applications](#future)
+- [Organic Manifestations](#organic-manifestations)
 
 ```
 [---Open~Idea---]
@@ -474,7 +475,7 @@ and implementations. For example, a prediction market could arise
 based a prototype deployment, or on whether
 VC funding will be sourced before a certain date.
 
-## Closing remarks
+## General remarks
 
 This is a loose and simple framework. There are more complex
 tools that could be integrated, but there is perhaps a benefit to starting
@@ -496,5 +497,48 @@ This idea is an:
 (*) Open your own ideas to the world (*)
 ```
 
+
+
+# Organic Manifestations
+
+In recongnition that a de novo knowledge graph would be an enormous undertaking, it may be wise to consider where the implementation might natrually arise.
+
+Consider GitHub as a graph of knowledge where there is already
+a system for 'attestation of personal contribution'. Imagine if you
+could use a piece of open source software and click a donate button
+that automatically routed payments to all the developers who made commits.
+
+One could even create a donations client that walks the links of a github project, fetching the contributors involving in the linked projects.
+
+It could be a cultural norm in the future to perform retroactive public goods funding by this mechanism - e.g., if you used/forked a piece of free and open source software, you could willingly and publicly direct some funds along to the humans that were involved in
+commiting the code that you ultimatley used.
+
+One important distinction is that such a practice would ideally be
+seen as a voluntary act, and that using FOSS without donating is also reasonable. I could see a future where it is compelling at the individual level (personal fulfilment) and at the organisational level (social engagement) to participate in retroactive funding in this way.
+
+### The inception of the database
+
+Consider a database with mappings of github users to ECDSA public keys.
+
+A system could work as follows:
+
+1. Donator inputs the name of a repository they like.
+2. Software pulls the github users that have made commits.
+3. Users are looked up in the user->ECDSA key database.
+4. List of public keys are returned.
+5. A multi-send contract on an ECDSA-compatible L2 is passed a donation amount and the list of addresses.
+6. Funds are routed.
+7. Perhaps some social certificate is optionally minted as a fun way to generate attention or clout. Perhaps owners of these tokens could be regarded as good-actors that other systems could use when looking
+for list of 'community-minded' people.
+
+Being tightly coupled to the Ethereum community, a good testbed
+could be Ethereum-related projects. There could be a site that
+allows users to sign in with their github account and attest to a public key.
+
+An individual is incentivised to volunteer an address if they have ever made a commit to a public repo that might attract donations.
+
+Perhaps the implementation is just a public repo with some simple rules
+allowing only addresses to be appended to a large list. The commit
+author for a given address is enforced by github authentification.
 
 
