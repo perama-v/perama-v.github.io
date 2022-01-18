@@ -35,7 +35,7 @@ numbers stay within a certain range.
 - The function accepts no inputs
 - The function returns two outputs.
 - The two outputs have the type `felt`.
-- All functions must have a `return` and and `end`
+- All functions must have a `return` and an `end`
 
 Save as `contracts/hello_world.cairo`
 
