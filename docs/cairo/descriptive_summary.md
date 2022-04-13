@@ -170,7 +170,7 @@ STARKs are a way to take a program and summarize its operation such that a tiny 
 can be put into the rollup. The power of a STARK is that the summary is always tiny,
 even if the program is very large.
 
-Another feature of STARKs is that eliminate a special type of risk inherent to other
+Another feature of STARKs is that they eliminate a special type of risk inherent to other
 Zero Knowledge Proofs. Proofs are made using a computer program that has been created for
 that purpose. Some proof systems require that a special secret be created by many different
 people. There is a very small but non-zero chance that all the secret-creators get together
