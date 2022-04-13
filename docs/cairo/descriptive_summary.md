@@ -191,7 +191,7 @@ An AIR can be thought of as deconstructing a program and reconstructing it as a 
 Every row and column in the spreadsheet accounts for different parts of the program.
 As the program progresses, new lines are added to the spreadsheet.
 
-The spreadsheet allows line-by-line checking of the program. If all the checks pass, then
+The spreadsheet allows line-by-line checking of the program. If all the checks pass,
 then the program can progress to the next stage of the proof generation.
 
 AIRs are novel in that they allow complex Cairo code to be broken down into small, easy
