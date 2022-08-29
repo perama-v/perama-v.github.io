@@ -83,7 +83,7 @@ end
 ```
 
 For an implementation of this model see
-[here](https://github.com/OpenZeppelin/cairo-contracts/blob/main/contracts/Account.cairo).
+[here](https://github.com/OpenZeppelin/cairo-contracts/blob/main/src/openzeppelin/account/IAccount.cairo).
 
 A user can define what they want their account to "be". For many users,
 an account contract will perform a signature check and then call the destination.
