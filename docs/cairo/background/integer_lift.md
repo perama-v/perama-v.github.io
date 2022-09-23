@@ -112,7 +112,7 @@ For example:
 
 It can be seen that `a` is a larger number than `b`.
 
-The `is_le_felt(a, b)` function checks if `a_high` is less than `b_high`.
+The `is_le_felt(a, b)` function checks if `a_high` is less than or equal to `b_high`.
 
 It would return:
 
