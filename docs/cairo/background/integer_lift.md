@@ -56,7 +56,7 @@ So for a number in Cairo, the integer lift would take the number, represent it a
     - `100101010110101...` (first 128 digits) and
     - `...101010100101001` (last 128 digits)
 - With integer lifts:
-    - `high * 2 * 128 + low`
+    - `high * 2 ** 128 + low`
     - `high` is a number that starts with `100101010110101...`
     - `low` is a number that ends with `...101010100101001`
 
@@ -112,7 +112,7 @@ For example:
 
 It can be seen that `a` is a larger number than `b`.
 
-The `is_le_felt(a, b)` function checks if `a_high` is less than `b_high`.
+The `is_le_felt(a, b)` function checks if `a_high` is less than or equal to `b_high`.
 
 It would return:
 
