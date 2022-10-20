@@ -19,7 +19,7 @@ powerful is that anyone can design a program and publish it for anyone else to u
 These programs can be crafted to perform a myriad of tasks, and can be thought of as
 digital robots that coordinate value between people all around the world.
 
-Each Ethereum transactions costs money to incentivise people to keep to the network running
+Each Ethereum transaction costs money to incentivise people to keep to the network running
 on their own computer. A very large Ethereum program or transaction causes those computers
 to work harder, and therefore costs more money that a small transaction. Ultimately, there is a
 limit to how hard you can make each computer work, and because of that, the network accepts
@@ -142,7 +142,7 @@ Field arithmetic is built upon mathematics with procedures involving equations a
 numbers. They are important when designing the Cairo system, but are not required for
 a developer who wishes to use Cairo to create an application.
 
-Zero Knowledge Proofs (ZPKs)
+Zero Knowledge Proofs (ZKPs)
 ----------------------------
 
 Zero knowledge proofs are a decades-old invention which has special
@@ -159,7 +159,7 @@ either rearranges it, or leaves it. If you can tell when it was rearranged, the 
 knows that you have the information about the puzzle that you promised.
 
 In zero knowledge proofs, a program performs this game and generates a receipt that
-mathematically prooves that the claim "I know some secret" is valid.
+mathematically proves that the claim "I know some secret" is valid.
 
 STARKs
 ------
