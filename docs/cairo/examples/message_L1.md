@@ -21,7 +21,7 @@ This has three steps: generate, verify & digest.
 - The `StarkNet.sol` deployed by StarkWare and [live on Ropsten](https://ropsten.etherscan.io/address/0x0d761163e8bdc22fec278fea0c7a95e7b2dfa3c3#code)
 - Features the write function [`consumeMessageFromL2()`](https://ropsten.etherscan.io/address/0x0d761163e8bdc22fec278fea0c7a95e7b2dfa3c3#writeContract).
     - This computes the hash tying together the message and both the L2 and L1 contracts.
-        - The L2 conract address (function argument, but could be stored in an L1 contract
+        - The L2 contract address (function argument, but could be stored in an L1 contract
         for security)
         - The calling `msg.sender` address (custom ethereum contract)
         - The message (some application logic. E.g., user and amount)
@@ -39,7 +39,7 @@ contract, deployed by StarkNet.
     - See the line: `starknetCore.consumeMessageFromL2(l2ContractAddress, payload);`
     - This is a request for verification that the payload is a valid message from the
     specified L2 address.
-- The purpose of this contract is to accept a message (E.g., user, withdrawl amount) and
+- The purpose of this contract is to accept a message (E.g., user, withdrawal amount) and
 and then call the StarkNet contract to check that is a valid message. The contract then
 proceeds with some logic appropriate for the application (E.g., releasing ETH to an address).
 
@@ -90,7 +90,7 @@ func increase_L1_balance{
     let (message : felt*) = alloc()
 
     # The L1 contract expects the message to have 3 elements.
-    assert message[0] = 0  # '0' is for a withdrawl L2 to L1.
+    assert message[0] = 0  # '0' is for a withdrawal L2 to L1.
     assert message[1] = 12345678 # User
     assert message[2] = 3  # Amount to increase L1 balance by.
 

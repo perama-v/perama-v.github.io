@@ -109,7 +109,7 @@ Once the proof is generated and the smart contract verifies the fact on chain,
 the L1 contract on Ropsten can be called.
 
 This contract specified the recipient of the message to be the address `0x123123`, which
-is the only Ethereum L1 address that can receive the mmessage.
+is the only Ethereum L1 address that can receive the message.
 
 Status options:
 

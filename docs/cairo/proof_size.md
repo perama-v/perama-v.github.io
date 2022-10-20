@@ -108,7 +108,7 @@ details on how this works can be found
 
 Every fact must be integrated into the smart contract of the application that will use it.
 This requires a transaction sent to the application contract, which contains data used
-for application logic. The data is corroborated with the Verfier contract before
+for application logic. The data is corroborated with the Verifier contract before
 storage and integration.
 For example: "The trading system new total balance is x, with user balances a, b, c and d".
 This transaction will incur a minimum cost of 20,000 gas per application.
@@ -123,7 +123,7 @@ such that the density of the system is greater than that possible with normal tr
 A STARK rollup is more dense than mainnnet when the proof costs and the costs to integrate
 facts are, in total, less than the mainnet transactions they replace. For 100,000 gas trades
 being replaced by a 5 million gas proof with 600,000 gas fact integration costs, the
-crossver value is `(5,000,000 + 600,000) / 200,000) = 56 trades`. For more than 56 trades, it is
+crossover value is `(5,000,000 + 600,000) / 200,000) = 56 trades`. For more than 56 trades, it is
 more efficient to use the rollup.
 
 ## Proof limits

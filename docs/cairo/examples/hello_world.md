@@ -5,7 +5,7 @@ permalink: /cairo/examples/hello_world/
 toc: false
 ---
 
-The Cairo comiler knows that a program is a contract
+The Cairo compiler knows that a program is a contract
 if it has `%lang starknet` at the top.
 
 In Cairo, each number is a `felt` (field element -> "F EL T").
@@ -16,7 +16,7 @@ behave like integers inside StarkNet contracts.
 %lang starknet
 %builtins range_check
 
-# Alphabet substituation cipher for each letter.
+# Alphabet substitution cipher for each letter.
 # a = 01, b = 02, etc.
 const hello = 10000805121215  # 08, 05, 12, 12, 15.
 const world = 10002315181204  # 23, 15, 18, 12, 04.

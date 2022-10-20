@@ -57,7 +57,7 @@ func use_variables{
     const my_const = 60
     # Cannot redefine const (const my_const = 61)
 
-    # Transient, non-revoacable expression (local). Requires alloc_locals.
+    # Transient, non-revocable expression (local). Requires alloc_locals.
     local my_local = 70
     # Cannot redefine local (local my_local = 71).
 

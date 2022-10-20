@@ -81,7 +81,7 @@ To explore the program structure and debug, visit the tracer at http://localhost
 ## Deploy program
 
 The program can be sent to a public Ethereum testnet (Ropsten) using SHARP. Run the following
-command to send the programto SHARP for proof generation and fact registration:
+command to send the program to SHARP for proof generation and fact registration:
 
 ```
 cairo-sharp submit --source program.cairo \
@@ -124,7 +124,7 @@ contract storage.
 ``bytes32 fact = keccak256(abi.encodePacked(cairoProgramHash_, outputHash));``.
 
 Calls the `Fact Registry` read method ``isValid(fact)`` to determine if the proof
-should be accepted. The address of the verifier is permament and can be
+should be accepted. The address of the verifier is permanent and can be
 retrieved from contract storage.
 
 ``require(cairoVerifier_.isValid(fact), "MISSING_CAIRO_PROOF");``.
@@ -165,7 +165,7 @@ Below is the Solidity code referenced in the above descriptions.
 When the contract is deployed, the `constructor` will need to be passed values that will
 permanently live in the contract:
 - `cairoProgramHash`, the enshrined Cairo program hash that the application will recognise.
-- `cairoVerifier`, the address of the Ropsten erifier, deployed by Starkware
+- `cairoVerifier`, the address of the Ropsten verifier, deployed by Starkware
 (`0xf0EC41069A89595ADf5f27A4a90ff2DF30D83d2E`).
 - `initialNumber`, the "first number" the application will store.
 

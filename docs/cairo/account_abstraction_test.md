@@ -30,7 +30,7 @@ TL;DR
 A nonce-nanny helper is used to manage multiple local accounts.
 ```
 
-## Local account intantiation flow
+## Local account instantiation flow
 
 This `pytest`-based framework is structured like so:
 
@@ -94,7 +94,7 @@ Thus, if you have an account contract, you are the only person that can store
 a number for your account. This example could be expanded to include a different
 account model, e.g., a `MultiSig.cairo` account that handles signatures from multiple
 parties. The application contract could already be deployed and would handle this
-new contract as it would this simple singl owner `Account.cairo`. For an account is an
+new contract as it would this simple single owner `Account.cairo`. For an account is an
 abstract concept from the perspective of the application.
 
 ## Framework execution
@@ -125,7 +125,7 @@ the address of the deployed account contract.
 This is the contents of the `Application.cairo` file.
 
 Once deployed, can be called by anyone to publicly store a number.
-E.g., a personal annoucements board where you can signal support
+E.g., a personal announcements board where you can signal support
 for some numbered-thing ('I support xyz number 554').
 
 Nobody can impersonate you or change/conceal your announcement.

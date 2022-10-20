@@ -49,7 +49,7 @@ is accessed through the feeHistory API from the
 
 ## The `|info|` button
 
-The user is not entirely satisfied with the simple inferface and wants more.
+The user is not entirely satisfied with the simple interface and wants more.
 
 ```
 |<- save & back|
@@ -165,7 +165,7 @@ illustrate the 'context' in which a transaction will be competing.
 The stats that this page exposes are:
 
 - 12 most recent basefees. *What is the trend?*
-- The Gas Premium values from the last block. *What is the competitiion?*
+- The Gas Premium values from the last block. *What is the competition?*
 
 ```
 |<- back|

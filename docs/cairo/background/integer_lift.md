@@ -5,7 +5,7 @@ permalink: /cairo/background/integer_lift/
 toc: false
 ---
 
-Cairo programs use large numbers and sometimes it is userful to be able to
+Cairo programs use large numbers and sometimes it is useful to be able to
 perform checks on these numbers as part of some operation. One useful technique
 is to split the field element.
 

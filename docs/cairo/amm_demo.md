@@ -181,10 +181,10 @@ where on the Cairo-based L2, these tokens are owned by many different actors.
 An L2 actor may claim their token on L1 by using their balance and some other Merkle branches.
 
 The L2->L1 withdrawal component of the AMM is not implemented in this example, but would
-involve a Cairo program executing a withdrawl operation. The withdrawl proof, which
+involve a Cairo program executing a withdrawal operation. The withdrawal proof, which
 contains the new AMM account merkle root, would be stored by the Verifier contract.
-The user could then trigger a withdrawl from the the AmmDemo contract, which would
-accept the new Merkle root after checking that the proof for the withdrawl was verified.
+The user could then trigger a withdrawal from the the AmmDemo contract, which would
+accept the new Merkle root after checking that the proof for the withdrawal was verified.
 
 ```
 // SPDX-License-Identifier: Cairo Program License (Source Available)
@@ -283,10 +283,10 @@ passed to the constructor.
   - Defined in the python script as `get_merkle_root(batch_prover.accounts)`.
   - A merkle tree root, representing the unique state of the system, see below for details.
   - `3262995978462033705189630496750790514901299827561453807468505774450708589253`
-- **`amount_token_a`**, initial balance of token A in the AMM. An arbirary value.
+- **`amount_token_a`**, initial balance of token A in the AMM. An arbitrary value.
   - Defined in the python script as `batch_prover.balance.a`.
   - Defined here as `100`.
-- **`amount_token_b`**, initial balance of token B in the AMM. An arbirary value.
+- **`amount_token_b`**, initial balance of token B in the AMM. An arbitrary value.
   - Defined in the python script as `batch_prover.balance.b`.
   - Defined here as `1000`.
 - **`program_hash`**, program hash, calculated by the Cairo command line interface (above).
@@ -722,13 +722,13 @@ and request funds by pasting the chosen address.
 
 Confirm that the contract deployment script `scripts/amm-deploy.js` targets the
 real Ropsten verifier address. If it was changed in Part II to target the pretend
-verifier, chanage it back to:
+verifier, change it back to:
 
 ```
 const verifierAddress = "0x2886D2A190f00aA324Ac5BF5a5b90217121D5756";
 ```
 
-Adda new section to the  `scripts/amm-deploy.js` deployment script, specifying the funded address
+Add new section to the  `scripts/amm-deploy.js` deployment script, specifying the funded address
 as the "signer" responsible for deployment.
 
 ```
@@ -855,7 +855,7 @@ accounts_dictionary = {
 ```
 
 The purpose of the Cairo program is to execute a legal set of trades, moving
-tokens between accounts. Thus, it is passed the curent account state, the current
+tokens between accounts. Thus, it is passed the current account state, the current
 AMM balances and some trades. Execute the trades:
 
 First compile:
@@ -903,7 +903,7 @@ Yet the Cairo program has:
 `-355506810204097508507692286344279590721807387770142892504586281685163431228`
 
 What is this discrepancy? They are the same numbers, when taken modulo the
-[defaul prime number](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/lang/cairo_constants.py)
+[default prime number](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/lang/cairo_constants.py)
 used in Cairo. See below for more information.
 
 **A note about field arithmetic**.

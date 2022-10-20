@@ -93,7 +93,7 @@ However, the contract may do anything:
 - Check multiple signatures.
 - Receive and swap a stable coin before paying for the transaction fee.
 - Only agree to pay for the transaction if a trade was profitable.
-- Use funds from a mixer to pay for the transaction, separating the deposit from withdrawl.
+- Use funds from a mixer to pay for the transaction, separating the deposit from withdrawal.
 - Send a transaction on behalf of itself - a DAO.
 
 ## Abstraction terminology
@@ -108,8 +108,8 @@ and account is an abstract concept - it could be a DAO or a multisig or anything
 ## L1 to L2 Onboarding to a new account
 
 To make a new account, a contract must be deployed. A contract may be selected from a library
-of well-scutinized contracts for different use cases. E.g,. Single-owner, multi-owner, or
-more specialised variants such as nonce-less accounts for exotic pruposes.
+of well-scrutinized contracts for different use cases. E.g,. Single-owner, multi-owner, or
+more specialised variants such as nonce-less accounts for exotic purposes.
 
 A user will likely experience an interface that combines key elements involved in onboarding to L2:
 
@@ -124,7 +124,7 @@ owners for the account).
 The wallet is used to sign a transaction to deploy the contract and save their details.
 
 The Account may then be used for all interactions with StarkNet, such as transferring, swapping
-or caling arbitrary contracts with arbitrary data.
+or calling arbitrary contracts with arbitrary data.
 
 The details of how this manifests in relation to an onboarding-related account creation
 with an L1 to L2 bridge will become clearer with time.
@@ -387,7 +387,7 @@ async def test_number_application():
     await save_my_number.invoke()
 
     # View number.
-    get_stored = signer.build_transactin(
+    get_stored = signer.build_transaction(
         account, application.contract_address, 'view_number')
     stored = get_stored.invoke()
 
@@ -465,7 +465,7 @@ The additional requirement is that the public key for StarkNet
 must be produced from the private key using the curve that is
 different from the Ethereum curve. This requires wallets to implement
 a function like that used in
-[signer.py](https://github.com/OpenZeppelin/cairo-contracts/blob/main/test/utils/Signer.py), which calls StarkWare's crypto module visibile
+[signer.py](https://github.com/OpenZeppelin/cairo-contracts/blob/main/test/utils/Signer.py), which calls StarkWare's crypto module visible
 [here](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/crypto/starkware/crypto/signature/signature.py).
 
 Account setup:
