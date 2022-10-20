@@ -38,7 +38,7 @@ Intermediate goals:
 
 - Faster production of tools.
 - Faster tool ideation.
-- Lower idea propogation friction.
+- Lower idea propagation friction.
 - Simple idea publication system.
   - Participation incentive for economically rational actors.
   A retrospective content-address-attribution royalty model.
@@ -278,13 +278,13 @@ the graph distributes funds according to the weights that the ideators
 declared at time of publication.
 
 The ideator could under-allocate the percentage that they choose
-to attribute to preceeding ideas. However, given that the graph
+to attribute to preceding ideas. However, given that the graph
 is public, there is a degree of social pressure that disincentivises
 this. The ideator hopes to attract funds, and therefore is likely
 to be honest about the contribution (the nature of which can be seen).
 
 There could be a requirement to attribute at least 10% to other ideas,
-or a more agressive proportion (60%), to create very broad distribution
+or a more aggressive proportion (60%), to create very broad distribution
 that extends many levels deep.
 
 ### Key management
@@ -340,7 +340,7 @@ Let us examine the psychology of the person who creates an idea.
 **Moment of inspiration**: In the moment of ideation, the mind is subsumed by euphoria.
 Ideas are inherently joyful things to create, and it is a natural response to
 want to share an idea. This forms the basis for the system. Users
-ultimately want to see their idea propogate to others and the system enables
+ultimately want to see their idea propagate to others and the system enables
 that.
 
 **Extraction**: Having real world responsibilities and goals,
@@ -486,7 +486,7 @@ that people are afraid. By providing a simple and neutral mechanism that
 is easy to understand, people might be less afraid to release their
 ideas. There is likely a strong desire for people to share their ideas
 and have them be the subject to the internet-swarm, whose members
-can contribute to the idea in compelmentary ways.
+can contribute to the idea in complementary ways.
 
 
 
