@@ -11,7 +11,7 @@ differ from Cairo contracts deployed to StarkNet. This page addresses
 SHARP-based programs only. They are the original Cairo program style, and are the most generic,
 free-form and flexible.
 
-### **Minimum Verfifiable Program**
+### **Minimum Verifiable Program**
 
 This is the structure of the most basic Cairo program. Comments are anything with "#" before it,
 the rest is code.

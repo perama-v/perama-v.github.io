@@ -15,11 +15,11 @@ Ethereum
 Ethereum is a platform shared across many computers around the world. It allows
 different people to come to agreements despite not knowing or trusting each other.
 These agreements allow you to send and program money. The core reason why Ethereum is
-powerful is that anyone can design a program and publish it for anyone elso to use.
+powerful is that anyone can design a program and publish it for anyone else to use.
 These programs can be crafted to perform a myriad of tasks, and can be thought of as
 digital robots that coordinate value between people all around the world.
 
-Each Ethereum transactions costs money to incentivise people to keep to the network running
+Each Ethereum transaction costs money to incentivise people to keep to the network running
 on their own computer. A very large Ethereum program or transaction causes those computers
 to work harder, and therefore costs more money that a small transaction. Ultimately, there is a
 limit to how hard you can make each computer work, and because of that, the network accepts
@@ -30,7 +30,7 @@ Smart Contracts
 
 Every transaction on Ethereum is a program which instructs the network to perform some task.
 One such task might be "Send 5 coins to Alice if Bob sends me 20 coins.". These programs are
-written in a programming language such as Solidity, which is the mos populat. Every computer in
+written in a programming language such as Solidity, which is the most popular. Every computer in
 the network runs the program and confirms that Alice received the coins according to the program.
 
 Programs can be complex, and can involve storing information for later use. A program might
@@ -60,7 +60,7 @@ In order to enable many humans to use Ethereum, the capacity of the blockchain m
 without sacrificing the decentralization property that makes it so important.
 
 One avenue to achieve that is by distributing the blockchain into many pieces,
-similar to how one can use file sharing software (E.g., torrent sofftware) without
+similar to how one can use file sharing software (E.g., torrent software) without
 storing all the files. This approach is being engineered for Ethereum as a future
 upgrade called "sharding".
 
@@ -131,22 +131,22 @@ because the numbers involved are very large.
 Computers normally process numbers with a "near enough is good enough" approach. Miniscule
 errors after a decimal point are usually unimportant. In cryptography this imprecision is
 unacceptable. Expanding the key analogy: A key must fit the lock perfectly for a blockchain
-to accept it. This problem with precision is solved by using field arithematic.
+to accept it. This problem with precision is solved by using field arithmetic.
 
 Field arithmetic uses a system similar to calculating the time of day in 100 hours time. The time
 will always be in the range 1 o'clock to 12 o'clock (E.g., it will never be 85 o'clock).
 Field arithmetic ensures that computation with large numbers is always in a certain range.
 From this system, special tricks enable computers to rapidly arrive at the answer to calculations.
 
-Field arithemtic is built upon mathematics with procedures involving equations and large prime
+Field arithmetic is built upon mathematics with procedures involving equations and large prime
 numbers. They are important when designing the Cairo system, but are not required for
 a developer who wishes to use Cairo to create an application.
 
-Zero Knowledge Proofs (ZPKs)
+Zero Knowledge Proofs (ZKPs)
 ----------------------------
 
 Zero knowledge proofs are a decades-old invention which has special
-privacy-preserving qualities. For many years the work was acedemic, but in the last ten
+privacy-preserving qualities. For many years the work was academic, but in the last ten
 years and with an ever-increasing pace of innovation, they have become practical to use.
 
 A zero knowledge proof enables you to say "I know some secret".
@@ -159,7 +159,7 @@ either rearranges it, or leaves it. If you can tell when it was rearranged, the 
 knows that you have the information about the puzzle that you promised.
 
 In zero knowledge proofs, a program performs this game and generates a receipt that
-mathematically prooves that the claim "I know some secret" is valid.
+mathematically proves that the claim "I know some secret" is valid.
 
 STARKs
 ------
@@ -177,7 +177,7 @@ people. There is a very small but non-zero chance that all the secret-creators g
 at some point and agree to join forces to steal money.
 
 With STARKs, this requirement is lifted and no special secret ceremony is required to
-build the program. In this way it is not relient on participants keeping a promise to never
+build the program. In this way it is not reliant on participants keeping a promise to never
 share their secret. The program is 'transparent'.
 
 AIRs
@@ -217,7 +217,7 @@ A third party does not need to run the program if they have all of:
 2.  The proof.
 3.  The output.
 
-They can read the Cario code, easily reason about the program logic,
+They can read the Cairo code, easily reason about the program logic,
 check the proof is valid and then use the output to make some change. As
 proofs are small enough to be saved on Ethereum, that change is usually
 an interaction with a smart contract. Cairo programs are ready for

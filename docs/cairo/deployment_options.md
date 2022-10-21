@@ -33,20 +33,20 @@ for trading applications and acts as the interface between a user and the proof 
 A user may interact with the StarkEx contract directly to lock funds. Those funds are then
 available as a layer two asset. Cairo programs can use those funds to trade assets, and this
 activity is then recorded as a proof which is sent, through SHARP, to the on chain verifier.
-The StarkEx contract queries the verifier to learn about the trade(s) that occured.
-Simultaneously, any other Cario program proof may "ride" in the same transaction and
+The StarkEx contract queries the verifier to learn about the trade(s) that occurred.
+Simultaneously, any other Cairo program proof may "ride" in the same transaction and
 be used in another program (E.g., a competitor trading contract SuperTraderEx).
 
 In summary, SHARP-based programs involve:
 - Sharing of the costs of proof submission to Ethereum (Ropsten and Mainnet).
-- Fully customisable appliication design.
+- Fully customisable application design.
 - Full access to hints, a facet of Cairo programming that is a complex but powerful
     and expressive feature.
 - Full use of the Cairo common library.
 - Manual management of the state of an application. (E.g. An application designer must
 architect how a Cairo program becomes aware of the current state of the system?).
 
-This last point is where StarkNet has an advantage. StarkNet allows a Cario program to
+This last point is where StarkNet has an advantage. StarkNet allows a Cairo program to
 read values stored by previous proof submissions. In SHARP-based applications, this information
 must be encoded in the `input.json` file supplied to a Cairo program at the time of proving.
 
@@ -59,7 +59,7 @@ allows the proof of an individual application to be interrogated based on its ha
 
 StarkNet is a network, which means that it has the ability to perform actions and
 complex coordination tasks. A StarkNet operator may take a Cairo program and perform some
-task before the progam is converted into a proof. This is powerful because it allows the
+task before the program is converted into a proof. This is powerful because it allows the
 operator perform increasingly complex tasks to enrich the layer 2 system. Features for
 the different stages of the roadmap are as follows:
 - **Planets**. Read the Cairo program and insert state values requested, such as the current
@@ -69,8 +69,8 @@ the main benefit the StarkNet Planets Alpha release offers.
 - **Constellations**. Read the state of another Cairo program (L2->L2 one-way interaction)
 or interact with another Cairo program (L2<->L2 two-way interaction). This allows actions
 similar to the rich contract-to-contract interactions present on mainnet Ethereum.
-- **Universe**. Deployement of the operation of StarkNet system as a decentralised public good,
-alowing a robust and diverse set of operators to maintain the tasks of the system. In this
+- **Universe**. Deployment of the operation of StarkNet system as a decentralised public good,
+allowing a robust and diverse set of operators to maintain the tasks of the system. In this
 stage, interaction with StarkNet will be akin to present-day Ethereum mainnet, where there is
 a flexible competitive protocol that is decentralised and which provides censorship resistant
 transactions to end-users.

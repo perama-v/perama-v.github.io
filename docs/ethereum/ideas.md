@@ -1,6 +1,6 @@
 ---
 layout: page
-title:  "Open ideas"
+title: "Open ideas"
 permalink: /ethereum/ideas
 toc: true
 ---
@@ -38,14 +38,14 @@ Intermediate goals:
 
 - Faster production of tools.
 - Faster tool ideation.
-- Lower idea propogation friction.
+- Lower idea propagation friction.
 - Simple idea publication system.
   - Participation incentive for economically rational actors.
-  A retrospective content-address-attribution royalty model.
+    A retrospective content-address-attribution royalty model.
   - Fast in simple-case, defers conflict resolution. Append-only public
-  graph of ideas where it is simple for an ideator to "do the right thing".
+    graph of ideas where it is simple for an ideator to "do the right thing".
   - Co-exist with existing idea systems (e.g., patent). Is opt-in, adopted
-  because it is a better experience for the user (ideator).
+    because it is a better experience for the user (ideator).
 
 ```
 TL;DR
@@ -81,11 +81,11 @@ Lombard, Marlize & Haidle, Miriam. (2012). Thinking a Bow-and-Arrow Set: Cogniti
 The ideation rate is likely to be some function of the
 
 - Number of people trying to generate ideas. The system does not address
-this factor.
+  this factor.
 - The number of ideas from which to draw from and combine
-in unique ways. Ideas can be drawn from only when they coexist in a
-single mind. Thus, an idea is most useful when it is present in the minds
-of all the ideators.
+  in unique ways. Ideas can be drawn from only when they coexist in a
+  single mind. Thus, an idea is most useful when it is present in the minds
+  of all the ideators.
 
 Humans generate ideas in opaque ways. Some notable historical figures
 generate vast quantities of excellent ideas, others fewer. The subject of
@@ -149,7 +149,6 @@ What happens to the rate of ideation globally if time-to-publication goes from
 years to days? The quantity of actionable ideas in that future world
 could be vastly higher than what we currently expect.
 
-
 # Design
 
 A timestamped list of `address -> idea_hash` mappings and a separate
@@ -158,9 +157,8 @@ graph of content and weighted attributions.
 The blockchain provides:
 
 - A persistent destination for payments to be routed. Payments can be made
-retrospectively years later.
+  retrospectively years later.
 - A timestamp. The idea could be falsely attributed to a another person.
-
 
 ## Topology
 
@@ -169,6 +167,7 @@ The blockchain-based graph component consists of a chain of hashes stored in a s
 ```
 H1 <- H2 <- H3 <- H4
 ```
+
 The hashes are used to fetch data from a content-addressable peer to peer
 filestore. Fetching the latest file returns structured data which
 contains the parent hash, which enables the entire graph to be traversed.
@@ -273,18 +272,19 @@ to other ideas, who in turn attributed various percentages to other ideas.
         - 0.6 Tertiary idea 7 (10.8k)
         - 0.4 Tertiary idea 8 (7.2k)
 ```
+
 Without listing the entire next layer (quaternery ideas), you can see how
 the graph distributes funds according to the weights that the ideators
 declared at time of publication.
 
 The ideator could under-allocate the percentage that they choose
-to attribute to preceeding ideas. However, given that the graph
+to attribute to preceding ideas. However, given that the graph
 is public, there is a degree of social pressure that disincentivises
 this. The ideator hopes to attract funds, and therefore is likely
 to be honest about the contribution (the nature of which can be seen).
 
 There could be a requirement to attribute at least 10% to other ideas,
-or a more agressive proportion (60%), to create very broad distribution
+or a more aggressive proportion (60%), to create very broad distribution
 that extends many levels deep.
 
 ### Key management
@@ -332,7 +332,6 @@ The client could have standard rates, ranging from "minor edit" (99%),
 to select more pro-social attribution percentages, which benefits
 the system as a whole.
 
-
 ## Journey of the Ideator
 
 Let us examine the psychology of the person who creates an idea.
@@ -340,7 +339,7 @@ Let us examine the psychology of the person who creates an idea.
 **Moment of inspiration**: In the moment of ideation, the mind is subsumed by euphoria.
 Ideas are inherently joyful things to create, and it is a natural response to
 want to share an idea. This forms the basis for the system. Users
-ultimately want to see their idea propogate to others and the system enables
+ultimately want to see their idea propagate to others and the system enables
 that.
 
 **Extraction**: Having real world responsibilities and goals,
@@ -379,7 +378,6 @@ It is a non-trivial consideration to build out an idea. The system provides
 a mechanism for ideas to be found by people suited to taking ideas
 to product.
 
-
 ## Ideator-Builder separation
 
 While it makes sense for some ideas to be built by the person who thinks
@@ -391,7 +389,6 @@ focused and effective at managing practical considerations.
 Anyone looking to make a product can examine the graph and start building.
 No permission needed, only a commitment to return some profit to the
 source of the graph.
-
 
 ## Publication makes you the subject of attributions
 
@@ -414,7 +411,7 @@ a derivative idea).
 
 Anyone who sees a way to improve a published idea can publish that improvement
 and receive attribution. They are now a stakeholder in this local area of the
-idea-graph and are also incentivised to propogate the idea to others.
+idea-graph and are also incentivised to propagate the idea to others.
 
 ## Decay-by-depth Royaltes
 
@@ -432,7 +429,6 @@ could undercut some business proposition of the first company, from the
 perspective of the ideator, this is: 1) The idea becoming successfully
 deployed in the real world, 2) Personal wealth accrual. Thus, when
 considering whether to publish the idea, this scenario is appealing.
-
 
 # Future
 
@@ -486,22 +482,19 @@ that people are afraid. By providing a simple and neutral mechanism that
 is easy to understand, people might be less afraid to release their
 ideas. There is likely a strong desire for people to share their ideas
 and have them be the subject to the internet-swarm, whose members
-can contribute to the idea in compelmentary ways.
-
-
+can contribute to the idea in complementary ways.
 
 This idea is an:
+
 ```
 [---Open~Idea---]
 
 (*) Open your own ideas to the world (*)
 ```
 
-
-
 # Organic Manifestations
 
-In recongnition that a de novo knowledge graph would be an enormous undertaking, it may be wise to consider where the implementation might natrually arise.
+In recognition that a de novo knowledge graph would be an enormous undertaking, it may be wise to consider where the implementation might naturally arise.
 
 Consider GitHub as a graph of knowledge where there is already
 a system for 'attestation of personal contribution'. Imagine if you
@@ -511,10 +504,10 @@ that automatically routed payments to all the developers who made commits.
 One could even create a donations client that walks the links of a github project, fetching the contributors involving in the linked projects.
 
 It could be a cultural norm in the future to perform retroactive public goods funding by this mechanism - e.g., if you used/forked a piece of free and open source software, you could willingly and publicly direct some funds along to the humans that were involved in
-commiting the code that you ultimatley used.
+committing the code that you ultimately used.
 
 One important distinction is that such a practice would ideally be
-seen as a voluntary act, and that using FOSS without donating is also reasonable. I could see a future where it is compelling at the individual level (personal fulfilment) and at the organisational level (social engagement) to participate in retroactive funding in this way.
+seen as a voluntary act, and that using FOSS without donating is also reasonable. I could see a future where it is compelling at the individual level (personal fulfillment) and at the organisational level (social engagement) to participate in retroactive funding in this way.
 
 ### The inception of the database
 
@@ -529,7 +522,7 @@ A system could work as follows:
 5. A multi-send contract on an ECDSA-compatible L2 is passed a donation amount and the list of addresses.
 6. Funds are routed.
 7. Perhaps some social certificate is optionally minted as a fun way to generate attention or clout. Perhaps owners of these tokens could be regarded as good-actors that other systems could use when looking
-for list of 'community-minded' people.
+   for list of 'community-minded' people.
 
 Being tightly coupled to the Ethereum community, a good testbed
 could be Ethereum-related projects. There could be a site that
@@ -540,5 +533,3 @@ An individual is incentivised to volunteer an address if they have ever made a c
 Perhaps the implementation is just a public repo with some simple rules
 allowing only addresses to be appended to a large list. The commit
 author for a given address is enforced by github authentification.
-
-

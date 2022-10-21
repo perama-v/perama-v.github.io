@@ -16,7 +16,7 @@ Ethereum is a blockchain with a virtual machine that can execute arbitrary code.
 It has 14 second blocks that contain transactions which execute opcodes to modify the
 storage and state of nodes within the network. Each transaction is metered by the opcodes
 it uses as a way to quantify the computation and storage requirements it invokes. The more
-resources a transation uses, the more it costs.
+resources a transaction uses, the more it costs.
 
 The metering occurs in a unit called gas, where each block contains about 15 million gas.
 A node processing 15 million gas worth of transactions will take a predictable amount of
@@ -61,12 +61,12 @@ that makes the network important.
 
 An upgrade termed "sharding" is being actively developed to increase the throughput of the
 network. The change involves splitting the chain data into parallel pieces where each node
-only verifies subset of the whole. Nodes can demonstrate that they posess data by using
+only verifies subset of the whole. Nodes can demonstrate that they posses data by using
 erasure coding and by responding to data sampling queries by the network. This gives a
-probabalistic guarantee that the data exists in the network.
+probabilistic guarantee that the data exists in the network.
 
 Another approach is to use Ethereum to process the state transitions of systems that operate
-outside the virtual machine. Each transaction can represent the net outcome of an arbitratry
+outside the virtual machine. Each transaction can represent the net outcome of an arbitrary
 number of intermediate state transitions. If a set of transactions can be represented by
 a transaction with a smaller quantity of gas, more gas is available for other users. This
 is a broad description of layer two systems.
@@ -84,7 +84,7 @@ to reflect that update. L2 users have the same guarantees that they have when se
 normal transaction on L1.
 
 The L1 contracts that accept, process and apply L2 state transitions vary between different
-L2 architectures. Their commonality is that a user in posession of their own data can,
+L2 architectures. Their commonality is that a user in possession of their own data can,
 if needed, send a transaction to exit the L2 and receive their assets on L1. They do not need
 to rely on another system being available or honest.
 
@@ -144,7 +144,7 @@ element of a finite field. A finite field is constructed using modular arithmeti
 modulo is a prime number. For example, the prime number ``2**64 + 13`` is used in some
 parts of Cairo as the basis for representing field elements.
 
-Zero Knowledge Proofs (ZPKs)
+Zero Knowledge Proofs (ZKPs)
 ----------------------------
 
 Zero Knowledge Proofs allow someone to verify that some computation is correct without
@@ -214,9 +214,9 @@ A computation can be reduced to a set of steps, where each step can be checked
 for computational integrity. Each step can be represented in a form defined in terms
 of polynomials. This polynomial form is an algebraic intermediate representation (AIR)
 of that computational integrity statement. Read more about this more in this post about
-[arithemtization](https://medium.com/starkware/arithmetization-i-15c046390862).
+[arithmetization](https://medium.com/starkware/arithmetization-i-15c046390862).
 
-Expressing computational integrity in terms of polynomials allows for probabalistic
+Expressing computational integrity in terms of polynomials allows for probabilistic
 testing to be performed, a key step in generating a STARK.
 
 More specifically, the AIR can be tested easily and quickly to ensure that
@@ -267,7 +267,7 @@ That process is termed FRI (Fast Reed-Solomon Interactive Oracle Proof of Proxim
 
 - F(ast-fourier-transform style recursive technique)
 - R(eed-Solomon-style error checking technique)
-- I(nteractive Oracle Proof of Proximity to a low degree polynomial by probabalistic testing)
+- I(nteractive Oracle Proof of Proximity to a low degree polynomial by probabilistic testing)
 
 That is to say that:
 
@@ -292,9 +292,9 @@ correctly).
 The prover:
 
 1.  Creates a statement of integrity for the steps in the trace.
-2.  Represents those statments as AIRs (statments in polynomial form).
+2.  Represents those statements as AIRs (statements in polynomial form).
 3.  Combines them into a single AIR.
-4.  Performs low degree testing (FRI) to generate a probabalistic proof (that the polynomials
+4.  Performs low degree testing (FRI) to generate a probabilistic proof (that the polynomials
     have low degree).
 5.  Generates Merkle trees that commit to that proof.
 6.  Saves the commitments as CALLDATA in the verifier smart contract

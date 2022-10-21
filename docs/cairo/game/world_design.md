@@ -79,7 +79,7 @@ some PAPER mechanic also.
 
 - World
     - `gameEnds`, block height of end of game.
-    - (`v2`) The potency of effect of a trait on probabalistic events.
+    - (`v2`) The potency of effect of a trait on probabilistic events.
         - `traitID` -> `traitPower`.
 - Markets
     - Item mappings. Each market has an AMM pool for every item.
@@ -97,11 +97,11 @@ some PAPER mechanic also.
 
 A player taking a turn updates their state, their market's state
 and potentially a regional/global state if they trigger some
-probabalistic event (supply shock).
+probabilistic event (supply shock).
 
 ## Randomness
 
-Events are triggered probabalistically. Mechanism TBD.
+Events are triggered probabilistically. Mechanism TBD.
 
 ## Player actions
 

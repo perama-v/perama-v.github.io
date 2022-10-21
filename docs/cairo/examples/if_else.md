@@ -147,7 +147,7 @@ Returns:
 
 Note the following:
 - An `if` statements may optionally be followed by an `else`.
-- Both `if` and `else` statments must contain a `return()` statement.
+- Both `if` and `else` statements must contain a `return()` statement.
 - An `end` statement must follow an `if` statement or an `if-else` pair.
 - `else if` statements are not supported.
 

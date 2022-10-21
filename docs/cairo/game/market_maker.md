@@ -21,7 +21,7 @@ receives.
 market_a_post = market_a_pre + user_gives_a  # User gives.
 market_b_post = market_b_pre - user_gets_b  # User takes.
 
-# Substitue into original
+# Substitute into original
 (market_a_pre + user_gives_a) * (market_b_pre - user_gets_b) =  market_a_pre * market_b_pre
 
 # Expand, note that the right hand term is cancelled. Simplify:

@@ -209,7 +209,7 @@ Recall that the prime used for Cairo is:
 3618502788666131213697322783095070105623107215331596699973092056135872020481
 ```
 So the result (`...0479`) is two less than the largest number (`...0481`),
-it is therefore qeuivalent to `-2`.
+it is therefore equivalent to `-2`.
 
 So the result for signed_div_rem(-1000, 501) is (-2, 2), which matches the Python equivalent:
 

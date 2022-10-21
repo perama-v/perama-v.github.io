@@ -60,7 +60,7 @@ L2 Optimism.
     Optimism.
     - Generates data that can be send to the gateway.
     - Accepts and digests responses produced by the gateway.
-    - Verifies the integrity of the gateweay responses. Is able to determine valid responses
+    - Verifies the integrity of the gateway responses. Is able to determine valid responses
      particular to each L2.
 - New L2 registry contracts
     - One L2 contract per L2.
@@ -93,7 +93,7 @@ payload to send.
 - Gateway reads which L2 is specified and which address and function to call on L2.
 - Gateway calls the function on L2 contract to discover the L2 address Alice has stored.
 - Gateway receives the result from the L2 call.
-- Gateweay responds to the user.
+- Gateway responds to the user.
 - User accepts the data and passes it to the L1 resolver contract.
 - The contract verifies the response is valid
 - The L2 address is provided as the result.
@@ -214,7 +214,7 @@ L2 user can follow these rules to set up an L2 ENS name (`carol.starknetwallet.e
 that can be retrieved from L1 like in the previous example.
 This avoids L1 interaction by the user. Note that if Bob sets the
 owner of the `starknetwallet.eth` to 0x0000 on L1, then the L2 subdomains cannot be revoked
-by Bob changing the L1 resolver to another contract (E.g., the Optismism L2 ENS resolver)
+by Bob changing the L1 resolver to another contract (E.g., the Optimism L2 ENS resolver)
 
 ## Message mechanisms
 

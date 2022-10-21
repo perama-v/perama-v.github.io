@@ -24,7 +24,7 @@ calculator arbitrage game):
     - Trade drugs with dealers to gain money.
     - Manage inventory, risk, strategy.
 
-The game play exsists as a contract that players are admitted to
+The game play exists as a contract that players are admitted to
 and initialised based on L1 token ownership. Balances are contained
 within the contract and player are traits are imported and used
 to augment player characteristics based on L1 token properties.
@@ -76,7 +76,7 @@ can inspect the rooms (read the contracts) before they vote.
 They vote, the votes are tallied and all the players move to winning room B.
 In that room they are faced with some activity (literally anything,
 a combat, a strategy game, a social challenge, a puzzle, a vending
-machine that admisters a beverage token to all players with health
+machine that administers a beverage token to all players with health
 below 50%).
 
 All players who voted on the winning room are given some privilege
@@ -95,7 +95,7 @@ Negative outcomes might include:
 - Elements that make the game less interesting.
 
 Having moved to room B, the players interact with the room B, and then
-repeat the process. First the instantiaion of the next set of rooms:
+repeat the process. First the instantiation of the next set of rooms:
 
 Rooms P, Q, R, S are deployed to the network, submitted for consideration
 and players are able to read about the four options in directly, or
@@ -271,7 +271,7 @@ DOPE-philosophy.
 To restate that philosophy:
 
 ```
-A shared theme, paired with ownership of unique thematic elemwents allows a community-driven
+A shared theme, paired with ownership of unique thematic elements allows a community-driven
 ecosystem to grow. The text-based token birthed a thematic universe that
 allows ownership and creative participation. New participants and creators
 can join and add more composable tools that can be used
@@ -319,7 +319,7 @@ evolve when the governance/voting system architecture is designed.
     - The combat module currently exists as a subcomponent of the `GameEngineV1.cairo` contract.
     - The Drug Lord is a competitively held position within the game that attracts a 'cut' of
     trades. Autobattle combat can dethrone the local Drug Lord and appoint the victor as.
-    - The Drug Lord is potentially a good 'composable' variale and can live externally, as
+    - The Drug Lord is potentially a good 'composable' variable and can live externally, as
     are the fighters and their combat parameters.
     - The combat mechanics can be brought externally and exist as a separate action
     that a player takes outside their main game turn.
@@ -361,7 +361,7 @@ of smaller subsystems that can operate independently as interesting standalone g
 In striving to make the core primitive elements composable, the scope for inclusion, creativity,
 collaboration and engaging gameplay increases.
 
-## Open possibilites
+## Open possibilities
 
 How does this tie back to current stages?
 
@@ -388,7 +388,7 @@ What new components will the community build, and how could these tie back to ma
 certain traits the most valuable?
 ```
 
-Moving futher, as the beat of the DOPE-drum rings out across the open grassy field of evolving
+Moving further, as the beat of the DOPE-drum rings out across the open grassy field of evolving
 coordination technology, perhaps the real question is:
 
 ```

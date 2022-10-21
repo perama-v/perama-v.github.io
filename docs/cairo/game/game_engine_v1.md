@@ -6,7 +6,7 @@ toc: false
 ---
 
 The `v1` game engine is a lean MVP. It predominantly consists of mappings stored
-in StarkNet state, an AMM that executes trades, and some probabalistic events.
+in StarkNet state, an AMM that executes trades, and some probabilistic events.
 The main game engine is a contract that stores the mappings and calls out to
 other contracts for player information and AMM trades.
 
@@ -43,7 +43,7 @@ from starkware.cairo.common.math import assert_nn_le
 
 
 #### Other Contract Info ####
-# Address of previously deployed MarketMaket.cairo contract.
+# Address of previously deployed MarketMaker.cairo contract.
 const MARKET_MAKER_ADDRESS = 0x07f9ad51033cd6107ad7d70d01c3b0ba2dda3331163a45b6b7f1a2952dac0880
 # Modifiable address pytest deployments.
 @storage_var

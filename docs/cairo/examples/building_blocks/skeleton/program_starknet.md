@@ -27,9 +27,9 @@ and exist inside blocks chained together. Cairo contracts are stapled
 back to Ethereum as aggregate STARK proofs that summarise key state updates.
 Proofs make state data available on Ethereum, and a Solidity
 contract can verify proofs to police StarkNet state. StarkNet is a
-an L2 in the sense that it inherets the security of Ethereum.
+an L2 in the sense that it inherits the security of Ethereum.
 
-Main diferences between a Cairo program and a StarkNet contract.
+Main differences between a Cairo program and a StarkNet contract.
 
 - Storage means that Cairo contracts can read and write values for access
 in between different Cairo contract invocations.
@@ -37,11 +37,11 @@ in between different Cairo contract invocations.
 - ABI (application binary interface). A convention that a user will
 user to specify inputs.
 - "No hints" means that Cairo contracts don't allow StarkNet operators
-the priveilege of running python code.
+the privilege of running python code.
 - No `main()`. Well, users are calling functions through the ABI now,
 so no need for a single entry point!
 
-### **Minimum Verfifiable Contract**
+### **Minimum Verifiable Contract**
 
 So what do Cairo contracts look like? Solidity contracts! Sort of.
 
