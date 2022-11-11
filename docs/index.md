@@ -17,4 +17,4 @@ Perhaps you are interested in:
 - Generative art: [**narrative**]({{ site.baseurl }}{% link ethereum/gactans.md %}) and
 [**gallery**]({{ site.baseurl }}{% link ethereum/more_gactans.md %})
 - A [**mechanism**]({{ site.baseurl }}{% link ethereum/ideas.md %})  to increase the rate of ideation.
-
+- [Poking around]({{ site.baseurl }}{% link ethereum/protocol_poking.md %}) in protocols.
