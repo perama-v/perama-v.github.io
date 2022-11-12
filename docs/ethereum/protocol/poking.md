@@ -48,10 +48,10 @@ But it could be! The ingredients seem to be there at least.
 
 If you like, these are the spoilers that came out of this:
 
-- [An index spec to discover your own transactions with minimal data](#https://github.com/perama-v/address-appearance-index-specs)
-- [An implementation prototype of the spec to build the index](#https://github.com/perama-v/min-know)
-- [A generalisation of the format of the index as a potential ERC standard](#https://github.com/perama-v/TODD)
-- [A generalisation of the broadcast mechanism as a potential ERC standard](#https://github.com/perama-v/GAMB)
+- [An index spec to discover your own transactions with minimal data](https://github.com/perama-v/address-appearance-index-specs)
+- [An implementation prototype of the spec to build the index](https://github.com/perama-v/min-know)
+- [A generalisation of the format of the index as a potential ERC standard](https://github.com/perama-v/TODD)
+- [A generalisation of the broadcast mechanism as a potential ERC standard](https://github.com/perama-v/GAMB)
 
 
 The "final product" is this "user interface" demo:
