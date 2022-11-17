@@ -74,15 +74,15 @@ So we can check each one:
 ```
 keccak("BeckerrJon(bytes16,bytes4,bytes23,bytes16,bytes1,bytes7,bytes1)")
 ddf252ade8bdc6f18de3868ae50ab6e67ee261b7136b3141cd791f1ad4786a79
-nope")
+nope
 
-keccak("join_tg_invmru_haha_c0bbdb6(uint256,uint256,uint256)
-78ffd931d380887ef41bca9957337adc0cba476e6219aa82096e5b085092b8f3
-nope")
+keccak("join_tg_invmru_haha_c0bbdb6(uint256,uint256,uint256)")
+ddf252adf412de2312dd2fb413abe76fa27143081679db419a9aa0d6a4e00692
+nope
 
 keccak("Transfer(address,address,uint256)
 ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
-yep")
+yep
 ```
 So while the database contains "duds", we can exclude them with full certainty for events
 (not for functions).
@@ -121,13 +121,13 @@ and maybe worthwhile. It would invovle chasing down contracts, getting blocks,
 checkin state, repeating - all the way through the EVM execution including nested
 calls to other contracts.
 
-Howevery I thinkg that that may end up being less helpful for your average wallet-goer.
+However I think that that may end up being less helpful for your average wallet-goer.
 
 Less is more? Hmm.
 
 ## A Trial
 
-We continue with out random address `0x846be97d3bf1e3865f3caf55d749864d39e54cb9`
+We continue with our random address `0x846be97d3bf1e3865f3caf55d749864d39e54cb9`
 that appears in a block present in our sample index files.
 
 Following the steps above, peering into `chapter_0x84` to get transaction ids, then
@@ -471,11 +471,11 @@ We can later use this to create a simplified human-readable summary for a user.
 
 ## A MatchMismatch
 
-In the above example there were two contracts that returned a 404 from Sourcify.
+In the above example there were two contracts that returned a 404 from Sourcify but verified on Etherscan.
 ```
 0x106d3c66d22d2dd0446df23d7f5960752994d600
 ```
-Etherscan notes that this is a token called "Labra", and is fully verified with Sourcify.
+Etherscan notes that this is a token called "Labra".
 ```
 0x1636a5dfcf7a21945c06d1bea40b52ce975ea614
 ```
