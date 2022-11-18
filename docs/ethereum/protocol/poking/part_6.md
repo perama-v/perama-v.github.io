@@ -465,10 +465,9 @@ Let's examine the plights for each database.
 - [Sourcify registry](#sourcify)
     - I have a contract with identifier  and I don't know how to interact with it. Identifier may be:
         - Deployed address (`0xabcd...1234`)
-        - `eth_getCode` metadata IPFS CID if present (`Qm1234...wxyz` ), or swarm hash.
-        - Hash of the runtime bytecode (as many contracts are the same)
+        - Hash of the runtime bytecode (as many contracts are the same) (`0xbcde...2345`)
     - ??? I NEED ... The chapter of the registry that contains contract identifiers starting
-    with (`0xab` or `Qm12...`).
+    with (`0xab`).
 
 ## Some TimeOrdering
 
@@ -527,7 +526,7 @@ make sense for each index/database.
 - Sourcify registry
     - A volume: Data covering next (?) quarter in sequence (2022 Q1)
         - Could also be size based. e.g., new volume every xMB.
-    - A chapter: Contract metadata identifiers that share starting characters (`Qm12...`)
+    - A chapter: Contract metadata identifiers that share starting characters (`0xab...`)
 
 The paramater design space looks like this:
 

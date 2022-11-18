@@ -347,7 +347,7 @@ Let us integrate this information into the next example script.
 cargo run --example user_3_decode_via_apis
 ```
 Reveals:
-```json
+```sh
 (sample index data) Address 0x846be97d3bf1e3865f3caf55d749864d39e54cb9 appeared in 2 transactions
 Examining the first transaction  (Tx 0x1a8d94dda1694bad33384215bb3dc0a56652b7069c71d2b1afed35b24c9b54df) using local node. 5 logs found.
 
@@ -415,7 +415,7 @@ lost information. Was an element in the event:
 
 Recall that the receipt has topics and data. This is the `Deposit(address,uint256)` log
 we looked at earlier:
-```json
+```sh
 ...
 topics: [
     0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c,
@@ -449,7 +449,7 @@ If something is indexed, it will go in logs, otherwise it goes in data.
 
 So we now know that
 
-```json
+```sh
 ...
 topics: [
     0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c,
