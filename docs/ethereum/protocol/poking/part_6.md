@@ -273,13 +273,6 @@ by the above ideas.
 
 So there must be another explanation.
 
-## Some
-
-Now some contracts are obscure,
-but after stalling at fetching contracts like `WETH`, it looks like there are not many
-Sourcify Home Enthusiasts.
-
-
 ## Some DoublePublishing
 
 Taking a step back, how should we think about the multiplicity of sources for contract ABIs? We
