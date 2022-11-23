@@ -148,28 +148,28 @@ I'd love to hear any thoughts you have on things! I'm @eth_worm on twitter and @
 
 A fast, secure, and portable light client for Ethereum
 
-https://github.com/a16z/helios
+[https://github.com/a16z/helios](https://github.com/a16z/helios)
 
 ### Trin
 
 Trin is a Rust implementation of a Portal Network client.
 
-https://github.com/ethereum/trin
+[https://github.com/ethereum/trin](https://github.com/ethereum/trin)
 
 ### Otterscan
 
 A blazingly fast, local, Ethereum block explorer built on top of Erigon
 
-https://github.com/wmitsuda/otterscan
+[https://github.com/wmitsuda/otterscan](https://github.com/wmitsuda/otterscan)
 
 ### ERC-time-ordered-distributable-database
 
 A format for useful peer-to-peer databases.
 
-https://github.com/perama-v/TODD
+[https://github.com/perama-v/TODD](https://github.com/perama-v/TODD)
 
 ### ERC-generic-attributable-manifest-broadcaster
 
 A contract for announcing newly published metadata.
 
-https://github.com/perama-v/GAMB
+[https://github.com/perama-v/GAMB](https://github.com/perama-v/GAMB)

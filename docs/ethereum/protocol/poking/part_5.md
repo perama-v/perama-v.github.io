@@ -609,6 +609,6 @@ Continue on to [poking part 6](part_6.md)
 
 List of 4byte identifiers for EVM smart contract functions
 
-https://www.4byte.directory/
+[https://www.4byte.directory/](https://www.4byte.directory/)
 
-https://github.com/ethereum-lists/4bytes
+[https://github.com/ethereum-lists/4bytes](https://github.com/ethereum-lists/4bytes)

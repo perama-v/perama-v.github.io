@@ -712,57 +712,57 @@ Continue on to [poking part 7](part_7.md)
 The Unchained Index is a naturally-sharded, easily-shared, reproducible, and minimally-sized.
 immutable index for EVM-based blockchains.
 
-https://trueblocks.io/papers/2022/file-format-spec-v0.40.0-beta.pdf
+[https://trueblocks.io/papers/2022/file-format-spec-v0.40.0-beta.pdf](https://trueblocks.io/papers/2022/file-format-spec-v0.40.0-beta.pdf)
 
 ### Sourcify
 
 Sourcify enables transparent and human-readable smart contract interactions through automated Solidity contract verification, contract metadata, and NatSpec comments.
 
-https://sourcify.dev/
+[https://sourcify.dev/](https://sourcify.dev/)
 
 
 ### 4Byte directory
 
 List of 4byte identifiers for EVM smart contract functions
 
-https://www.4byte.directory/
+[https://www.4byte.directory/](https://www.4byte.directory/)
 
-https://github.com/ethereum-lists/4bytes
+[https://github.com/ethereum-lists/4bytes](https://github.com/ethereum-lists/4bytes)
 
 ### Swarm
 
 storage and communication infrastructure for a self-sovereign digital society
 
-https://docs.ethswarm.org/docs/
+[https://docs.ethswarm.org/docs/](https://docs.ethswarm.org/docs/)
 
-https://docs.ethswarm.org/swarm-whitepaper.pdf
+[https://docs.ethswarm.org/swarm-whitepaper.pdf](https://docs.ethswarm.org/swarm-whitepaper.pdf)
 
 ### Portal Network
 
 Lightweight protocol access by resource constrained devices.
 
-https://github.com/ethereum/portal-network-specs/blob/master/README.md
+[https://github.com/ethereum/portal-network-specs/blob/master/README.md](https://github.com/ethereum/portal-network-specs/blob/master/README.md)
 
 ### Otterscan
 
 A blazingly fast, local, Ethereum block explorer built on top of Erigon
 
-https://github.com/wmitsuda/otterscan
+[https://github.com/wmitsuda/otterscan](https://github.com/wmitsuda/otterscan)
 
 ### ERC-time-ordered-distributable-database
 
 A format for useful peer-to-peer databases.
 
-https://github.com/perama-v/TODD
+[https://github.com/perama-v/TODD](https://github.com/perama-v/TODD)
 
 ### ERC-generic-attributable-manifest-broadcaster
 
 A contract for announcing newly published metadata.
 
-https://github.com/perama-v/GAMB
+[https://github.com/perama-v/GAMB](https://github.com/perama-v/GAMB)
 
 ### address-appearance-index-specs
 
 A specification of an index that maps addresses to the transactions that they appear in.
 
-https://github.com/perama-v/address-appearance-index-specs
+[https://github.com/perama-v/address-appearance-index-specs](https://github.com/perama-v/address-appearance-index-specs)

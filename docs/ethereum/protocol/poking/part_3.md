@@ -98,10 +98,10 @@ Continue on to [poking part 4](part_4.md)
 
 Lightweight protocol access by resource constrained devices.
 
-https://github.com/ethereum/portal-network-specs/blob/master/README.md
+[https://github.com/ethereum/portal-network-specs/blob/master/README.md](https://github.com/ethereum/portal-network-specs/blob/master/README.md)
 
 ### Beacon chain
 
 The specification for Phase 0 -- The Beacon Chain.
 
-https://github.com/ethereum/consensus-specs/blob/dev/specs/phase0/beacon-chain.md
+[https://github.com/ethereum/consensus-specs/blob/dev/specs/phase0/beacon-chain.md](https://github.com/ethereum/consensus-specs/blob/dev/specs/phase0/beacon-chain.md)

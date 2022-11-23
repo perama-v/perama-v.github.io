@@ -81,7 +81,7 @@ For example, here is an example where the public 4byte registry is absorbed into
 source database with a free API. The API is then embedded in an open source tool because
 it has better uptime characteristics.
 
-https://github.com/foundry-rs/foundry/issues/1672
+[https://github.com/foundry-rs/foundry/issues/1672](https://github.com/foundry-rs/foundry/issues/1672)
 
 Now there are two competing entities trying to solve the same problem,
 in a way that detracts from the other - rather than strengthening it. This creates
@@ -203,7 +203,7 @@ produce Volumes/Chapters and Manifests of the right format.
 
 For example, A "TODD" format, where TODD is a Time-Ordered Distributable Database:
 
-https://github.com/perama-v/TODD
+[https://github.com/perama-v/TODD](https://github.com/perama-v/TODD)
 
 This could exist as a local tool that lets a user participate in creating a
 distributable database of any artitrary sort:
@@ -245,7 +245,7 @@ thus making it clear under which term ("fourbyte" "4byte" "event-signatures" etc
 publishing IPNS names should be registered.
 
 See here for more rationale on IPNS name based broadcasting:
-https://github.com/perama-v/GAMB/issues/1
+[https://github.com/perama-v/GAMB/issues/1](https://github.com/perama-v/GAMB/issues/1)
 
 ## The Hoovers
 

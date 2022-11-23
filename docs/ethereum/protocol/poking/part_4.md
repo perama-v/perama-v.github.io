@@ -441,29 +441,29 @@ Continue on to [poking part 5](part_5.md)
 
 Lightweight protocol access by resource constrained devices.
 
-https://github.com/ethereum/portal-network-specs/blob/master/README.md
+[https://github.com/ethereum/portal-network-specs/blob/master/README.md](https://github.com/ethereum/portal-network-specs/blob/master/README.md)
 
 ### Trin
 
 Trin is a Rust implementation of a Portal Network client.
 
-https://github.com/ethereum/trin
+[https://github.com/ethereum/trin](https://github.com/ethereum/trin)
 
 ### Sourcify
 
 Sourcify enables transparent and human-readable smart contract interactions through automated Solidity contract verification, contract metadata, and NatSpec comments.
 
-https://sourcify.dev/
+[https://sourcify.dev/](https://sourcify.dev/)
 
 ### IPFS CID
 
 Self-describing content-addressed identifiers for distributed systems.
 
-https://github.com/multiformats/cid
+[https://github.com/multiformats/cid](https://github.com/multiformats/cid)
 
 ### Min-know
 
 An implementation of the address-appearance-index-specs.
 
-https://github.com/perama-v/min-know
+[https://github.com/perama-v/min-know](https://github.com/perama-v/min-know)
 

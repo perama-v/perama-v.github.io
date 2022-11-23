@@ -134,62 +134,62 @@ Continue on to [poking part 2](part_2.md)
 
 A secure decentralised transaction ledger.
 
-https://ethereum.github.io/yellowpaper/paper.pdf
+[https://ethereum.github.io/yellowpaper/paper.pdf](https://ethereum.github.io/yellowpaper/paper.pdf)
 
 ### EIP-4444
 
 Bound Historical Data in Execution Clients.
 
-https://eips.ethereum.org/EIPS/eip-4444
+[https://eips.ethereum.org/EIPS/eip-4444](https://eips.ethereum.org/EIPS/eip-4444)
 
 ### Portal Network
 
 Lightweight protocol access by resource constrained devices.
 
-https://github.com/ethereum/portal-network-specs/blob/master/README.md
+[https://github.com/ethereum/portal-network-specs/blob/master/README.md](https://github.com/ethereum/portal-network-specs/blob/master/README.md)
 
 ### trueblocks-core
 
 TrueBlocks creates an index that lets you access the entire Ethereum chain directly from your local machine.
 
-https://github.com/TrueBlocks/trueblocks-core
+[https://github.com/TrueBlocks/trueblocks-core](https://github.com/TrueBlocks/trueblocks-core)
 
 ### Unchained Index
 
 The Unchained Index is a naturally-sharded, easily-shared, reproducible, and minimally-sized.
 immutable index for EVM-based blockchains.
 
-https://trueblocks.io/papers/2022/file-format-spec-v0.40.0-beta.pdf
+[https://trueblocks.io/papers/2022/file-format-spec-v0.40.0-beta.pdf](https://trueblocks.io/papers/2022/file-format-spec-v0.40.0-beta.pdf)
 
 
 ### Sourcify
 
 Sourcify enables transparent and human-readable smart contract interactions through automated Solidity contract verification, contract metadata, and NatSpec comments.
 
-https://sourcify.dev/
+[https://sourcify.dev/](https://sourcify.dev/)
 
 ### 4Byte directory
 
 List of 4byte identifiers for EVM smart contract functions
 
-https://www.4byte.directory/
+[https://www.4byte.directory/](https://www.4byte.directory/)
 
-https://github.com/ethereum-lists/4bytes
+[https://github.com/ethereum-lists/4bytes](https://github.com/ethereum-lists/4bytes)
 
 ### Otterscan
 
 A blazingly fast, local, Ethereum block explorer built on top of Erigon
 
-https://github.com/wmitsuda/otterscan
+[https://github.com/wmitsuda/otterscan](https://github.com/wmitsuda/otterscan)
 
 ### Erigon
 
 Ethereum implementation on the efficiency frontier
 
-https://github.com/ledgerwatch/erigon
+[https://github.com/ledgerwatch/erigon](https://github.com/ledgerwatch/erigon)
 
 ### address-appearance-index-specs
 
 A specification of an index that maps addresses to the transactions that they appear in.
 
-https://github.com/perama-v/address-appearance-index-specs
+[https://github.com/perama-v/address-appearance-index-specs](https://github.com/perama-v/address-appearance-index-specs)

@@ -227,20 +227,20 @@ Continue on to [poking part 3](part_3.md)
 
 Simple Serialize (SSZ) is a standard for the encoding and merkleization of structured data.
 
-https://github.com/ethereum/consensus-specs/blob/dev/ssz/simple-serialize.md
+[https://github.com/ethereum/consensus-specs/blob/dev/ssz/simple-serialize.md](https://github.com/ethereum/consensus-specs/blob/dev/ssz/simple-serialize.md)
 
 ### Snappy
 
 Consensus spec: SSZ-snappy encoding strategy.
 
-https://github.com/ethereum/consensus-specs/blob/dev/specs/phase0/p2p-interface.md#ssz-snappy-encoding-strategy
+[https://github.com/ethereum/consensus-specs/blob/dev/specs/phase0/p2p-interface.md#ssz-snappy-encoding-strategy](https://github.com/ethereum/consensus-specs/blob/dev/specs/phase0/p2p-interface.md#ssz-snappy-encoding-strategy)
 
 Google: Snappy, a fast compressor/decompressor.
 
-https://github.com/google/snappy
+[https://github.com/google/snappy](https://github.com/google/snappy)
 
 ### Lighthouse
 
 An Ethereum consensus client in Rust.
 
-https://github.com/sigp/lighthouse
+[https://github.com/sigp/lighthouse](https://github.com/sigp/lighthouse)
