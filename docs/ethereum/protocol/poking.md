@@ -42,6 +42,7 @@ But it could be! The ingredients seem to be there at least.
 - [Part V - Remotes: Can remote resources make tx history human-readable? (Yes, through decoding and ABIs)](poking/part_5.md)
 - [Part VI - Acquisitions: Can useful remote resources become distributed (Yes, by generalising a format)](poking/part_6.md)
 - [Part VII - Coalesce: Is a local, lighthweight personal history browser a good idea? (Plausibly so)](poking/part_7.md)
+- [Part VII - Hoovering: Can private API-based database curators coexist with distributed database design? (Yes, by standards for distribution)](poking/part_7.md)
 
 ---
 

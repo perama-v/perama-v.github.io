@@ -132,6 +132,8 @@ accounting such as reviewing past actions and checking the current state of thei
 
 There could be other databases amenable to such a concept too.
 
+Continue on to [poking part 8](part_8.md)
+
 ---
 
 ## Thanks :)
