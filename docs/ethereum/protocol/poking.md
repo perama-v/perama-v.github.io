@@ -118,4 +118,7 @@ Here is a diagram of the idea. Scan for the 4 appearances of
 the word "BONUS" so find the interesting parts. The game
 is to get to the bottom without using an API.
 
+For higher resolution, try the [SVG version](./poking/diagrams/source.svg).
+
 ![image](./poking/diagrams/source.png)
+
