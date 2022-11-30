@@ -112,4 +112,10 @@ Using theoretical combination of:
     - The event signature database
     - The contract ABI database
 
-The how-s and the why-s are covered in post-parts-1-to-7.
+The how-s and the why-s are covered in post-s.
+
+Here is a diagram of the idea. Scan for the 4 appearances of
+the word "BONUS" so find the interesting parts. The game
+is to get to the bottom without using an API.
+
+![image](./poking/diagrams/source.png)

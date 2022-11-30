@@ -1,0 +1,98 @@
+@startuml
+title "Local tiny wallet explorer: Trying to only use P2P systems"
+
+(*) --> [wallet] "User connects wallet to local software\nto get address:  `0xf145..f00d`"
+--> "Find previous transaction IDs"
+if "Use an index"
+        --> [API] "Some API provider with private index"
+        ---> "Share wallet address"
+        ---> "Retrieve transaction events"
+    else
+        -> [NEW P2P index] Get Address Appearance Index manifest\nusing contract to find publishers
+        --> [IPFS] "Determines `0xf1` Chapter of index is needed\n(1/256th), download (80gb/256=350MB)"
+        --> "Inspect transaction IDs from Chapter locally\n(block_num, tx_index)"
+        --> "This limb may be thought of as a derivative \nof the Unchained Index (or if Unchained had this\nitself had this shardable architecture)"
+        --> "BONUS: User pins and shares local index DB.\nInfrastructure teams can pin and share too."
+        ---> "Retrieve transaction events"
+    else
+        -> [P2P Unchained Index] Get Unchained Index manifest\nusing contract to find publishers
+        --> [IPFS] Download bloom filters (3GB) using manifest.
+        --> [IPFS] "Use CIDs to get relevant parts of the index \n(~25MB per appearance)"
+        --> "Inspect transaction IDs from chunks locally\n(block_num, tx_index)"
+        --> "BONUS: User pins and shares downloaded chunks.\nTrueBlocks can pin and share too."
+endif
+---> "Retrieve transaction events"
+--> [portal node] "Get transaction ids:
+eth_getTransactionByBlockAndIndex(block_num, tx_index)
+-> tx_hash"
+--> "Get receipts:
+eth_getTransactionReceipt(tx_hash)
+-> log_topic, contract_address"
+---> "Retrieve transaction events"
+---> "Get info for contracts that events came from"
+-> [portal node] "Get Runtime bytecode:
+eth_getCode(contract_address)
+-> bytecode, bytecode_metadata"
+---> "Get info for contracts that events came from"
+---> "Decode events"
+if "Source code"
+    --> [retrievable] "Get Source code"
+    if "Fetch the source code"
+        --> [P2P single] "Use metadata hash in bytecode:\ndecoder(bytecode_metadata) -> \nipfs_cid_for_abi"
+        --> "Retrieve source code from IPFS"
+        --> "Not worth pinning a single contract.\nRelies on others to pin the entire database."
+        --> "Use ABI and Userdocs to create translation"
+    else
+        --> [API] "Sourcify as API:\nsourcify(contract_address) -> ABI"
+        --> "API provider maintains DB but is a\ncentral point of vulnerability to the system"
+        --> "Use ABI and Userdocs to create translation"
+    else
+        --> [NEW P2P DB] "Sourcify as distributable database\n(stays up to date).\nGet sourcify manifest using\ncontract to find publishers"
+        --> "Download the relevant portion of the database\n(e.g., 1/256th = 16GB/256 = 62MB)"
+        --> "Retrieve source code locally\nsource code identifier -> ABI"
+        --> "BONUS: User pins and shares local DB.\nSourcify team can add, pin and share too."
+    endif
+    --> "Use ABI and Userdocs to create translation"
+    --> "Very detailed events\nwith values, variable names\nand info from Developer"
+    --> ===Display_To_User===
+else
+    --> [unretrievable] "Try for partial translation"
+endif
+if "Event signatures"
+    ---> [decodeable] "Get signature-to-text mappings\n0xabcdef -> MyEvent(uint256,address)"
+    if "Get mappings"
+        ---> [API] "4byte.directory site"
+        --> "Maintainer adds new data, but is\na central source of failure."
+        --> "Readable events"
+    else
+        -> [Cloned repo] "4byte cloned DB"
+        --> "Falls behind maintained sources"
+        --> "Readable events"
+    else
+        --> [NEW P2P DB] "4Byte as distributable database\n(stays up to date).\nGet sourcify manifest using\ncontract to find publishers"
+        --> "Download the relevant portion\nof the 4byte database\n(e.g., 1/16th = 1M/16 = 60k signatures)"
+        --> "Retrieve signatures locally\nsignature -> text"
+        --> "BONUS: User pins and shares local DB.\n4byte team can add, pin and share too."
+    endif
+    --> "Readable events"
+    if "Bytecode"
+        --> [use decompiler] "Panoramix-style decoding"
+        --> "Try to parse variable names and types\n(This concept may not work)"
+        --> "Readable event names\nwith values and variable names"
+        --> ===Display_To_User===
+    else
+        -> [no decompilation] "Readable event names\nwithout values or variable names"
+        --> ===Display_To_User===
+    endif
+else
+    ---> [undecodable] "Very unreadable events"
+endif
+--> ===Display_To_User===
+--> "Display to user"
+--> "You hax 7 transactions:
+- Tx1 details: swap token x on contract y
+- Tx2 details: deposit x on protocol y
+- Tx3 details: sell x on market y
+- ..."
+
+@enduml
