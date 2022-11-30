@@ -38,8 +38,8 @@ eth_getCode(contract_address)
 if "Source code"
     --> [retrievable] "Get Source code"
     if "Fetch the source code"
-        --> [P2P single] "Use metadata hash in bytecode:\ndecoder(bytecode_metadata) -> \nipfs_cid_for_abi"
-        --> "Retrieve source code from IPFS"
+        --> [P2P single] "Use metadata hash in bytecode:\nCBOR decoder(bytecode_metadata) -> \ncid_for_abi"
+        --> "Retrieve source code from IPFS or Swarm"
         --> "Not worth pinning a single contract.\nRelies on others to pin the entire database."
         --> "Use ABI and Userdocs to create translation"
     else
