@@ -474,7 +474,7 @@ assert_not_zero(value)
 Verifies that `a != b`. The proof will fail otherwise.
 
 ```
-assert_not_zero(a, b)
+assert_not_equal(a, b)
 ```
 
 ### assert_nn()
