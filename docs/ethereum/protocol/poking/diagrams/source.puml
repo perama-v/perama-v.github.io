@@ -1,7 +1,9 @@
 @startuml
 title "Local tiny wallet explorer: Trying to only use P2P systems"
 
-(*) --> [wallet] "User connects wallet to local software\nto get address:  `0xf145..f00d`"
+(*) --> "Local application:
+e.g., 'tiny pulsar' explorer PSR_B0943+10 "
+--> [wallet] "User connects wallet to local software\nto get address:  `0xf145..f00d`"
 --> "Find previous transaction IDs"
 if "Use an index"
         --> [API] "Some API provider with private index"
@@ -76,8 +78,8 @@ if "Event signatures"
     endif
     --> "Readable events"
     if "Bytecode"
-        --> [use decompiler] "Panoramix-style decoding"
-        --> "Try to parse variable names and types\n(This concept may not work)"
+        --> [use decompiler] "Decompile ABI with Heimdall"
+        --> "Try to rename variable names\n(This may not be useful.)"
         --> "Readable event names\nwith values and variable names"
         --> ===Display_To_User===
     else

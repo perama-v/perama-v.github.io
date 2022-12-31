@@ -35,27 +35,50 @@ But it could be! The ingredients seem to be there at least.
 
 ---
 
-- [Part I - Musing: Is there an underserved user in the history-expiry roadmap? (Yes, a regular wallet user)](poking/part_1.md)
-- [Part II - Code: Can you divide a useful index into tiny useful parts? (Yes, prototype)](poking/part_2.md)
-- [Part III - Specifying: Could other clients use a divided index? (Yes, with a spec)](poking/part_3.md)
-- [Part IV - Examining: Does a divided index result in anything useful? (Yes, personal history)](poking/part_4.md)
-- [Part V - Remotes: Can remote resources make tx history human-readable? (Yes, through decoding and ABIs)](poking/part_5.md)
-- [Part VI - Acquisitions: Can useful remote resources become distributed (Yes, by generalising a format)](poking/part_6.md)
-- [Part VII - Coalesce: Is a local, lighthweight personal history browser a good idea? (Plausibly so)](poking/part_7.md)
-- [Part VIII - Hoovering: Can private API-based database curators coexist with distributed database design? (Yes, by standards for distribution)](poking/part_8.md)
+|Part|Question|Answer|
+|-|-|-|
+|[Part I: Musing](poking/part_1.md) | Is there an underserved user in the history-expiry roadmap? | Yes, a regular wallet user |
+|[Part II: Code](poking/part_2.md) | Can you divide a useful index into tiny useful parts? | Yes, prototype |
+|[Part III: Specifying](poking/part_3.md) | Could other clients use a divided index? | Yes, with a spec |
+|[Part IV: Examining](poking/part_4.md) | Does a divided index result in anything useful? | Yes, personal history |
+|[Part V: Remotes](poking/part_5.md) | Can remote resources make tx history human-readable? | Yes, through decoding and ABIs |
+|[Part VI: Acquisitions](poking/part_6.md) | Can useful remote resources become distributed? | Yes, by generalising a format |
+|[Part VII: Coalesce](poking/part_7.md) | Is a local, lighthweight personal history browser a good idea? | It's plausibly so |
+|[Part VIII: Hoovering](poking/part_8.md) | Can private API-based database curators coexist with distributed database design? | Yes, by standards for distribution |
 
 ---
 
 
 If you like, these are the spoilers that came out of this:
 
-- [An index spec to discover your own transactions with minimal data](https://github.com/perama-v/address-appearance-index-specs)
-- [An implementation prototype of the spec to build the index](https://github.com/perama-v/min-know)
-- [A generalisation of the format of the index as a potential ERC standard](https://github.com/perama-v/TODD)
-- [A generalisation of the broadcast mechanism as a potential ERC standard](https://github.com/perama-v/GAMB)
+- A meta-specification for a "Volumes and Chapters" publishing model.
+    - A formula for making data updateable, shardable and publisher-agnostic.
+        - Updateable (CIDs never change)
+        - Shardable (users can get subsets that are relevant to them)
+        - Publishser-agnostic (publishing is a protocol that anyone can follow)
+    - It is a meta-spec because it is a spec that other specs can comply with.
+    - [https://github.com/perama-v/TODD](https://github.com/perama-v/TODD)
+- A rust library using generics to implement the "Volumes and Chapters" publishing model.
+    - Allows arbitrary datastructures/databases to be converted into a "Volumes and Chapters" publishing model.
+    - [https://github.com/perama-v/min-know](https://github.com/perama-v/min-know)
+- A specification for transformation of the UnchainedIndex into a "Volumes and Chapters" publishing model.
+    - Used to discover your own transactions with minimal data
+    - Complies with the "Volumes and Chapters" TODD meta-spec.
+    - [https://github.com/perama-v/address-appearance-index-specs](https://github.com/perama-v/address-appearance-index-specs)
+- A smart contract standard for publishing.
+    - The "Volumes and Chapters" meta-spec outlines a manifest-based publishing model.
+    - A smart contract allows cencorship-resistant posting of IPNS names and publishing topics.
+    - [https://github.com/perama-v/GAMB](https://github.com/perama-v/GAMB)
+- A simple address exploration rust application that puts everything together.
+    - Tries to get wallet history with <1GB data and no APIs
+    - Essentially consists of
+        - An experimental "Volumes and Chapters" variant of the UnchainedIndex.
+        - A Portal node.
+        - The Heimdall decompiler.
+        - (TODO) Experimental "Volumes and Chapters" variants of 4byte registry, Sourcify and a names/tags database.
+    - [https://github.com/perama-v/PSR_B0943_10](https://github.com/perama-v/PSR_B0943_10)
 
-
-The "final product" is this "user interface" demo:
+The direction of this user interface demo is something like:
 
 ```
 [User: Clicks on their wallet]
