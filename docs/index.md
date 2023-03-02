@@ -7,14 +7,15 @@ layout: home
 
 :seedling:
 
-Perhaps you are interested in:
-
-- The
-[**Cairo programming language**]({{ site.baseurl }}{% link cairo/intro.md %})
-- Ethereum
-[**wallet UI design**]({{ site.baseurl }}{% link ethereum/1559-wallet-interface.md %})
-- [**Local data extraction**]({{ site.baseurl }}{% link ethereum/local_data.md %})
-- Generative art: [**narrative**]({{ site.baseurl }}{% link ethereum/gactans.md %}) and
-[**gallery**]({{ site.baseurl }}{% link ethereum/more_gactans.md %})
-- A [**mechanism**]({{ site.baseurl }}{% link ethereum/ideas.md %})  to increase the rate of ideation.
-- [Poking around]({{ site.baseurl }}{% link ethereum/protocol/poking.md %}) in protocols.
+- 2023
+    - Understanding the challenges of a [horizontally scaled archive node]({{ site.baseurl }}{% link ethereum/protocol/archive.md %}).
+- 2022
+    - Designs for [divisible and distributable data]({{ site.baseurl }}{% link ethereum/protocol/poking.md %}) (tx index, 4-byte event signatures).
+- 2021
+    - The
+    [**Cairo programming language**]({{ site.baseurl }}{% link cairo/intro.md %}) framework (pre-1.0)
+    - Ethereum
+    [**wallet UI design**]({{ site.baseurl }}{% link ethereum/1559-wallet-interface.md %}) leading up to EIP-1559
+    - [**Decompiling a contract**]({{ site.baseurl }}{% link ethereum/local_data.md %}) using an archive node.
+    - Whimsical [generative art]({{ site.baseurl }}{% link ethereum/gactans.md %}).
+    - A [**mechanism**]({{ site.baseurl }}{% link ethereum/ideas.md %}) to increase the rate of ideation.
