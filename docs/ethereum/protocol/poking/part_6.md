@@ -371,11 +371,11 @@ Every network starts with one node and embarks on a journey. By having a strong 
 reliable start, the network can gain momentum. When the network becomes critical
 infrastructure for someone, they will then be incentivised to participate.
 
-Realistic transitions:
+Idealistic transitions:
 ```
 Begin -> Provide supports -> Gather community -> Reduce supports -> Community adds support
 ```
-Idealistic transitions:
+Realistic transitions:
 ```
 Begin -> Gather community -> Community finds concept unreliable -> Moves on
 ```
