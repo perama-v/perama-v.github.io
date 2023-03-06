@@ -12,7 +12,23 @@ with scissors, and tape?
 TL;DR: Snip up an archive node and expose it trustlessly amongst Portal Network nodes
 for light weight transaction tracing.
 
-- [Structured (EIP-like)](#structured-eip-like)
+Challenges faced:
+- Tracing a transaction requires executing preceeding transactions in that block
+    - A "distributed trace transaction" must be a wrapper on a "distributed trace block".
+- Block state requires contract code for contracts accessed
+    - A "distributed trace block" requires contract bytecode to be available for state proofs,
+    which effectively amplifies bytecode compared to a regular archive node.
+
+Interesting facets:
+- We really can distribute/shard archive nodes if slow/non-contiguous tracing is of interest.
+- A distributed archive node can be multiples more disk size than the theoretical minimum but
+individual users will not experience that pain.
+
+
+---
+Table of Contents.
+
+- [Structured (EIP-like): A JSON-RPC method to enable disctributed archive nodes.](#structured-eip-like-a-json-rpc-method-to-enable-disctributed-archive-nodes)
   - [Abstract](#abstract)
   - [Motivation](#motivation)
   - [Specification](#specification)
@@ -26,7 +42,7 @@ for light weight transaction tracing.
   - [Reference Implementation](#reference-implementation)
   - [Security Considerations](#security-considerations)
   - [Copyright](#copyright)
-- [Unstructured (blog-like)](#unstructured-blog-like)
+- [Unstructured (blog-like): A look at what is involved in enabling disctributed archive nodes.](#unstructured-blog-like-a-look-at-what-is-involved-in-enabling-disctributed-archive-nodes)
   - [Recap](#recap)
   - [Terminal goal](#terminal-goal)
   - [What is an archive node?](#what-is-an-archive-node)
@@ -46,10 +62,18 @@ for light weight transaction tracing.
   - [Why not IPFS](#why-not-ipfs)
   - [Contrast to an archive node databases](#contrast-to-an-archive-node-databases)
   - [Example: Looking for state in a trace](#example-looking-for-state-in-a-trace)
+  - [Simple transfer exploration: Using `debug_traceTransaction` with `prestateTracer`](#simple-transfer-exploration-using-debug_tracetransaction-with-prestatetracer)
+  - [Verifying the preStateChange result of a simple transfer](#verifying-the-prestatechange-result-of-a-simple-transfer)
+  - [Basic contract interaction exploration: Using `debug_traceTransaction` with `prestateTracer`](#basic-contract-interaction-exploration-using-debug_tracetransaction-with-prestatetracer)
+  - [Summary of `debug_traceTransaction` explorations](#summary-of-debug_tracetransaction-explorations)
+  - [Modifications to `prestateTracer` for proofs](#modifications-to-prestatetracer-for-proofs)
+  - [On contract bytecode duplication](#on-contract-bytecode-duplication)
+  - [State](#state)
   - [Validation](#validation)
   - [Integration](#integration)
 
-# Structured (EIP-like)
+---
+# Structured (EIP-like): A JSON-RPC method to enable disctributed archive nodes.
 
 Presented as an EIP for fun. If an actual EIP is made, it will be noted here
 ```
@@ -160,12 +184,10 @@ Response
   "jsonrpc": "2.0",
   "result": {
     "blockStateProof": [
-      "TODO",
-      "TODO",
+      "TODO - Merkle poof against header state root for all first-accessed state in a block",
     ],
     "ancillaryStateProof": [
-      "TODO",
-      "TODO",
+      "TODO - Merkle proof against accumulator for block headers used by BLOCKHASH opcode",
     ]
   }
 }
@@ -238,7 +260,7 @@ of having recent blocks be unavailable if an archive node is not integrated with
 
 Copyright and related rights waived via [CC0](../LICENSE.md).
 
-# Unstructured (blog-like)
+# Unstructured (blog-like): A look at what is involved in enabling disctributed archive nodes.
 
 ## Recap
 We explored in the last [post series](./poking.md) how one could have an historical view
@@ -644,6 +666,8 @@ curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "met
 Pick a transaction and call `debug_traceTransaction`, filtering anything that mentions "storage":
 ```
 TX=0x1737d3cb7407b4fbf17e152e2d95cabca691e5fdcc8ae67a48c1a11d4809fe78
+```
+```
 curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "debug_traceTransaction", "params": ["'"$TX"'"], "id":1}' http://127.0.0.1:8545 | jq
 grep storage -B 30 -A 10
 ```
@@ -731,6 +755,406 @@ the tree, we will only record the first value for every accessed key.
 That way, we know the state at the start of the block and can update
 the record in real time as the transactions are executed.
 
+## Simple transfer exploration: Using `debug_traceTransaction` with `prestateTracer`
+
+The `debug_traceTransaction` method has a `prestateTracer` method.
+This returns all state that is accessed (read / write) during the transaction.
+
+Let's pick a transaction that is a simple transfer:
+```sh
+TX=0x4ebc6a7b170eac0173c6fce706b3be7dc040795140daf2d3ef985ee863a73af5
+```
+First lets trace it with `callTracer`:
+```sh
+curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "debug_traceTransaction", "params": ["'"$TX"'", {"tracer": "callTracer"}], "id":1}' http://127.0.0.1:8545 | jq
+```
+Response:
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "from": "0x16ad4a024c53d8056b0e38f6df6ca1fb92cb8c11",
+    "gas": "0x0",
+    "gasUsed": "0x5208",
+    "to": "0x7962390d8e104fb6067f0ea88408c6506fbb9967",
+    "input": "0x",
+    "value": "0xb1a2bc2ec50000",
+    "type": "CALL"
+  }
+}
+```
+Now with `prestateTracer`:
+```sh
+curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "debug_traceTransaction", "params": ["'"$TX"'", {"tracer": "prestateTracer"}], "id":1}' http://127.0.0.1:8545 | jq
+```
+Response:
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "0x16ad4a024c53d8056b0e38f6df6ca1fb92cb8c11": {
+      "balance": "0x19a8149c54fd359",
+      "nonce": 500
+    },
+    "0x1f9090aae28b8a3dceadf281b0f12828e676c326": {
+      "balance": "0x5a57d38c712aa53d",
+      "nonce": 8908
+    },
+    "0x7962390d8e104fb6067f0ea88408c6506fbb9967": {
+      "balance": "0x0",
+      "nonce": 4
+    }
+  }
+}
+```
+It can be seen that the "from" and "to" accounts have been accessed,
+and we have balances and nonces. However, what about `0x1f90...c326`
+that has sent 8908 transactions so far?
+
+## Verifying the preStateChange result of a simple transfer
+Using the above trace, we can think about whether the returned trace makes sense.
+Why do we have three parties in a simple transfer from A to B?
+
+Let's use the `preStateTracer` with `diffMode` on:
+```sh
+curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "debug_traceTransaction", "params": ["'"$TX"'", {"tracer": "prestateTracer", "tracerConfig": {"diffMode": true}}], "id":1}' http://127.0.0.1:8545 | jq
+```
+Response:
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "post": {
+      "0x16ad4a024c53d8056b0e38f6df6ca1fb92cb8c11": {
+        "balance": "0xe29cde97b99bc1",
+        "nonce": 501
+      },
+      "0x1f9090aae28b8a3dceadf281b0f12828e676c326": {
+        "balance": "0x5a57d42f0ad715c5"
+      },
+      "0x7962390d8e104fb6067f0ea88408c6506fbb9967": {
+        "balance": "0xb1a2bc2ec50000"
+      }
+    },
+    "pre": {
+      "0x16ad4a024c53d8056b0e38f6df6ca1fb92cb8c11": {
+        "balance": "0x19a8149c54fd359",
+        "nonce": 500
+      },
+      "0x1f9090aae28b8a3dceadf281b0f12828e676c326": {
+        "balance": "0x5a57d38c712aa53d",
+        "nonce": 8908
+      },
+      "0x7962390d8e104fb6067f0ea88408c6506fbb9967": {
+        "balance": "0x0",
+        "nonce": 4
+      }
+    }
+  }
+}
+```
+So this third address gained 698362917000 wei (698 Gwei). It will be the tip payment to the
+block producer (miner). Let's check by seeing what the priority fee per gas was.
+
+```sh
+$ curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_getTransactionByHash", "params": ["'"$TX"'"], "id":1}' http://127.0.0.1:8545 | jq
+```
+Returns:
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "blockHash": "0x67dd0d35b6572c6d7443ef1124c4b7bafd962867958106be273531493257ce4a",
+    "blockNumber": "0xff81ab",
+    "from": "0x16ad4a024c53d8056b0e38f6df6ca1fb92cb8c11",
+    "gas": "0x5208",
+    "gasPrice": "0x1386791c33",
+    "maxPriorityFeePerGas": "0x1fb6fd1",
+    "maxFeePerGas": "0x1825052d1b",
+    "hash": "0x4ebc6a7b170eac0173c6fce706b3be7dc040795140daf2d3ef985ee863a73af5",
+    "input": "0x",
+    "nonce": "0x1f4",
+    "to": "0x7962390d8e104fb6067f0ea88408c6506fbb9967",
+    "transactionIndex": "0xf6",
+    "value": "0xb1a2bc2ec50000",
+    "type": "0x2",
+    "accessList": [],
+    "chainId": "0x1",
+    "v": "0x0",
+    "r": "0xf7015cd91089482ea032eee5b3ce0451946cd869793cec8b72da7a33a0f40124",
+    "s": "0x31009337e54b43ce8e48b967c6c9b0c49671c21d19cc806542895bca36244a61"
+  }
+}
+```
+So the max the user was prepared to give the miner was:
+max_priority_fee_per_gas was 0x1fb6fd1 = 33255377 wei/gas = 0.33 Gwei/gas.
+```
+max priority fee (wei) = max priority fee per gas (wei/gas) * gas used (gas)
+max priority fee = 0x1fb6fd1 * 0x5208
+max priority fee = 33255377 * 21000
+max priority fee = 698362917000 = 698 Gwei
+```
+This matches what we observed being changed in the trace earlier.
+
+As the full priority fee was paid, we can assume that the base fee was below
+the users max fee.
+```sh
+curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "eth_getBlockByHash", "params": ["0xff81ab", false], "id":1}' http://127.0.0.1:8545 | jq
+```
+Returns the block, including the basefee: 0x13847dac62 (wei/gas).
+
+We know that the priority fee will be charged fully if the base fee plus the priority fee
+are within the max:
+```
+max fee per gas (wei/gas) > base fee per gas (wei/gas) + priority fee (wei/gas)
+0x1825052d1b > 0x13847dac62 + 0x1fb6fd1
+103700311323 > 83827207266 + 33255377
+103 Gwei/gas > 83.8 Gwei/gas + 0.33 Gwei/gas
+103 Gwei/gas > 84.1 Gwei/gas (true)
+```
+The condition holds. If this was not true, then only part of the priority fee would be given and we would have expected a different state change.
+
+This confirms that the third address and state change are the protocol transaction fee.
+
+## Basic contract interaction exploration: Using `debug_traceTransaction` with `prestateTracer`
+
+Let's pick a transaction that is a contract interaction:
+```sh
+TX=0x161b0f272bd99727861d7383e5cf239e6f08074697b1a7e5771246e0fc50e071
+```
+First lets trace it with `callTracer`:
+```sh
+curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "debug_traceTransaction", "params": ["'"$TX"'", {"tracer": "callTracer"}], "id":1}' http://127.0.0.1:8545 | jq
+```
+Response:
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "from": "0x58803db3cc22e8b1562c332494da49cacd94c6ab",
+    "gas": "0x1166b",
+    "gasUsed": "0x108ce",
+    "to": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+    "input": "0x095ea7b3000000000000000000000000000000000022d473030f116ddee9f6b43ac78ba3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "output": "0x0000000000000000000000000000000000000000000000000000000000000001",
+    "calls": [
+      {
+        "from": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+        "gas": "0xf572",
+        "gasUsed": "0x2047",
+        "to": "0xb8ffc3cd6e7cf5a098a1c92f48009765b24088dc",
+        "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f3ca7c3e38968823ccb4c78ea688df41356f182ae1d159e4ee608d30d68cef320",
+        "output": "0x00000000000000000000000047ebab13b806773ec2a2d16873e2df770d130b50",
+        "calls": [
+          {
+            "from": "0xb8ffc3cd6e7cf5a098a1c92f48009765b24088dc",
+            "gas": "0xb9bc",
+            "gasUsed": "0xb04",
+            "to": "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425",
+            "input": "0xbe00bbd8f1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f3ca7c3e38968823ccb4c78ea688df41356f182ae1d159e4ee608d30d68cef320",
+            "output": "0x00000000000000000000000047ebab13b806773ec2a2d16873e2df770d130b50",
+            "type": "DELEGATECALL"
+          }
+        ],
+        "value": "0x0",
+        "type": "CALL"
+      },
+      {
+        "from": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+        "gas": "0xa632",
+        "gasUsed": "0x698c",
+        "to": "0x47ebab13b806773ec2a2d16873e2df770d130b50",
+        "input": "0x095ea7b3000000000000000000000000000000000022d473030f116ddee9f6b43ac78ba3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "output": "0x0000000000000000000000000000000000000000000000000000000000000001",
+        "type": "DELEGATECALL"
+      }
+    ],
+    "value": "0x0",
+    "type": "CALL"
+  }
+}
+```
+This `callTracer` configuration of the `debug_TraceTransaction` method provides information
+that maps to how developers think about contracts being protocols. The method exploses how
+the transaction sequentially interacts with different protocols. E.g., First in protocol a,
+then visiting protocol b, then protocol c.
+
+
+Now with `prestateTracer`:
+```sh
+curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "debug_traceTransaction", "params": ["'"$TX"'", {"tracer": "prestateTracer"}], "id":1}' http://127.0.0.1:8545 | jq
+```
+Response:
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "0x2b33cf282f867a7ff693a66e11b0fcc5552e4425": {
+      "balance": "0x0",
+      "code": "608060/* Snip (entire contract bytecode) */0b0029",
+      "nonce": 1
+    },
+    "0x47ebab13b806773ec2a2d16873e2df770d130b50": {
+      "balance": "0x0",
+      "code": "0x608060/* Snip (entire contract bytecode) */a90029",
+      "nonce": 1
+    },
+    "0x58803db3cc22e8b1562c332494da49cacd94c6ab": {
+      "balance": "0x13befe42b38a40",
+      "nonce": 54
+    },
+    "0xae7ab96520de3a18e5e111b5eaab095312d7fe84": {
+      "balance": "0x4558214a60e751c3a",
+      "code": "0x608060/* Snip (entire contract bytecode) */410029",
+      "nonce": 1,
+      "storage": {
+        "0x1b6078aebb015f6e4f96e70b5cfaec7393b4f2cdf5b66fb81b586e48bf1f4a26": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x4172f0f7d2289153072b0a6ca36959e0cbe2efc3afe50fc81636caa96338137b": "0x000000000000000000000000b8ffc3cd6e7cf5a098a1c92f48009765b24088dc",
+        "0x644132c4ddd5bb6f0655d5fe2870dcec7870e6be4758890f366b83441f9fdece": "0x0000000000000000000000000000000000000000000000000000000000000001",
+        "0xd625496217aa6a3453eecb9c3489dc5a53e6c67b444329ea2b2cbc9ff547639b": "0x3ca7c3e38968823ccb4c78ea688df41356f182ae1d159e4ee608d30d68cef320"
+      }
+    },
+    "0xb8ffc3cd6e7cf5a098a1c92f48009765b24088dc": {
+      "balance": "0x0",
+      "code": "0x608060/* Snip (entire contract bytecode) */cd40029",
+      "nonce": 10,
+      "storage": {
+        "0x54b2b2de1ae6731a04bdbca30cee71852851cfcd3298aaf29f4ebff9452b27ad": "0x00000000000000000000000047ebab13b806773ec2a2d16873e2df770d130b50",
+        "0x8e2ed18767e9c33b25344c240cdf92034fae56be99e2c07f3d9946d949ffede4": "0x0000000000000000000000002b33cf282f867a7ff693a66e11b0fcc5552e4425"
+      }
+    },
+    "0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5": {
+      "balance": "0x106001246036090a",
+      "nonce": 251257
+    }
+  }
+}
+```
+Note that contract code is included in the response. Contract code present at the time of
+the transaction is important because while many contracts do not change, some may.
+For example, through the SELFDESTRUCT opcode or CREATE2 opcode a contract code may change
+in the transaction prior.
+
+The contract code has been snipped out and the total size of the pre-snipped response
+was 78KB. Hence for complex contract calls this can amount to a significant cost.
+
+Let's compare the result to the `diffMode`
+```sh
+curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc": "2.0", "method": "debug_traceTransaction", "params": ["'"$TX"'", {"tracer": "prestateTracer", "tracerConfig": {"diffMode": true}}], "id":1}' http://127.0.0.1:8545 | jq
+```
+Response:
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "post": {
+      "0x58803db3cc22e8b1562c332494da49cacd94c6ab": {
+        "balance": "0xeb6c743e9ca94",
+        "nonce": 55
+      },
+      "0xae7ab96520de3a18e5e111b5eaab095312d7fe84": {
+        "storage": {
+          "0x1b6078aebb015f6e4f96e70b5cfaec7393b4f2cdf5b66fb81b586e48bf1f4a26": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        }
+      },
+      "0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5": {
+        "balance": "0x10600622a2b46b7a"
+      }
+    },
+    "pre": {
+      "0x58803db3cc22e8b1562c332494da49cacd94c6ab": {
+        "balance": "0x13befe42b38a40",
+        "nonce": 54
+      },
+      "0xae7ab96520de3a18e5e111b5eaab095312d7fe84": {
+        "balance": "0x4558214a60e751c3a",
+        "code": "0x608060/* Snip (entire contract bytecode) */410029",
+        "nonce": 1
+      },
+      "0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5": {
+        "balance": "0x106001246036090a",
+        "nonce": 251257
+      }
+    }
+  }
+}
+```
+We only have three changes:
+- `0x5880...c6ab`
+    - Nonce increase with a balance decrease by 0.0014 ether
+    - Likely sender paying tx fee
+- `0xae7a...7fe84`
+    - Contract with storage value `0x1b60...4a26` changed to `0xffff...ffff`.
+- `0xdafe...98bc5`
+    - Large nonce account with small balance increse
+    - Likely the miner receiving tx fee
+
+## Summary of `debug_traceTransaction` explorations
+
+The `debug_traceTransaction` is a convenient method to get information required to
+produce an archive block state proof. It has different tracers available.
+
+The `callTracer` tracer is good for accessing all the opcodes, but may not be necessary
+due to the existence of other configuration options.
+
+The `prestateTracer` tracer is good for identifying every part of state read/written
+by a transaction. This is good for **creating a proof** because you can enumerate transactions
+for a whole block and store every part of state needed for that block.
+
+The `prestateTracer` tracer with `diffMode` configuration shows what state values changed during
+a block. This is good for when you are **using a proof** to replay a specific transaction.
+Preceding transactions are enumerated and the true state immediately prior to the transaction
+can be known.
+
+## Modifications to `prestateTracer` for proofs
+
+The `prestateTracer` tracer could be useful because clients have them implemented already.
+They can minimally modified to be useful in the generation and usage of archive block state proofs.
+These changes are summarised as follows:
+
+- Proof generation
+    - Modify `prestateTracer` tracer to output a state proof
+    - The tracer produces only the state required for a block
+    - All transactions in a block are processed and the result aggregated
+    - Duplicate state access is ignored, only store the first value encountered for a given key
+    - Output is used for an `eth_getArchiveBlockStateProof`
+- Proof consumption
+    - Modify `prestateTracer` tracer with `diffMode` on to recreate pre-transaction state.
+    - This is for executing an `debug_traceTransaction` for a specific transaction.
+    - The tracer is used to find the state immediately prior to the transaction in question.
+    - The tracer uses a block state proof, then applies a transaction trace with `diffMode`
+    to quickly see what is different after each transaction
+    - The effect of all preceeding transactions are applied and then the transaction of interest
+    can be traced completely
+    - The trace of the transaction-of-interest can then be executed with whatever trace is desired
+    such as `callState`.
+
+## On contract bytecode duplication
+
+A node responsible for providing`trace_block` must have the contract code for every contract
+involved in that block. It realistically needs to have this code and cannot just keep the
+code hash and point to another overlay network because this would be a DoS burden for the
+unfortunate nodes who happen to be responsible for popular contracts.
+
+Nodes are responsible for many non-contiguous blocks. Functionally immutable contracts
+that are popular will probably re-appear in these disparate blocks. Hence, a node can store
+contract code in a way that doesn't duplicate this data. Thus, while it may seem that the problem
+of duplication of contract bytecode amplifies the total size of the network-wide database,
+the true size is less.
+
+The per-node archive state database size should therefore not be calculated by naive estimates.
+It will depend on the node radius, and the number and frequency of "common contracts". With
+Contract code duplication will decrease if radii are larger and number and frequency of common
+contracts is higher.
+
+## State
 
 ## Validation
 
