@@ -24,6 +24,7 @@ Interesting facets:
 - A distributed archive node can be multiples more disk size than the theoretical minimum but
 individual users will not experience that pain.
 
+Associated experimental rust library: https://github.com/perama-v/archors
 
 ---
 Table of Contents.
@@ -68,6 +69,7 @@ Table of Contents.
   - [Summary of `debug_traceTransaction` explorations](#summary-of-debug_tracetransaction-explorations)
   - [Modifications to `prestateTracer` for proofs](#modifications-to-prestatetracer-for-proofs)
   - [On contract bytecode duplication](#on-contract-bytecode-duplication)
+  - [debug_traceTransaction for slots, eth_getProof for slot proofs](#debug_tracetransaction-for-slots-eth_getproof-for-slot-proofs)
   - [State](#state)
   - [Validation](#validation)
   - [Integration](#integration)
@@ -1153,6 +1155,39 @@ The per-node archive state database size should therefore not be calculated by n
 It will depend on the node radius, and the number and frequency of "common contracts". With
 Contract code duplication will decrease if radii are larger and number and frequency of common
 contracts is higher.
+
+## debug_traceTransaction for slots, eth_getProof for slot proofs
+
+Recall that the state tree is nested: Each account has a storage root for a storage tree.
+This storage root is not returned as part of `debug_traceTransaction`. To
+construct the leaf data of the state root tree, the Recursive Length Prefix (RLP) encoded
+account data is all required. So to provide someone with a specific storage value (e.g., some storage slot that will be accessed during a block) in the storage tree, the RLP data must be reconstructed, hashed and proved in the first tree. This requires that the code hash, nonce and balance for every account accessed must be part of the proof data.
+
+A retrospective look at one block can reveal all the leaf data that is needed to execute that block. Aggregation of all those values into one big tree is the proof. Imagine that a block only accessed one storage value from one contract (AKA account). Here is the data that would be in the proof:
+
+- Storage key
+- Storage value
+- Account storage root (of storage tree, using key/value)
+- Account code hash
+- Account nonce
+- Account balance
+
+A call to debug_traceTransaction with the prestateTracer may return balance, code, nonce and storage, and some fields may absent.
+
+If only the balance of an address is accessed (there is code etc that is not accessed), the other fields are still required. Once obtained, the other fields are RLP encoded to get the account leaf, then the hash of that encoded data is the account node.
+
+Thus the prestateTracer is necessary (to know which storage keys are accessed) but insufficient (does not get account storage root or other unaccessed account state fields).
+
+A convenient approach would be to call `eth_getProof` for every account.
+This will provide the account node (account state root), the account value
+(RLP encoded data) and the storage proof against the storage root in that encoded data.
+
+Thus we have a new step: `eth_getProof`:
+1. eth_getBlockByNumber
+2. For each transaction, get novel state with `debug_traceTransaction` with prestate tracer
+3. Combine all required storage slots for all accounts accessed
+4. Request a single proof for each account with `eth_getProof`
+5. Combine all account proofs in a tree to form the state proof.
 
 ## State
 
