@@ -2,7 +2,7 @@
 layout: page
 title:  "GACTANS"
 permalink: /ethereum/gactans
-toc: true
+toc: false
 ---
 
 GACTANs are a derivative fan-art project I made for fun.

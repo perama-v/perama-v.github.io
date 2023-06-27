@@ -9,6 +9,8 @@ layout: home
 
 - 2023
     - Understanding the challenges of a [horizontally scaled archive node]({{ site.baseurl }}{% link ethereum/protocol/archive.md %}).
+    - [Dissecting]({{ site.baseurl }}{% link ethereum/protocol/proof.md %}) a merkle state proof.
+    - [Trustlessly tracing]({{ site.baseurl }}{% link ethereum/protocol/tracing.md %}) old blocks without an archive node.
 - 2022
     - Designs for [divisible and distributable data]({{ site.baseurl }}{% link ethereum/protocol/poking.md %}) (tx index, 4-byte event signatures).
 - 2021
